@@ -23,7 +23,7 @@ public class ReadingStatus {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUses;
+    private Users idUsers;
 
     @OneToOne
     @JoinColumn(name = "id_livro", nullable = false)
