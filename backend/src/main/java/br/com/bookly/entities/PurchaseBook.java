@@ -21,19 +21,19 @@ public class PurchaseBook {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id_compraLivro;
+    private UUID idPurchaseBook;
 
     @OneToMany
     @JoinColumn(name = "compra", nullable = false)
-    private Purchase compra;
+    private Purchase purchase;
 
     @ManyToMany
     @JoinColumn(name = "livro", nullable = false)
-    private Book livro;
+    private Book book;
 
     @Column(nullable = false)
-    private Integer quantidade;
+    private Integer quantity;
 
     @Column(nullable = false, columnDefinition = "NUMERIC(4,2)")
-    private BigDecimal precoUnidade;
+    private BigDecimal unitPrice;
 }

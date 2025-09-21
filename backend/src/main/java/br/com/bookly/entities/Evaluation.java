@@ -20,22 +20,22 @@ public class Evaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID avaliacao;
+    private UUID evaluation;
 
     @OneToMany
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUsuario;
+    private Users idUser;
 
     @ManyToMany
     @JoinColumn(name = "id_livro", nullable = false)
-    private Book idLivro;
+    private Book idBook;
 
     @Column(nullable = false)
-    private String comentario;
+    private String coments;
 
     @Column(nullable = false)
-    private Integer nota;
+    private Integer Grade;
 
     @Column(nullable = false)
-    private LocalDate dataAvaliacao;
+    private LocalDate evaluationDate;
 }

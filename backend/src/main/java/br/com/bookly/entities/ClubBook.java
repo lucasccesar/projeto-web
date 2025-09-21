@@ -26,16 +26,16 @@ public class ClubBook { // Livro_clube
 
     @ManyToOne
     @JoinColumn(name = "id_clube_do_livro", nullable = false)
-    private BookClub clubeDoLivro;
+    private BookClub bookClub;
 
     @ManyToOne
     @JoinColumn(name = "id_livro", nullable = false)
-    private Book livro;
+    private Book book;
 
     @Column(nullable = false, name = "data_inicio")
-    private LocalDate dataInicio;
+    private LocalDate startDate;
 
     @Column(nullable = false, name = "data_fim")
-    private LocalDate dataFim;
+    private LocalDate fisnishDate;
 
 }

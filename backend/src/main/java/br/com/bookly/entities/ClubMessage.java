@@ -24,19 +24,19 @@ public class ClubMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_mensagem_clube")
-    private UUID idMensagemClube;
+    private UUID idClubMessage;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users usuario;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "id_clube_do_livro", nullable = false)
-    private BookClub clube;
+    private BookClub club;
 
     @Column(nullable = false, length = 512, name = "conteudo_mensagem")
-    private String conteudoMensagem;
+    private String message;
 
     @Column(nullable = false, name = "data_mensagem")
-    private Timestamp dataMensagem;
+    private Timestamp messageDate;
 }

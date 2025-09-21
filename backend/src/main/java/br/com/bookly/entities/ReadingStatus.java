@@ -17,16 +17,19 @@ import java.util.UUID;
 
 public class ReadingStatus {
 
-    private UUID statusLeitura;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID readingStatus;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUsuario;
+    private Users idUses;
 
     @OneToOne
     @JoinColumn(name = "id_livro", nullable = false)
-    private Book idLivro;
+    private Book idBook;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 }

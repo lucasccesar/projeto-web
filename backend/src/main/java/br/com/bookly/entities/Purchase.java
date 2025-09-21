@@ -20,16 +20,16 @@ public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idCompra;
+    private UUID idPurchase;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUsuario;
+    private Users idUser;
 
     @Column(nullable = false)
-    private LocalDate dataCompra;
+    private LocalDate purchaseDate;
 
     @Column(nullable = false, columnDefinition = "NUMERIC(4,2)")
-    private BigDecimal valorTotal;
+    private BigDecimal totalValuation;
 
 }

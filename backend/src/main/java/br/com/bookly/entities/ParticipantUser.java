@@ -23,17 +23,17 @@ public class ParticipantUser {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_usuario-participante")
-    private UUID idUsuarioParticipante;
+    private UUID idParticipantUser;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users usuario;
+    private Users user;
 
     @ManyToOne
     @JoinColumn(name = "id_clube_do_livro", nullable = false)
-    private BookClub clube;
+    private BookClub club;
 
     @Column(nullable = false, name = "data_entrada")
-    private LocalDate dataEntrada;
+    private LocalDate entryDate;
 
 }

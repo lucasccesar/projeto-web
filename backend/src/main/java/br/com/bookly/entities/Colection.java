@@ -18,16 +18,16 @@ public class Colection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID idColecao;
+    private UUID idColection;
 
     @ManyToOne
-    private Users idUsuario;
+    private Users idUser;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private String descricao;
+    private String description;
 
 
 }

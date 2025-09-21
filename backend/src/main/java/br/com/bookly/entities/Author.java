@@ -21,5 +21,5 @@ public class Author {
     private UUID idAuthor;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 }

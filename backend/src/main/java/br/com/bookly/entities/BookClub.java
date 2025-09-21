@@ -24,24 +24,24 @@ public class BookClub { // clube_do_livro
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_clube_do_livro")
-    private UUID idClubeDoLivro;
+    private UUID idBookClub;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
-    private String tema;
+    private String theme;
 
     @Column(nullable = false, length = 512)
-    private String descricao;
+    private String description;
 
 
     @OneToMany(mappedBy = "clubeDoLivro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClubBook> livrosMensais = new ArrayList<>();
+    private List<ClubBook> MensalBooks = new ArrayList<>();
 
     @OneToMany(mappedBy = "clube", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClubMessage> mensagensDoClube = new ArrayList<>();
+    private List<ClubMessage> ClubMessage = new ArrayList<>();
 
     @OneToMany(mappedBy = "clube", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ParticipantUser> usuariosParticipantes = new ArrayList<>();
+    private List<ParticipantUser> UsersParticipants = new ArrayList<>();
 }
