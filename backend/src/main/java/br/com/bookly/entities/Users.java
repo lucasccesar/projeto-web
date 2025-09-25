@@ -17,31 +17,39 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Usuarios")
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(name = "id_usuario")
+    private UUID idUser;
 
-    @Column(nullable = false)
+    @Column(name = "nome",nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "data_nascimento",nullable = false)
     private LocalDate birthday;
 
     @Column(unique = true, nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "senha",nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "tipo",nullable = false)
     private UserType type;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    // relação de usuário com ClubMessage
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClubMessage> MensagensDoUsuario = new ArrayList<>();
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    // relação de usuário com ParticipantUser
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParticipantUser> usuariosParticipantes = new ArrayList<>();
+
+    // relação de usuário com avaliação (Evaluation)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Evaluation> evaluations = new ArrayList<>();
 }

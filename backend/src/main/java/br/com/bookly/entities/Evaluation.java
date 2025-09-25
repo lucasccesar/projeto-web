@@ -15,27 +15,28 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "avaliacao")
 public class Evaluation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID evaluation;
+    @Column(name = "id_avaliacao")
+    private UUID idEvaluation;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUser;
+    private Users user;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "id_livro", nullable = false)
-    private Book idBook;
+    private Book book;
 
-    @Column(nullable = false)
+    @Column(name = "comentario",nullable = false)
     private String coments;
 
-    @Column(nullable = false)
+    @Column(name = "nota",nullable = false)
     private Integer Grade;
 
-    @Column(nullable = false)
+    @Column(name = "data_avaliacao",nullable = false)
     private LocalDate evaluationDate;
 }

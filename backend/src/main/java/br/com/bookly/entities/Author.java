@@ -13,13 +13,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "Autor")
 public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_autor")
     private UUID idAuthor;
 
-    @Column(nullable = false)
+    @Column(name = "nome",nullable = false)
     private String name;
 }

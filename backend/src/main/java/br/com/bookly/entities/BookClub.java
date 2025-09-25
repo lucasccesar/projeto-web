@@ -26,22 +26,24 @@ public class BookClub { // clube_do_livro
     @Column(name = "id_clube_do_livro")
     private UUID idBookClub;
 
-    @Column(nullable = false)
+    @Column(name = "nome",nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "tema",nullable = false)
     private String theme;
 
-    @Column(nullable = false, length = 512)
+    @Column(name = "descricao",nullable = false, length = 512)
     private String description;
 
-
-    @OneToMany(mappedBy = "clubeDoLivro", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Relação de clubeDoLivro com LivroClube (ClubBook)
+    @OneToMany(mappedBy = "bookClub", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClubBook> MensalBooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "clube", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Relação ClubeDoLivro com MensagemClube (ClubMessage)
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClubMessage> ClubMessage = new ArrayList<>();
 
-    @OneToMany(mappedBy = "clube", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Relação ClubeDoLivro com UsuariosParticipantes (ParticipantUser)
+    @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParticipantUser> UsersParticipants = new ArrayList<>();
 }

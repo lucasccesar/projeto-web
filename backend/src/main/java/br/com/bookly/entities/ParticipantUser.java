@@ -22,7 +22,7 @@ public class ParticipantUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_usuario-participante")
+    @Column(name = "id_usuario_participante")
     private UUID idParticipantUser;
 
     @ManyToOne

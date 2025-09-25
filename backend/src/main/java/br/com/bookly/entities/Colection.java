@@ -13,20 +13,22 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "Colecao")
 public class Colection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_colecao")
     private UUID idColection;
 
     @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
     private Users idUser;
 
-    @Column(nullable = false)
+    @Column(name = "nome",nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(name = "descricao",nullable = false)
     private String description;
 
 

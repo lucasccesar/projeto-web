@@ -14,11 +14,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "Status_Leitura")
 public class ReadingStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_status_leitura")
     private UUID readingStatus;
 
     @ManyToOne

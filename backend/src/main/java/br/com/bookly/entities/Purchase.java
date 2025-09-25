@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,21 +17,26 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Table(name = "Compra")
 public class Purchase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_compra")
     private UUID idPurchase;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
     private Users idUser;
 
-    @Column(nullable = false)
+    @Column(name = "data_compra",nullable = false)
     private LocalDate purchaseDate;
 
-    @Column(nullable = false, columnDefinition = "NUMERIC(4,2)")
+    @Column(name = "valor_total",nullable = false, columnDefinition = "NUMERIC(4,2)")
     private BigDecimal totalValuation;
+
+    // Relação de Compra com CompraLivro (PurchaseBook)
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PurchaseBook> purchaseBooks = new ArrayList<>();
 
 }

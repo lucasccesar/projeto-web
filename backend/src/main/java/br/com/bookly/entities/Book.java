@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.math.BigDecimal;
 
@@ -14,25 +16,34 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Livro")
 public class Book{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Column(name = "id_livro")
+    private UUID idBook;
 
-    @Column(nullable = false)
+    @Column(name = "sinopse",nullable = false)
     private String synopsis;
 
-    @Column(nullable = false)
+    @Column(name = "titulo",nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(name = "genero",nullable = false)
     private String genre;
 
-    @Column(nullable = false, name="available_quantity")
+    @Column(nullable = false, name="quantidade_disponivel")
     private int availableQuantity;
 
-    @Column(nullable = false, columnDefinition = "NUMERIC(6,2)")
+    @Column(name = "preco",nullable = false, columnDefinition = "NUMERIC(6,2)")
     private BigDecimal price;
 
+    // Relação de livro com avaliação (Evaluation)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Evaluation> evaluations = new ArrayList<>();
+
+    // Relação de livro com LivroCompra (PurchaseBook)
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PurchaseBook> purchaseBooks = new ArrayList<>();
 }
