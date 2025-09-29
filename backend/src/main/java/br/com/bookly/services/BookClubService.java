@@ -12,7 +12,7 @@ public interface BookClubService {
     public BookClub createBookClub(BookClub bookClub);
     public boolean deleteBookClub(BookClub bookClub);
     public boolean deleteBookClubById(UUID id);
-    public BookClub updateBookClub(BookClub bookClub);
+    public BookClub updateBookClub(UUID id, BookClub bookClub);
     public BookClub findBookClubById(UUID id);
     public BookClub findBookClubByName(String name);
     public Page<BookClub> listBookClub(Pageable pageable);

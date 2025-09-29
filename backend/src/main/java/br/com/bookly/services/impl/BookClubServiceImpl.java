@@ -42,25 +42,17 @@ public class BookClubServiceImpl implements BookClubService {
     }
 
     @Override
-    public BookClub updateBookClub(BookClub bookClub) {
+    public BookClub updateBookClub(UUID id, BookClub bookClub) {
 
 
-        //veridica se o id do clube foi informado para atualizar
-        if (bookClub.getIdBookClub() == null) {
-            return null;
-        }
-
-
-        BookClub exists = bookClubRepository.findById(bookClub.getIdBookClub()).orElse(null); // se o clube não existir retorna null
+        BookClub exists = bookClubRepository.findById(id).orElse(null); // se o clube não existir retorna null
         if (exists == null) {
             return null;
         }
 
-
         if (bookClub.getName() == null || bookClub.getName().isBlank()) {
             return null;
         }
-
 
         if (bookClub.getTheme() == null || bookClub.getTheme().isBlank()) {
             return null;
