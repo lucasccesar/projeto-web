@@ -1,5 +1,6 @@
 package br.com.bookly.services.impl;
 
+import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Enums.UserType;
 import br.com.bookly.entities.Users;
 import br.com.bookly.repositories.UsersRepository;
@@ -26,7 +27,7 @@ public class UsersServiceImpl implements UsersService {
             return null;
         }
 
-        if(user.getEmail() == null || user.getEmail().isBlank() || usersRepository.existsByEmail(user.getEmail())) {
+        if(user.getEmail() == null || user.getEmail().isBlank() || usersRepository.findByEmail(user.getEmail()) != null) {
             return null;
         }
 
@@ -34,7 +35,7 @@ public class UsersServiceImpl implements UsersService {
             return null;
         }
 
-        if(user.getBirthday().isBefore(LocalDate.now())) {
+        if(user.getBirthday().isAfter(LocalDate.now())) {
             return null;
         }
 
@@ -46,26 +47,30 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Users loginUser(Users user) {
+    public Users loginUser(String email, String password) {
 
-        Users userByEmail = usersRepository.findByEmail(user.getEmail());
+        Users userByEmail = usersRepository.findByEmail(email);
 
-        if(!user.getEmail().equals(userByEmail.getEmail()) || !user.getPassword().equals(userByEmail.getPassword())) {
+        if(userByEmail == null) {
             return null;
         }
 
-        return user;
+        if(!userByEmail.getEmail().equals(email) || !userByEmail.getPassword().equals(password)) {
+            return null;
+        }
+
+        return userByEmail;
 
     }
 
     @Override
-    public Users updateUser(Users user) {
+    public Users updateUser(UUID id, Users user) {
 
-        if(user == null || user.getIdUser() == null){
+        if(user == null || id == null){
             return null;
         }
 
-        Users userById = usersRepository.findById(user.getIdUser()).orElse(null);
+        Users userById = usersRepository.findById(id).orElse(null);
 
         if(userById == null) {
             return null;
@@ -90,17 +95,6 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public boolean deleteUser(Users user) {
-        usersRepository.delete(user);
-
-        if(!usersRepository.existsById(user.getIdUser())) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public boolean deleteUser(UUID id) {
         usersRepository.deleteById(id);
 
@@ -109,5 +103,10 @@ public class UsersServiceImpl implements UsersService {
         }
 
         return false;
+    }
+
+    @Override
+    public Page<Users> getUsers(Pageable pageable) {
+        return usersRepository.findAll(pageable);
     }
 }

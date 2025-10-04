@@ -13,6 +13,7 @@ import java.util.UUID;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, UUID> {
 
+    public List<Users> findAll();
     public Users findByEmail(String email);
     public Users findByName(String name);
     public boolean existsByEmail(String email);

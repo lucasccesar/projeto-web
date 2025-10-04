@@ -11,9 +11,9 @@ import java.util.UUID;
 public interface UsersService {
 
     public Users signupUser(Users user);
-    public Users loginUser(Users user);
-    public Users updateUser(Users user);
-    public boolean deleteUser(Users user);
+    public Users loginUser(String email, String password);
+    public Users updateUser(UUID id, Users user);
     public boolean deleteUser(UUID id);
+    public Page<Users> getUsers(Pageable pageable);
 
 }
