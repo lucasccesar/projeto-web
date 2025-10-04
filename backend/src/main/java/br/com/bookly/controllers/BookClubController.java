@@ -2,6 +2,7 @@ package br.com.bookly.controllers;
 
 
 import br.com.bookly.entities.BookClub;
+import br.com.bookly.entities.dtos.BookClubDTO;
 import br.com.bookly.services.BookClubService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,24 @@ public class BookClubController {
         return ResponseEntity.ok(bookClubService.listBookClub(pageable));
     }
 
-    // todo: 2 gets
+    @GetMapping({"/{id}"})
+    public ResponseEntity<BookClubDTO> findBookClubById(@PathVariable UUID id) {
+        BookClub bookClub = bookClubService.findBookClubById(id);
+        if (bookClub == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new BookClubDTO(bookClub));
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<BookClubDTO> findBookClubByName(@PathVariable("name") String name) {
+        BookClub bookClub = bookClubService.findBookClubByName(name);
+        if (bookClub == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(new BookClubDTO(bookClub));
+    }
+
 
     @PostMapping
     public ResponseEntity<BookClub> createBookClub(@RequestBody BookClub bookClub) {

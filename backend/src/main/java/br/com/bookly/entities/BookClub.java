@@ -29,7 +29,7 @@ public class BookClub { // clube_do_livro
     @Column(name = "nome",nullable = false)
     private String name;
 
-    @Column(name = "tema",nullable = false)
+    @Column(name = "tema")
     private String theme;
 
     @Column(name = "descricao",nullable = false, length = 512)
