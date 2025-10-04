@@ -37,7 +37,7 @@ public class BookClub { // clube_do_livro
 
     // Relação de clubeDoLivro com LivroClube (ClubBook)
     @OneToMany(mappedBy = "bookClub", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ClubBook> MensalBooks = new ArrayList<>();
+    private List<BookClubAssignment> MensalBooks = new ArrayList<>();
 
     // Relação ClubeDoLivro com MensagemClube (ClubMessage)
     @OneToMany(mappedBy = "club", cascade = CascadeType.ALL, orphanRemoval = true)
