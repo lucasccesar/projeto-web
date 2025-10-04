@@ -8,10 +8,10 @@ import org.springframework.data.domain.Pageable;
 import java.util.UUID;
 
 public interface BookClubAssignmentService {
-    public BookClubAssignment createBookClub(BookClubAssignment bookClubAssignment);
-    public boolean deleteBookClub(BookClubAssignment bookClubAssignment);
+    public BookClubAssignment createBookClubAssignment(BookClubAssignment bookClubAssignment);
+    public boolean deleteBookClubAssignment(BookClubAssignment bookClubAssignment);
     public boolean deleteById(UUID id);
-    public BookClubAssignment updateBookClub(UUID id, BookClubAssignment bookClubAssignment);
-    public BookClubAssignment findBookClubById(UUID id);
-    public Page<BookClubAssignment> findAllBookClubs(Pageable pageable);
+    public BookClubAssignment updateBookClubAssignment(UUID id, BookClubAssignment bookClubAssignment);
+    public BookClubAssignment findBookClubAssignmentById(UUID id);
+    public Page<BookClubAssignment> findAllBookClubsAssignment(Pageable pageable);
 }

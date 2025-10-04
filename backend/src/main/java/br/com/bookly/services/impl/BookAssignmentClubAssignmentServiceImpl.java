@@ -18,7 +18,7 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
 
 
     @Override
-    public BookClubAssignment createBookClub(BookClubAssignment bookClubAssignment) {
+    public BookClubAssignment createBookClubAssignment(BookClubAssignment bookClubAssignment) {
 
         if (bookClubAssignment.getStartDate() == null || bookClubAssignment.getFisnishDate() == null) {
             return null;
@@ -38,7 +38,7 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
     }
 
     @Override
-    public boolean deleteBookClub(BookClubAssignment bookClubAssignment) {
+    public boolean deleteBookClubAssignment(BookClubAssignment bookClubAssignment) {
 
         BookClubAssignment exists = bookClubAssignmentRepository.findById(bookClubAssignment.getIdClubBook()).orElse(null);
 
@@ -62,7 +62,7 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
     }
 
     @Override
-    public BookClubAssignment updateBookClub(UUID id, BookClubAssignment bookClubAssignment) {
+    public BookClubAssignment updateBookClubAssignment(UUID id, BookClubAssignment bookClubAssignment) {
 
         BookClubAssignment exists = bookClubAssignmentRepository.findById(id).orElse(null);
 
@@ -89,12 +89,12 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
     }
 
     @Override
-    public BookClubAssignment findBookClubById(UUID id) {
+    public BookClubAssignment findBookClubAssignmentById(UUID id) {
         return bookClubAssignmentRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Page<BookClubAssignment> findAllBookClubs(Pageable pageable) {
+    public Page<BookClubAssignment> findAllBookClubsAssignment(Pageable pageable) {
         return bookClubAssignmentRepository.findAll(pageable);
     }
 }
