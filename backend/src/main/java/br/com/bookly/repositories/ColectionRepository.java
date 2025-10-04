@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ColectionRepository extends JpaRepository<Colection, UUID> {
+    boolean existsByNameIgnoreCase(String name);
+    Colection findByNameIgnoreCase(String name);
 }
