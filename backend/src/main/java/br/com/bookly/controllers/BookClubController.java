@@ -20,8 +20,9 @@ public class BookClubController {
     BookClubService bookClubService;
 
     @GetMapping
-    public ResponseEntity<Page<BookClub>> listBookClubs(Pageable pageable) {
-        return ResponseEntity.ok(bookClubService.listBookClub(pageable));
+    public ResponseEntity<Page<BookClubDTO>> listBookClubs(Pageable pageable) {
+        Page<BookClubDTO> dtos = bookClubService.listBookClub(pageable).map(BookClubDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping({"/{id}"})
