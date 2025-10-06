@@ -36,7 +36,7 @@ public class ColectionServiceImpl implements ColectionService {
             return null;
         }
 
-        if (colectionRepository.existsByNameIgnoreCaseAndUser_IdUser(colectionDTO.getName(), user.getIdUser())) {
+        if (colectionRepository.existsByNameIgnoreCaseAndUser_Id(colectionDTO.getName(), user.getId())) {
             return null;
         }
 
@@ -100,16 +100,16 @@ public class ColectionServiceImpl implements ColectionService {
 
 
     @Override
-    public List<Colection> findByUser_IdUser(UUID idUser) {
+    public List<Colection> findByUser_Id(UUID idUser) {
         if (idUser == null)
             return colectionRepository.findAll();
 
-        return colectionRepository.findByUser_IdUser(idUser);
+        return colectionRepository.findByUser_Id(idUser);
     }
 
     @Override
-    public boolean existsByNameIgnoreCaseAndUser_IdUser(String name, UUID idUser) {
-        return colectionRepository.existsByNameIgnoreCaseAndUser_IdUser(name, idUser);
+    public boolean existsByNameIgnoreCaseAndUser_Id(String name, UUID idUser) {
+        return colectionRepository.existsByNameIgnoreCaseAndUser_Id(name, idUser);
     }
 
 

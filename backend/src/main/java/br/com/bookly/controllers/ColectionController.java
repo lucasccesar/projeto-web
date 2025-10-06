@@ -29,8 +29,8 @@ public class ColectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteColectionById(@PathVariable UUID idColection) {
-        boolean deleted = colectionService.deleteColectionById(idColection);
+    public ResponseEntity<Void> deleteColectionById(@PathVariable UUID id) {
+        boolean deleted = colectionService.deleteColectionById(id);
         if (!deleted) {
             return ResponseEntity.notFound().build();
         }
@@ -39,9 +39,9 @@ public class ColectionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Colection> updateColection(@PathVariable UUID idColection, //O Path Variable (id) identifica o recurso
+    public ResponseEntity<Colection> updateColection(@PathVariable UUID id, //O Path Variable (id) identifica o recurso
                                                       @RequestBody Colection colection){ // o Request Body (colection) provê os novos dados.
-        Colection updatedCollection = colectionService.updateColection(idColection, colection);
+        Colection updatedCollection = colectionService.updateColection(id, colection);
         if (updatedCollection == null) {
 
             return ResponseEntity.badRequest().build();
@@ -69,7 +69,7 @@ public class ColectionController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Colection>> findColectionsByIdUser(@PathVariable UUID userId) {
-        List<Colection> colecoes = colectionService.findByUser_IdUser(userId);
+        List<Colection> colecoes = colectionService.findByUser_Id(userId);
         return ResponseEntity.ok(colecoes);
     }
 

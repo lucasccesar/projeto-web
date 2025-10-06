@@ -17,7 +17,7 @@ public interface ColectionService {
     Colection updateColection(UUID idColection, Colection colection);
     public Colection findColectionById(UUID idColection);
     public Colection findColectionByName(String name);
-    List<Colection> findByUser_IdUser(UUID userId);
-    boolean existsByNameIgnoreCaseAndUser_IdUser(String name, UUID userId);
+    List<Colection> findByUser_Id(UUID userId);
+    boolean existsByNameIgnoreCaseAndUser_Id(String name, UUID userId);
     public Page<Colection> findAllColections(Pageable pageable);
 }

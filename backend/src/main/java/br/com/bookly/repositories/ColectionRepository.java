@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface ColectionRepository extends JpaRepository<Colection, UUID> {
     boolean existsByNameIgnoreCase(String name);
     Colection findByNameIgnoreCase(String name);
-    List<Colection> findByUser_IdUser(UUID userId);
-    boolean existsByNameIgnoreCaseAndUser_IdUser(String name, UUID userId);
+    List<Colection> findByUser_Id(UUID userId);
+    boolean existsByNameIgnoreCaseAndUser_Id(String name, UUID userId);
 }
