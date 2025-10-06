@@ -23,7 +23,7 @@ public class Colection {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUser;
+    private Users user;
 
     @Column(name = "nome",nullable = false)
     private String name;
