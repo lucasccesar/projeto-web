@@ -100,11 +100,11 @@ public class ColectionServiceImpl implements ColectionService {
 
 
     @Override
-    public List<Colection> findByUser_Id(UUID idUser) {
+    public Page<Colection> findByUser_Id(UUID idUser, Pageable pageable) {
         if (idUser == null)
-            return colectionRepository.findAll();
+            return colectionRepository.findAll(pageable);
 
-        return colectionRepository.findByUser_Id(idUser);
+        return colectionRepository.findByUser_Id(idUser, pageable);
     }
 
     @Override

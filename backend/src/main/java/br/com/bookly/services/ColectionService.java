@@ -6,6 +6,7 @@ import br.com.bookly.entities.dtos.ColectionDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.security.PublicKey;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public interface ColectionService {
     Colection updateColection(UUID idColection, Colection colection);
     public Colection findColectionById(UUID idColection);
     public Colection findColectionByName(String name);
-    List<Colection> findByUser_Id(UUID userId);
+    public Page<Colection> findByUser_Id(UUID userId, Pageable pageable);
     boolean existsByNameIgnoreCaseAndUser_Id(String name, UUID userId);
     public Page<Colection> findAllColections(Pageable pageable);
 }

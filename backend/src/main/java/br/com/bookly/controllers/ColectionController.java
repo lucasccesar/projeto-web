@@ -68,8 +68,8 @@ public class ColectionController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Colection>> findColectionsByIdUser(@PathVariable UUID userId) {
-        List<Colection> colecoes = colectionService.findByUser_Id(userId);
+    public ResponseEntity<Page<Colection>> findColectionsByIdUser(@PathVariable UUID userId, Pageable pageable) {
+        Page<Colection> colecoes = colectionService.findByUser_Id(userId, pageable);
         return ResponseEntity.ok(colecoes);
     }
 
