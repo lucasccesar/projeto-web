@@ -44,8 +44,8 @@ public class BookClubServiceImpl implements BookClubService {
     @Override
     public BookClub updateBookClub(UUID id, BookClub bookClub) {
 
-
         BookClub exists = bookClubRepository.findById(id).orElse(null); // se o clube não existir retorna null
+
         if (exists == null) {
             return null;
         }

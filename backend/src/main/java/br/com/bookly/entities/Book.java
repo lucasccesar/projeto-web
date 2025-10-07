@@ -24,11 +24,11 @@ public class Book{
     @Column(name = "id_livro")
     private UUID idBook;
 
-    @Column(name = "sinopse",nullable = false)
-    private String synopsis;
-
     @Column(name = "titulo",nullable = false)
     private String title;
+
+    @Column(name = "sinopse",nullable = false)
+    private String synopsis;
 
     @Column(name = "genero",nullable = false)
     private String genre;
