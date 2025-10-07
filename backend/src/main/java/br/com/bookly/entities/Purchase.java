@@ -27,7 +27,7 @@ public class Purchase {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUser;
+    private Users user;
 
     @Column(name = "data_compra",nullable = false)
     private LocalDate purchaseDate;

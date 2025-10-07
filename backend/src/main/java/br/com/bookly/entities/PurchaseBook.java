@@ -24,8 +24,8 @@ public class PurchaseBook {
     @Column(name = "id_compra_livro")
     private UUID idPurchaseBook;
 
-    @ManyToOne
-    @JoinColumn(name = "id_compra", nullable = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "id_compra", nullable = true)
     private Purchase purchase;
 
     @ManyToOne
