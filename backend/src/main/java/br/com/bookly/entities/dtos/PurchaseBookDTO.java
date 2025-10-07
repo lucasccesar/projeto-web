@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Setter
@@ -11,12 +12,14 @@ import java.util.UUID;
 public class PurchaseBookDTO {
     private UUID idBook;
     private Integer quantity;
+    private BigDecimal unitPrice;
 
     public PurchaseBookDTO() {
     }
 
-    public PurchaseBookDTO(UUID idBook, Integer quantity) {
+    public PurchaseBookDTO(UUID idBook, Integer quantity,  BigDecimal unitPrice) {
         this.idBook = idBook;
         this.quantity = quantity;
+        this.unitPrice = unitPrice;
     }
 }

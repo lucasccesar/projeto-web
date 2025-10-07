@@ -54,6 +54,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             purchaseBook.setPurchase(savedPurchase);
             purchaseBook.setBook(book);
             purchaseBook.setQuantity(bookDTO.getQuantity());
+            purchaseBook.setUnitPrice(bookDTO.getUnitPrice());
 
             purchaseBookRepository.save(purchaseBook);
             savedPurchase.getPurchaseBooks().add(purchaseBook);
