@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignmentService {
+public class BookClubAssignmentServiceImpl implements BookClubAssignmentService {
 
     @Autowired
     BookClubAssignmentRepository bookClubAssignmentRepository;
@@ -20,34 +20,21 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
     @Override
     public BookClubAssignment createBookClubAssignment(BookClubAssignment bookClubAssignment) {
 
-        if (bookClubAssignment.getStartDate() == null || bookClubAssignment.getFisnishDate() == null) {
+        if (bookClubAssignment.getStartDate() == null || bookClubAssignment.getFinishDate() == null) {
             return null;
         }
 
         //Não permite datas igual (inicio/fim)
-        if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFisnishDate())){
+        if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFinishDate())){
             return null;
         }
 
         //Data final menor do que inicial
-        if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFisnishDate())){
+        if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFinishDate())){
             return null;
         }
 
         return bookClubAssignmentRepository.save(bookClubAssignment);
-    }
-
-    @Override
-    public boolean deleteBookClubAssignment(BookClubAssignment bookClubAssignment) {
-
-        BookClubAssignment exists = bookClubAssignmentRepository.findById(bookClubAssignment.getIdClubBook()).orElse(null);
-
-        if(exists == null){
-            return false;
-        }
-
-        bookClubAssignmentRepository.delete(exists);
-        return true;
     }
 
     @Override
@@ -70,19 +57,19 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
             return null;
         }
 
-        if (bookClubAssignment.getStartDate() == null || bookClubAssignment.getFisnishDate() == null) {
+        if (bookClubAssignment.getStartDate() == null || bookClubAssignment.getFinishDate() == null) {
             return null;
         }
 
-        if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFisnishDate())){
+        if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFinishDate())){
             return null;
         }
 
-        if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFisnishDate())){
+        if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFinishDate())){
             return null;
         }
 
-        exists.setFisnishDate(bookClubAssignment.getFisnishDate());
+        exists.setFinishDate(bookClubAssignment.getFinishDate());
         exists.setStartDate(bookClubAssignment.getStartDate());
 
         return bookClubAssignmentRepository.save(exists);
@@ -96,5 +83,15 @@ public class BookAssignmentClubAssignmentServiceImpl implements BookClubAssignme
     @Override
     public Page<BookClubAssignment> findAllBookClubsAssignment(Pageable pageable) {
         return bookClubAssignmentRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<BookClubAssignment> findByBookId(UUID bookId, Pageable pageable) {
+        return bookClubAssignmentRepository.findByBook_IdBook(bookId, pageable);
+    }
+
+    @Override
+    public Page<BookClubAssignment> findByBookClubId(UUID bookClubId, Pageable pageable) {
+        return bookClubAssignmentRepository.findByBookClub_IdBookClub(bookClubId, pageable);
     }
 }

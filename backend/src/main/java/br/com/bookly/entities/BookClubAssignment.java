@@ -34,6 +34,6 @@ public class BookClubAssignment { // Livro_clube
     private LocalDate startDate;
 
     @Column(nullable = false, name = "data_fim")
-    private LocalDate fisnishDate;
+    private LocalDate finishDate;
 
 }

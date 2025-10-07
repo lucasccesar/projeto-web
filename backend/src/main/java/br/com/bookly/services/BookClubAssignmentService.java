@@ -9,9 +9,10 @@ import java.util.UUID;
 
 public interface BookClubAssignmentService {
     public BookClubAssignment createBookClubAssignment(BookClubAssignment bookClubAssignment);
-    public boolean deleteBookClubAssignment(BookClubAssignment bookClubAssignment);
     public boolean deleteById(UUID id);
     public BookClubAssignment updateBookClubAssignment(UUID id, BookClubAssignment bookClubAssignment);
     public BookClubAssignment findBookClubAssignmentById(UUID id);
     public Page<BookClubAssignment> findAllBookClubsAssignment(Pageable pageable);
+    Page<BookClubAssignment> findByBookId(UUID bookId, Pageable pageable);
+    Page<BookClubAssignment> findByBookClubId(UUID bookClubId, Pageable pageable);
 }

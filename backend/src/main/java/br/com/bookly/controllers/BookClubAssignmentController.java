@@ -1,6 +1,8 @@
 package br.com.bookly.controllers;
 
 import br.com.bookly.entities.BookClubAssignment;
+import br.com.bookly.entities.dtos.BookClubAssignmentDTO;
+import br.com.bookly.entities.dtos.ClubMessageDTO;
 import br.com.bookly.services.BookClubAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,51 +20,56 @@ public class BookClubAssignmentController {
     BookClubAssignmentService bookClubAssignmentService;
 
     @GetMapping
-    public ResponseEntity<Page<BookClubAssignment>> listBookClubAssignments(Pageable pageable) {
-        return ResponseEntity.ok(bookClubAssignmentService.findAllBookClubsAssignment(pageable));
+    public ResponseEntity<Page<BookClubAssignmentDTO>> listBookClubAssignments(Pageable pageable) {
+        Page<BookClubAssignmentDTO> dto = bookClubAssignmentService.findAllBookClubsAssignment(pageable).map(BookClubAssignmentDTO::new);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookClubAssignment> findBookClubAssignmentById(@PathVariable UUID id) {
+    public ResponseEntity<BookClubAssignmentDTO> findBookClubAssignmentById(@PathVariable UUID id) {
         BookClubAssignment bookClubAssignment = bookClubAssignmentService.findBookClubAssignmentById(id);
 
-        if (bookClubAssignment != null) {
-            return ResponseEntity.ok(bookClubAssignment);
-        } else {
+        if (bookClubAssignment == null) {
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(new BookClubAssignmentDTO(bookClubAssignment));
         }
     }
 
-    @PostMapping
-    public ResponseEntity<BookClubAssignment> createBookClubAssignment(@RequestBody BookClubAssignment bookClubAssignment) {
-        BookClubAssignment createdBookClubAssignment = bookClubAssignmentService.createBookClubAssignment(bookClubAssignment);
+    @GetMapping("/book/{bookId}")
+    public ResponseEntity<Page<BookClubAssignmentDTO>> getAssignmentsByBook(
+            @PathVariable UUID bookId, Pageable pageable) {
+        Page<BookClubAssignmentDTO> dtoPage = bookClubAssignmentService.findByBookId(bookId, pageable).map(BookClubAssignmentDTO::new);
+        return ResponseEntity.ok(dtoPage);
+    }
 
-        if (createdBookClubAssignment != null) {
-            return ResponseEntity.status(201).body(createdBookClubAssignment);
-        } else {
+    @GetMapping("/club/{clubId}")
+    public ResponseEntity<Page<BookClubAssignmentDTO>> getAssignmentsByClub(
+            @PathVariable UUID clubId, Pageable pageable) {
+        Page<BookClubAssignmentDTO> dtoPage = bookClubAssignmentService.findByBookClubId(clubId, pageable).map(BookClubAssignmentDTO::new);
+        return ResponseEntity.ok(dtoPage);
+    }
+
+    @PostMapping
+    public ResponseEntity<BookClubAssignmentDTO> createBookClubAssignment(@RequestBody BookClubAssignment bookClubAssignment) {
+        BookClubAssignment created = bookClubAssignmentService.createBookClubAssignment(bookClubAssignment);
+
+        if (created == null) {
             return ResponseEntity.badRequest().build();
+        } else {
+            BookClubAssignmentDTO dto = new BookClubAssignmentDTO(created);
+            return ResponseEntity.status(201).body(dto);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookClubAssignment> updateBookClubAssignment(@PathVariable UUID id, @RequestBody BookClubAssignment bookClubAssignment) {
+    public ResponseEntity<BookClubAssignmentDTO> updateBookClubAssignment(@PathVariable UUID id, @RequestBody BookClubAssignment bookClubAssignment) {
         BookClubAssignment updated = bookClubAssignmentService.updateBookClubAssignment(id, bookClubAssignment);
 
         if (updated == null) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok(updated);
-        }
-    }
-
-        @DeleteMapping
-    public ResponseEntity<BookClubAssignment> deleteBookClubAssignment(@RequestBody BookClubAssignment bookClubAssignment) {
-        boolean deleted = bookClubAssignmentService.deleteBookClubAssignment(bookClubAssignment);
-
-        if(deleted) {
-            return ResponseEntity.ok(bookClubAssignment);
-        } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new BookClubAssignmentDTO(updated));
         }
     }
 
