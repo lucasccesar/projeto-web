@@ -26,14 +26,6 @@ public class AuthorController {
         return ResponseEntity.status(201).body(created);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Author> deleteAuthor(@RequestBody Author author) {
-        boolean deleted = authorService.deleteAuthor(author);
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(author);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAuthorById(@PathVariable UUID id) {
@@ -62,9 +54,9 @@ public class AuthorController {
         return ResponseEntity.ok(author);
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<Author> findAuthorByName(@PathVariable String name) {
-        Author author = authorService.findAuthorByName(name);
+    @GetMapping("/name")
+    public ResponseEntity<Page<Author>> findAuthorByName(@RequestParam String name, Pageable pageable) {
+        Page<Author> author = authorService.findAuthorByName(name, pageable);
         if (author == null) {
             return ResponseEntity.notFound().build();
         }

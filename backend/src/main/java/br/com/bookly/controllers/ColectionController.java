@@ -50,16 +50,16 @@ public class ColectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Colection> findColectionById(@PathVariable UUID idColection) {
-        Colection colection = colectionService.findColectionById(idColection);
+    public ResponseEntity<Colection> findColectionById(@PathVariable UUID id) {
+        Colection colection = colectionService.findColectionById(id);
         if (colection == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(colection);
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<Colection> findColectionByName(@PathVariable String name) {
+    @GetMapping("/name")
+    public ResponseEntity<Colection> findColectionByName(@RequestParam String name) {
         Colection colection = colectionService.findColectionByName(name);
         if (colection == null) {
             return ResponseEntity.notFound().build();

@@ -13,7 +13,7 @@ public interface AuthorService {
     public boolean deleteAuthorById(UUID idAuthor);
     public Author updateAuthor(UUID idAuthor, Author author);
     public Author findAuthorById(UUID idAuthor);
-    public Author findAuthorByName(String name);
+    public Page<Author> findAuthorByName(String name, Pageable pageable);
     public Page<Author> findAllAuthors(Pageable pageable);
 
 }

@@ -56,7 +56,7 @@ public class AuthorServiceImpl implements AuthorService {
         if(author.getName() == null || author.getName().isBlank())
             return null;
 
-        author.setName(author.getName());
+        exists.setName(author.getName());
         return authorRepository.save(exists);
     }
 
@@ -66,8 +66,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author findAuthorByName(String name) {
-        return authorRepository.findAuthorByNameIgnoreCase(name);
+    public Page<Author> findAuthorByName(String name, Pageable pageable) {
+        return authorRepository.findAuthorByNameIgnoreCase(name, pageable);
     }
 
     @Override
