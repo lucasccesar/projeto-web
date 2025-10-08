@@ -3,10 +3,12 @@ package br.com.bookly.controllers;
 import br.com.bookly.entities.Purchase;
 import br.com.bookly.entities.PurchaseBook;
 import br.com.bookly.entities.dtos.PurchaseDTO;
+import br.com.bookly.entities.dtos.PurchaseResponseDto;
 import br.com.bookly.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +23,20 @@ public class PurchaseController {
     PurchaseService purchaseService;
 
     @PostMapping
-    public ResponseEntity<Purchase> createPurchase(@RequestBody PurchaseDTO purchasedto) {
+    public ResponseEntity<PurchaseResponseDto> createPurchase(@RequestBody PurchaseDTO purchasedto) {
         Purchase createdPurchase = purchaseService.createPurchase(purchasedto);
 
         if (createdPurchase == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(201).body(createdPurchase);
+        PurchaseResponseDto pg  = new PurchaseResponseDto(createdPurchase);
+
+        return ResponseEntity.status(201).body(pg);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity <Purchase> deletePurchase(@PathVariable UUID id) {
+    public ResponseEntity <PurchaseResponseDto> deletePurchase(@PathVariable UUID id) {
         boolean deleted = purchaseService.deletePurchase(id);
         if (deleted) {
             return ResponseEntity.ok().build();
@@ -41,39 +45,46 @@ public class PurchaseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Purchase> updatePurchase(@PathVariable UUID id, @RequestBody Purchase purchase) {
+    public ResponseEntity<PurchaseResponseDto> updatePurchase(@PathVariable UUID id, @RequestBody Purchase purchase) {
 
         Purchase updatedPurchase = purchaseService.updatePurchase(id, purchase);
 
         if (updatedPurchase == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(updatedPurchase);
+
+        PurchaseResponseDto pg  = new PurchaseResponseDto(updatedPurchase);
+
+        return ResponseEntity.ok(pg);
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Purchase> findById(@PathVariable UUID id) {
+    @GetMapping("/id/{id}")
+    public ResponseEntity<PurchaseResponseDto> GetfindById(@PathVariable UUID id) {
         Purchase purchase = purchaseService.findPurchaseById(id);
         if (purchase == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(purchase);
+
+        PurchaseResponseDto pg  = new PurchaseResponseDto(purchase);
+        return ResponseEntity.ok(pg);
 
     }
 
-    @GetMapping("/{date}")
-    public ResponseEntity<Purchase> findPurchaseByDate_purchaseDate(@RequestParam LocalDate date) {
-        Purchase purchase = purchaseService.findPurchaseByDate_purchaseDate(date);
+    @GetMapping("/date/{date}")
+    public ResponseEntity<Page<PurchaseResponseDto>> findPurchaseByDate_purchaseDate(@PathVariable("date")
+                                                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, Pageable pageable) {
+        Page<PurchaseResponseDto> purchase = purchaseService.findPurchaseByDate_purchaseDate(date, pageable);
         if (purchase == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(purchase);
     }
 
-    @GetMapping("/{pageId}")
-    public ResponseEntity<Page<Purchase>> findPurchaseByUser_id(@PathVariable UUID id, Pageable pageable) {
-        Page<Purchase> purchase = purchaseService.findPurchaseByUser_id(id, pageable);
+    @GetMapping("/PageId/{id}")
+    public ResponseEntity<Page<PurchaseResponseDto>> findPurchaseByUser_id(@PathVariable UUID id, Pageable pageable) {
+        Page<PurchaseResponseDto> purchase = purchaseService.findPurchaseByUser_id(id, pageable);
         if (purchase == null) {
             return ResponseEntity.notFound().build();
         }
@@ -81,8 +92,8 @@ public class PurchaseController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Purchase>> findAll(Pageable pageable) {
-        Page<Purchase> page = purchaseService.findAllPurchase(pageable);
+    public ResponseEntity<Page<PurchaseResponseDto>> findAll(Pageable pageable) {
+        Page<PurchaseResponseDto> page = purchaseService.findAllPurchase(pageable);
         return ResponseEntity.ok(page);
     }
 }

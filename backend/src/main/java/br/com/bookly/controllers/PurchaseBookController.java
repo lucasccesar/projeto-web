@@ -2,6 +2,8 @@ package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Book;
 import br.com.bookly.entities.PurchaseBook;
+import br.com.bookly.entities.dtos.PurchaseBookDTO;
+import br.com.bookly.entities.dtos.PurchaseBookResponseDTO;
 import br.com.bookly.services.PurchaseBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,19 +21,23 @@ public class PurchaseBookController {
     PurchaseBookService purchaseBookService;
 
     @PostMapping
-    public ResponseEntity<PurchaseBook> createPurchaseBook(@RequestBody PurchaseBook purchaseBook){
-        PurchaseBook createdPurchaseBook = purchaseBookService.createPurchaseBook(purchaseBook);
+    public ResponseEntity<PurchaseBookResponseDTO> createPurchaseBook(@RequestBody PurchaseBookDTO dto) {
+        PurchaseBook created = purchaseBookService.createPurchaseBook(dto);
 
-        if(createdPurchaseBook == null){
+        if (created == null) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(201).body(createdPurchaseBook);
+        // Converte a entidade para DTO de resposta
+        PurchaseBookResponseDTO response = new PurchaseBookResponseDTO(created);
+
+        return ResponseEntity.status(201).body(response);
     }
 
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<PurchaseBook> deletePurchaseBookById(@RequestBody UUID idPurchaseBook){
-        boolean delete = purchaseBookService.deletePurchaseBook(idPurchaseBook);
+    public ResponseEntity<PurchaseBook> deletePurchaseBookById(@PathVariable UUID id){
+        boolean delete = purchaseBookService.deletePurchaseBook(id);
 
         if(delete){
             return ResponseEntity.ok().build();
@@ -40,52 +46,64 @@ public class PurchaseBookController {
         return ResponseEntity.notFound().build();
     }
 
-    @PutMapping
-    public ResponseEntity<PurchaseBook> updatePurchaseBook(@PathVariable UUID id, @RequestBody PurchaseBook purchaseBook){
+    @PutMapping("/{id}")
+    public ResponseEntity<PurchaseBookResponseDTO> updatePurchaseBook(@PathVariable UUID id, @RequestBody PurchaseBook purchaseBook){
         PurchaseBook updatedPurchaseBook = purchaseBookService.updatePurchaseBook(id, purchaseBook);
 
         if(updatedPurchaseBook == null){
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().body(updatedPurchaseBook);
+        PurchaseBookResponseDTO response = new PurchaseBookResponseDTO(updatedPurchaseBook);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PurchaseBook> findById(@PathVariable UUID id) {
+    public ResponseEntity<PurchaseBookResponseDTO> findById(@PathVariable UUID id) {
         PurchaseBook purchaseBook = purchaseBookService.findPurchaseBookById(id);
+
         if (purchaseBook == null)
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(purchaseBook);
+
+        PurchaseBookResponseDTO dto = new PurchaseBookResponseDTO(purchaseBook);
+        return ResponseEntity.ok(dto);
     }
 
 
-    @GetMapping("/purchase")
-    public ResponseEntity<PurchaseBook> findByPurchase_IdPurchase(@PathVariable UUID idPurchase) {
+    @GetMapping("/purchase/{idPurchase}")
+    public ResponseEntity<PurchaseBookResponseDTO> findByPurchase_IdPurchase(@PathVariable UUID idPurchase) {
         PurchaseBook purchaseBook = purchaseBookService.findPurchaseBookByPurchase_IdPurchase(idPurchase);
         if (purchaseBook == null)
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(purchaseBook);
+
+        PurchaseBookResponseDTO dto = new PurchaseBookResponseDTO(purchaseBook);
+        return ResponseEntity.ok(dto);
     }
 
 
-    @GetMapping("/book")
-    public ResponseEntity<PurchaseBook> findByBook(@PathVariable Book book) {
-            PurchaseBook purchaseBook = purchaseBookService.findPurchaseBookByBook(book);
+    @GetMapping("/book/{idBook}")
+    public ResponseEntity<PurchaseBookResponseDTO> findPurchaseBookBy_Id(@PathVariable UUID idBook) {
+        PurchaseBook purchaseBook = purchaseBookService.findPurchaseBookByBook_IdBook(idBook);
+
         if (purchaseBook == null)
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(purchaseBook);
+
+        PurchaseBookResponseDTO dto = new PurchaseBookResponseDTO(purchaseBook);
+        return ResponseEntity.ok(dto);
+
+        //Da erro quando um livro está em mais de uma lista de compra de livros, rever isso!
     }
 
-    @GetMapping("/bypurchase")
-    public ResponseEntity<Page<PurchaseBook>> findAllByPurchase(@PathVariable UUID idPurchase, Pageable pageable) {
-         Page<PurchaseBook> page = purchaseBookService.findByPurchase(idPurchase, pageable);
+    @GetMapping("/bypurchase/{idPurchase}")
+    public ResponseEntity<Page<PurchaseBookResponseDTO>> findAllByPurchase(@PathVariable UUID idPurchase, Pageable pageable) {
+         Page<PurchaseBookResponseDTO> page = purchaseBookService.findByPurchase_IdPurchase(idPurchase, pageable);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping
-    public ResponseEntity<Page<PurchaseBook>> findAll(Pageable pageable) {
-        Page<PurchaseBook> page = purchaseBookService.findAllPurchaseBooks(pageable);
+    public ResponseEntity<Page<PurchaseBookResponseDTO>> findAll(Pageable pageable) {
+        Page<PurchaseBookResponseDTO> page = purchaseBookService.findAllPurchaseBooks(pageable);
         return ResponseEntity.ok(page);
     }
 }

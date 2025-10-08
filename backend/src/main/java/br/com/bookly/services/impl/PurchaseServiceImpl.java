@@ -6,6 +6,7 @@ import br.com.bookly.entities.PurchaseBook;
 import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.PurchaseBookDTO;
 import br.com.bookly.entities.dtos.PurchaseDTO;
+import br.com.bookly.entities.dtos.PurchaseResponseDto;
 import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.PurchaseBookRepository;
 import br.com.bookly.repositories.PurchaseRepository;
@@ -57,6 +58,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             purchaseBook.setUnitPrice(bookDTO.getUnitPrice());
 
             purchaseBookRepository.save(purchaseBook);
+
             savedPurchase.getPurchaseBooks().add(purchaseBook);
         }
 
@@ -74,34 +76,38 @@ public class PurchaseServiceImpl implements PurchaseService {
         return true;
     }
 
+
     @Override
     public Purchase updatePurchase(UUID id, Purchase purchase) {
         Purchase exists = purchaseRepository.findById(id).orElse(null);
+        if (exists == null || purchase.getUser() == null) return null;
 
-        if(exists==null){
-            return null;
-        }
-
-        if(purchase.getUser() == null){
-            return null;
-        }
-
-        exists.setUser((purchase.getUser()));
-
-        if(purchase.getPurchaseBooks() == null){
-            return null;
-        }
+        exists.setUser(purchase.getUser());
         exists.getPurchaseBooks().clear();
-        exists.getPurchaseBooks().addAll(purchase.getPurchaseBooks());
-        purchase.getPurchaseBooks().forEach(pb -> pb.setPurchase(exists));
-        /*Dificuldade nessa parte
-         O forEach tem uma função lambda embutida
-         Para cada PurchaseBook da lista, define que ele pertence a esta Purchase.
-         Garante que a relação bidirecional entre Purchase e PurchaseBook fique correta.
-        */
-        return purchaseRepository.save(exists);
 
+        for (PurchaseBook pb : purchase.getPurchaseBooks()) {
+            PurchaseBook persistedpb;
+
+            if (pb.getIdPurchaseBook() != null && purchaseBookRepository.existsById(pb.getIdPurchaseBook())) {
+                // Apenas busca se realmente existe
+                persistedpb = purchaseBookRepository.findById(pb.getIdPurchaseBook()).get();
+            } else {
+                // Novo PurchaseBook, sem ID
+                persistedpb = new PurchaseBook();
+            }
+
+            persistedpb.setPurchase(exists);
+            persistedpb.setBook(pb.getBook());
+            persistedpb.setQuantity(pb.getQuantity());
+            persistedpb.setUnitPrice(pb.getUnitPrice());
+
+            exists.getPurchaseBooks().add(persistedpb);
+        }
+
+        return purchaseRepository.save(exists);
     }
+
+
 
     @Override
     public Purchase findPurchaseById(UUID id) {
@@ -109,12 +115,15 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Page<Purchase> findPurchaseByUser_id(UUID id, Pageable pageable) {
+    public Page<PurchaseResponseDto> findPurchaseByUser_id(UUID id, Pageable pageable) {
+
         if(id == null){
-            return purchaseRepository.findAll(pageable);
+            Page <Purchase> pg = purchaseRepository.findAll(pageable);
+            return pg.map(PurchaseResponseDto::new);
         }
 
-        return purchaseRepository.findByUserId_id(id, pageable);
+        Page <Purchase> pg = purchaseRepository.findByUserId_id(id, pageable);
+        return pg.map(PurchaseResponseDto::new);
         // Dúvida, se será preciso colocar o pageable.
         /* O pageable será para os usuários ou para as purchases, pq se
             for para os usuários não será necessário, mas se for para as purchases
@@ -124,13 +133,15 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public Purchase findPurchaseByDate_purchaseDate(LocalDate date) {
-        return  purchaseRepository.findBypurchaseDate(date);
+    public Page<PurchaseResponseDto> findPurchaseByDate_purchaseDate(LocalDate date, Pageable pageable) {
+        Page<Purchase> pg = purchaseRepository.findByPurchaseDate(date, pageable);
+        return pg.map(PurchaseResponseDto::new);
     }
 
     @Override
-    public Page<Purchase> findAllPurchase(Pageable pageable) {
-        return purchaseRepository.findAll(pageable);
+    public Page<PurchaseResponseDto> findAllPurchase(Pageable pageable) {
+        Page<Purchase> pg = purchaseRepository.findAll(pageable);
+        return pg.map(PurchaseResponseDto::new);
     }
 
 }

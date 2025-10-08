@@ -13,6 +13,6 @@ import java.util.UUID;
 @Repository
 public interface PurchaseRepository extends JpaRepository<Purchase, UUID> {
 
-    public Purchase findBypurchaseDate(LocalDate date);
-    public Page<Purchase> findByUserId_id(UUID id, Pageable pageable);
+    Page<Purchase> findByPurchaseDate(LocalDate date, Pageable pageable);
+    Page<Purchase> findByUserId_id(UUID id, Pageable pageable);
 }

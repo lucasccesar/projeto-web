@@ -1,5 +1,6 @@
 package br.com.bookly.entities;
 
+import br.com.bookly.entities.dtos.PurchaseBookDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
