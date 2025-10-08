@@ -83,6 +83,11 @@ public class ClubMessageImpl implements ClubMessageService {
             return null;
         }
 
+        if (exists.getMessage().trim().equals(clubMessage.getMessage().trim())) {
+            exists.setMessageDate(null);
+            return exists;
+        }
+
         exists.setMessage(clubMessage.getMessage());
         exists.setUser(clubMessage.getUser());
         exists.setClub(clubMessage.getClub());

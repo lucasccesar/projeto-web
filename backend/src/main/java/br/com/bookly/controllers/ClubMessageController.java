@@ -7,6 +7,7 @@ import br.com.bookly.services.ClubMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,12 +65,17 @@ public class ClubMessageController {
     @PutMapping("/{id}")
     public ResponseEntity<ClubMessageDTO> updateClubMessage(@PathVariable UUID id, @RequestBody ClubMessage clubMessage){
         ClubMessage updated = clubMessageService.updateClubMessage(id, clubMessage);
+
         if (updated == null) {
             return ResponseEntity.badRequest().build();
-        } else {
-            ClubMessageDTO dto = new ClubMessageDTO(updated);
-            return ResponseEntity.ok().body(dto);
         }
+
+        if (updated.getMessageDate() == null) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+        }
+
+        ClubMessageDTO dto = new ClubMessageDTO(updated);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping("/{id}")

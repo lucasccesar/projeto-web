@@ -34,6 +34,15 @@ public class BookClubAssignmentServiceImpl implements BookClubAssignmentService 
             return null;
         }
 
+        boolean exists = bookClubAssignmentRepository.existsByBook_IdBookAndBookClub_IdBookClubAndStartDateAndFinishDate(bookClubAssignment.getBook().getIdBook(), bookClubAssignment.getBookClub().getIdBookClub(),
+                bookClubAssignment.getStartDate(),
+                bookClubAssignment.getFinishDate()
+        );
+
+        if (exists) {
+            return null;
+        }
+
         return bookClubAssignmentRepository.save(bookClubAssignment);
     }
 

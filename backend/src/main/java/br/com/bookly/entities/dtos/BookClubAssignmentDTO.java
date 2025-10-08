@@ -14,14 +14,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class BookClubAssignmentDTO {
 
-    private UUID idClubBook;
+    private UUID idBookClubAssignment;
     private UUID bookId;
     private UUID bookClubId;
     private LocalDate startDate;
     private LocalDate finishDate;
 
-    public BookClubAssignmentDTO(UUID idClubBook, UUID bookId, UUID bookClubId, LocalDate startDate, LocalDate finishDate) {
-        this.idClubBook = idClubBook;
+    public BookClubAssignmentDTO(UUID idBookClubAssignment, UUID bookId, UUID bookClubId, LocalDate startDate, LocalDate finishDate) {
+        this.idBookClubAssignment = idBookClubAssignment;
         this.bookId = bookId;
         this.bookClubId = bookClubId;
         this.startDate = startDate;
@@ -29,7 +29,7 @@ public class BookClubAssignmentDTO {
     }
 
     public BookClubAssignmentDTO(BookClubAssignment bookClubAssignment) {
-        this.idClubBook = bookClubAssignment.getIdBookClubAssignment();
+        this.idBookClubAssignment = bookClubAssignment.getIdBookClubAssignment();
         this.bookId = bookClubAssignment.getBook().getIdBook();
         this.bookClubId = bookClubAssignment.getBookClub().getIdBookClub();
         this.startDate = bookClubAssignment.getStartDate();
