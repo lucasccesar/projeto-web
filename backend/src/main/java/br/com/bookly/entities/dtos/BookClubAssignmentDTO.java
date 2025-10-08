@@ -29,7 +29,7 @@ public class BookClubAssignmentDTO {
     }
 
     public BookClubAssignmentDTO(BookClubAssignment bookClubAssignment) {
-        this.idClubBook = bookClubAssignment.getIdClubBook();
+        this.idClubBook = bookClubAssignment.getIdBookClubAssignment();
         this.bookId = bookClubAssignment.getBook().getIdBook();
         this.bookClubId = bookClubAssignment.getBookClub().getIdBookClub();
         this.startDate = bookClubAssignment.getStartDate();

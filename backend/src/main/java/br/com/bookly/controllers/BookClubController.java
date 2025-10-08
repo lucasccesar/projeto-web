@@ -65,16 +65,6 @@ public class BookClubController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<BookClub> deleteBookClub(@RequestBody BookClub bookClub) {
-        boolean deleted = bookClubService.deleteBookClub(bookClub);
-        if (deleted) {
-            return ResponseEntity.ok(bookClub);//vai retornar o objeto deletado
-        } else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBookClubById(@PathVariable UUID id) {
         boolean deleted = bookClubService.deleteBookClubById(id);
@@ -84,5 +74,4 @@ public class BookClubController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

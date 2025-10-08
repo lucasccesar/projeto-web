@@ -72,19 +72,6 @@ public class BookClubServiceImpl implements BookClubService {
     }
 
     @Override
-    public boolean deleteBookClub(BookClub bookClub) {
-
-        BookClub exists = bookClubRepository.findById(bookClub.getIdBookClub()).orElse(null);
-
-        if (exists == null) {
-            return false;
-        }
-
-        bookClubRepository.delete(exists);
-        return true;
-    }
-
-    @Override
     public boolean deleteBookClubById(UUID id) {
 
         if (bookClubRepository.existsById(id) == false) {

@@ -20,7 +20,7 @@ public class BookClubAssignment { // Livro_clube
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_livro_clube")
-    private UUID idClubBook;
+    private UUID idBookClubAssignment;
 
     @ManyToOne
     @JoinColumn(name = "id_clube_do_livro", nullable = false)

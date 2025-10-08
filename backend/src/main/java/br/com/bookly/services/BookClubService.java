@@ -10,7 +10,6 @@ import java.util.UUID;
 public interface BookClubService {
 
     public BookClub createBookClub(BookClub bookClub);
-    public boolean deleteBookClub(BookClub bookClub);
     public boolean deleteBookClubById(UUID id);
     public BookClub updateBookClub(UUID id, BookClub bookClub);
     public BookClub findBookClubById(UUID id);
