@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -46,4 +44,18 @@ public class Book{
     // Relação de livro com LivroCompra (PurchaseBook)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseBook> purchaseBooks = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "livro_autor",
+            joinColumns = @JoinColumn(name = "id_livro"),
+            inverseJoinColumns = @JoinColumn(name = "id_autor")
+    )
+    private List<Author> authors = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "books")
+    private Set<Colection> colecoes = new HashSet<>();
+
+    @ManyToMany(mappedBy = "favoriteBooks")
+    private Set<Users> favoritedByUsers = new HashSet<>();
 }

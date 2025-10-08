@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Getter
@@ -52,4 +50,12 @@ public class Users {
     // relação de usuário com avaliação (Evaluation)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Evaluation> evaluations = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "livros_favoritos",
+            joinColumns = @JoinColumn(name = "id_usuario"),
+            inverseJoinColumns = @JoinColumn(name = "id_livro")
+    )
+    private Set<Book> favoriteBooks = new HashSet<>();
 }

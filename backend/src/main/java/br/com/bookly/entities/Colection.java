@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -31,5 +33,12 @@ public class Colection {
     @Column(name = "descricao",nullable = false)
     private String description;
 
+    @ManyToMany
+    @JoinTable(
+            name = "colecao_livro",
+            joinColumns = @JoinColumn(name = "id_colecao"),
+            inverseJoinColumns = @JoinColumn(name = "id_livro")
+    )
+    private Set<Book> books = new HashSet<>();
 
 }
