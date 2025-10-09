@@ -28,16 +28,15 @@ public class UsersController {
     }
 
     @PostMapping
-    public ResponseEntity<Users> signupUser(@RequestBody Users user) {
-
+    public ResponseEntity<UsersDTO> signupUser(@RequestBody Users user) {
         Users userSignedUp = usersService.signupUser(user);
+        UsersDTO userDTO = new UsersDTO(userSignedUp);
 
         if (userSignedUp != null) {
-            return ResponseEntity.status(201).body(userSignedUp);
+            return ResponseEntity.status(201).body(userDTO);
         } else {
             return ResponseEntity.badRequest().build();
         }
-
     }
 
     @DeleteMapping("/{id}")
@@ -62,11 +61,12 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Users> loginUser(@RequestBody UsersLoginDTO loginDto) {
+    public ResponseEntity<UsersDTO> loginUser(@RequestBody UsersLoginDTO loginDto) {
         Users user = usersService.loginUser(loginDto.getEmail(), loginDto.getPassword());
 
         if (user != null) {
-            return ResponseEntity.ok(user);
+            UsersDTO userDTO = new UsersDTO(user);
+            return ResponseEntity.ok(userDTO);
         } else {
             return ResponseEntity.badRequest().build();
         }
