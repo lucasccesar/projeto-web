@@ -2,6 +2,8 @@ package br.com.bookly.controllers;
 
 import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Users;
+import br.com.bookly.entities.dtos.ParticipantUserDTO;
+import br.com.bookly.entities.dtos.UsersDTO;
 import br.com.bookly.entities.dtos.UsersLoginDTO;
 import br.com.bookly.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,9 @@ public class UsersController {
     private UsersService usersService;
 
     @GetMapping
-    public ResponseEntity<Page<Users>> getUsers(Pageable pageable) {
-        return ResponseEntity.ok(usersService.getUsers(pageable));
+    public ResponseEntity<Page<UsersDTO>> getUsers(Pageable pageable) {
+        Page<UsersDTO> dtos = usersService.getUsers(pageable).map(UsersDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
