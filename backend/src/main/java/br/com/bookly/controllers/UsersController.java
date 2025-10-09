@@ -30,13 +30,12 @@ public class UsersController {
     @PostMapping
     public ResponseEntity<UsersDTO> signupUser(@RequestBody Users user) {
         Users userSignedUp = usersService.signupUser(user);
-        UsersDTO userDTO = new UsersDTO(userSignedUp);
 
-        if (userSignedUp != null) {
-            return ResponseEntity.status(201).body(userDTO);
-        } else {
+        if (userSignedUp == null) {
             return ResponseEntity.badRequest().build();
         }
+        UsersDTO userDTO = new UsersDTO(userSignedUp);
+        return ResponseEntity.status(201).body(userDTO);
     }
 
     @DeleteMapping("/{id}")

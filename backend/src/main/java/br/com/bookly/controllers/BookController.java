@@ -2,6 +2,8 @@ package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Book;
 import br.com.bookly.entities.Users;
+import br.com.bookly.entities.dtos.BookDTO;
+import br.com.bookly.entities.dtos.UsersDTO;
 import br.com.bookly.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,31 +21,30 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<Page<Book>> getBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getBooks(pageable));
+    public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {
+        Page<BookDTO> dtos = bookService.getBooks(pageable).map(BookDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-
+    public ResponseEntity<BookDTO> addBook(@RequestBody Book book) {
         Book addedBook = bookService.addBook(book);
 
-        if (addedBook != null) {
-            return ResponseEntity.status(201).body(addedBook);
-        } else {
+        if (addedBook == null) {
             return ResponseEntity.badRequest().build();
         }
-
+        BookDTO bookDTO = new BookDTO(addedBook);
+        return ResponseEntity.status(201).body(bookDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable UUID id, @RequestBody Book book) {
+    public ResponseEntity<BookDTO> updateBook(@PathVariable UUID id, @RequestBody Book book) {
         Book updated = bookService.updateBook(id, book);
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        } else{
+        if (updated == null) {
             return ResponseEntity.badRequest().build();
         }
+        BookDTO bookDTO = new BookDTO(updated);
+        return ResponseEntity.status(201).body(bookDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -57,42 +58,48 @@ public class BookController {
     }
 
     @PutMapping("/{id}/increase")
-    public ResponseEntity<Book> increaseAvailableBooks(@PathVariable UUID id, @RequestParam int amount) {
+    public ResponseEntity<BookDTO> increaseAvailableBooks(@PathVariable UUID id, @RequestParam int amount) {
         Book updatedBook = bookService.increaseAvaliableBooks(id, amount);
-        if (updatedBook != null) {
-            return ResponseEntity.status(201).body(updatedBook);
-        } else{
+
+        if (updatedBook == null) {
             return ResponseEntity.badRequest().build();
         }
+        BookDTO bookDTO = new BookDTO(updatedBook);
+        return ResponseEntity.status(201).body(bookDTO);
     }
 
     @PutMapping("/{id}/decrease")
-    public ResponseEntity<Book> decreaseAvailableBooks(@PathVariable UUID id, @RequestParam int amount) {
+    public ResponseEntity<BookDTO> decreaseAvailableBooks(@PathVariable UUID id, @RequestParam int amount) {
         Book updatedBook = bookService.decreaseAvaliableBooks(id, amount);
-        if (updatedBook != null) {
-            return ResponseEntity.status(201).body(updatedBook);
-        } else{
+
+        if (updatedBook == null) {
             return ResponseEntity.badRequest().build();
         }
+        BookDTO bookDTO = new BookDTO(updatedBook);
+        return ResponseEntity.status(201).body(bookDTO);
     }
 
     @GetMapping(params = "title")
-    public ResponseEntity<Page<Book>> getBooksByTitle(Pageable pageable, @RequestParam String title) {
-        return ResponseEntity.ok(bookService.getBooksByTitleContaining(pageable, title));
+    public ResponseEntity<Page<BookDTO>> getBooksByTitle(Pageable pageable, @RequestParam String title) {
+        Page<BookDTO> dtos = bookService.getBooksByTitleContaining(pageable, title).map(BookDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping(params = "genre")
-    public ResponseEntity<Page<Book>> getBooksByGenre(Pageable pageable, @RequestParam String genre) {
-        return ResponseEntity.ok(bookService.getBooksByGenre(pageable, genre));
+    public ResponseEntity<Page<BookDTO>> getBooksByGenre(Pageable pageable, @RequestParam String genre) {
+        Page<BookDTO> dtos = bookService.getBooksByGenre(pageable, genre).map(BookDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/availables")
-    public ResponseEntity<Page<Book>> getAvailableBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getAvailableBooks(pageable));
+    public ResponseEntity<Page<BookDTO>> getAvailableBooks(Pageable pageable) {
+        Page<BookDTO> dtos = bookService.getAvailableBooks(pageable).map(BookDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("/unavailables")
-    public ResponseEntity<Page<Book>> getUnavailableBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getUnavailableBooks(pageable));
+    public ResponseEntity<Page<BookDTO>> getUnavailableBooks(Pageable pageable) {
+        Page<BookDTO> dtos = bookService.getUnavailableBooks(pageable).map(BookDTO::new);
+        return ResponseEntity.ok(dtos);
     }
 }

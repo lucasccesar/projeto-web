@@ -37,9 +37,9 @@ public class Book{
     @Column(name = "preco",nullable = false, columnDefinition = "NUMERIC(6,2)")
     private BigDecimal price;
 
-    // Relação de livro com avaliação (Evaluation)
+    // Relação de livro com avaliação (Rating)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
 
     // Relação de livro com LivroCompra (PurchaseBook)
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)

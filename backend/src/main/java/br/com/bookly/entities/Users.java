@@ -47,9 +47,9 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ParticipantUser> usuariosParticipantes = new ArrayList<>();
 
-    // relação de usuário com avaliação (Evaluation)
+    // relação de usuário com avaliação (Rating)
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Evaluation> evaluations = new ArrayList<>();
+    private List<Rating> ratings = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
