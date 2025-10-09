@@ -96,6 +96,10 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public boolean deleteUser(UUID id) {
+        if(!usersRepository.existsById(id)){
+            return false;
+        }
+
         usersRepository.deleteById(id);
 
         if(!usersRepository.existsById(id)){

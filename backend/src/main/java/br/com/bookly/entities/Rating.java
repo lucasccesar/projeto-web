@@ -16,12 +16,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "avaliacao")
-public class Evaluation {
+public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_avaliacao")
-    private UUID idEvaluation;
+    private UUID idRating;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
@@ -31,12 +31,12 @@ public class Evaluation {
     @JoinColumn(name = "id_livro", nullable = false)
     private Book book;
 
-    @Column(name = "comentario",nullable = false)
-    private String coments;
+    @Column(name = "comentario",nullable = true)
+    private String comment;
 
     @Column(name = "nota",nullable = false)
-    private Integer Grade;
+    private int ratingValue;
 
     @Column(name = "data_avaliacao",nullable = false)
-    private LocalDate evaluationDate;
+    private LocalDate ratingDate;
 }
