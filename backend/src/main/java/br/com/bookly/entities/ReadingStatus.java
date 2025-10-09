@@ -24,11 +24,11 @@ public class ReadingStatus {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)
-    private Users idUsers;
+    private Users users;
 
     @OneToOne
     @JoinColumn(name = "id_livro", nullable = false)
-    private Book idBook;
+    private Book book;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
