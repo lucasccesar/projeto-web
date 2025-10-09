@@ -78,26 +78,35 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 
     @Override
-    public Purchase updatePurchase(UUID id, Purchase purchase) {
+    public Purchase updatePurchase(UUID id, PurchaseDTO purchase) {
         Purchase exists = purchaseRepository.findById(id).orElse(null);
-        if (exists == null || purchase.getUser() == null) return null;
+        if (exists == null || purchase.getIdUser() == null)
+            return null;
 
-        exists.setUser(purchase.getUser());
+        Users user = userRepository.findById(purchase.getIdUser()).orElse(null);
+        if (user == null)
+            return null;
+
+        exists.setUser(user);
         exists.getPurchaseBooks().clear();
 
-        for (PurchaseBook pb : purchase.getPurchaseBooks()) {
+        for (PurchaseBookDTO pb : purchase.getBooks()) {
             PurchaseBook persistedpb;
 
-            if (pb.getIdPurchaseBook() != null && purchaseBookRepository.existsById(pb.getIdPurchaseBook())) {
+            if (pb.getIdBook() != null && purchaseBookRepository.existsById(pb.getIdBook())) {
                 // Apenas busca se realmente existe
-                persistedpb = purchaseBookRepository.findById(pb.getIdPurchaseBook()).get();
+                persistedpb = purchaseBookRepository.findById(pb.getIdBook()).get();
             } else {
                 // Novo PurchaseBook, sem ID
                 persistedpb = new PurchaseBook();
             }
 
             persistedpb.setPurchase(exists);
-            persistedpb.setBook(pb.getBook());
+            Book book = bookRepository.findById(pb.getIdBook()).orElse(null);
+            if (book == null)
+                return null; // ou lançar exceção
+            persistedpb.setBook(book);
+
             persistedpb.setQuantity(pb.getQuantity());
             persistedpb.setUnitPrice(pb.getUnitPrice());
 

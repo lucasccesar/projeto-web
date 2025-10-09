@@ -45,7 +45,7 @@ public class PurchaseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PurchaseResponseDto> updatePurchase(@PathVariable UUID id, @RequestBody Purchase purchase) {
+    public ResponseEntity<PurchaseResponseDto> updatePurchase(@PathVariable UUID id, @RequestBody PurchaseDTO purchase) {
 
         Purchase updatedPurchase = purchaseService.updatePurchase(id, purchase);
 
