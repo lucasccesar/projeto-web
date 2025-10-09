@@ -51,10 +51,11 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable UUID id, @RequestBody Users user) {
+    public ResponseEntity<UsersDTO> updateUser(@PathVariable UUID id, @RequestBody Users user) {
         Users updated = usersService.updateUser(id, user);
         if (updated != null) {
-            return ResponseEntity.ok(updated);
+            UsersDTO userDTO = new UsersDTO(updated);
+            return ResponseEntity.ok(userDTO);
         } else{
             return ResponseEntity.badRequest().build();
         }
