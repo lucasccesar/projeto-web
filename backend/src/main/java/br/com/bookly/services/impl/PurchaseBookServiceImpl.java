@@ -34,11 +34,12 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
             return null;
         }
 
+        //Nulo
         if (purchaseBookdto.getIdBook() == null || purchaseBookdto.getPurchase() == null) {
             return null;
         }
 
-        // Busca o Book e o Purchase pelos IDs
+        //Tabela
         Book book = bookRepository.findById(purchaseBookdto.getIdBook()).orElse(null);
         Purchase purchase = purchaseRepository.findById(purchaseBookdto.getPurchase()).orElse(null);
 
@@ -46,14 +47,12 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
             return null;
         }
 
-        // Cria a entidade para salvar
         PurchaseBook purchaseBook = new PurchaseBook();
         purchaseBook.setBook(book);
         purchaseBook.setPurchase(purchase);
         purchaseBook.setUnitPrice(purchaseBookdto.getUnitPrice());
         purchaseBook.setQuantity(purchaseBookdto.getQuantity());
 
-        // Agora sim, salva a ENTIDADE
         return purchaseBookRepository.save(purchaseBook);
     }
 

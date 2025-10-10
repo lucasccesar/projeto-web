@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface ReadingStatusRepository extends JpaRepository<ReadingStatus, UUID> {
-    public ReadingStatus findByBook_IdBook(UUID idBook);
+    ReadingStatus findByIdReadingStatus(UUID readingStatus);
+    public ReadingStatus findByBook_IdBookAndUsersId(UUID idBook, UUID userId);
     public Page<ReadingStatus> findByUsers_id(UUID userId, Pageable pageable);
 }

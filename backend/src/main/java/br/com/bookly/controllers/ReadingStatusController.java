@@ -2,6 +2,7 @@ package br.com.bookly.controllers;
 
 
 import br.com.bookly.entities.ReadingStatus;
+import br.com.bookly.entities.dtos.RatingDTO;
 import br.com.bookly.entities.dtos.ReadingStatusDto;
 import br.com.bookly.services.ReadingStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,16 @@ public class ReadingStatusController {
     ReadingStatusService readingStatusService;
 
     @PostMapping
-    public ResponseEntity<ReadingStatus> createReadingStatus(@RequestBody ReadingStatusDto readingStatus){
+    public ResponseEntity<ReadingStatusDto> createReadingStatus(@RequestBody ReadingStatus readingStatus){
 
         ReadingStatus created = readingStatusService.createReadingStatus(readingStatus);
 
         if(created == null){
             return ResponseEntity.notFound().build();
         }
+        ReadingStatusDto readingStatusDto = new ReadingStatusDto(created);
 
-        return ResponseEntity.status(201).body(created);
+        return ResponseEntity.status(201).body(readingStatusDto);
     }
 
     @DeleteMapping("/{id}")
@@ -41,35 +43,40 @@ public class ReadingStatusController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReadingStatus> updtaReadingStatus(@RequestBody ReadingStatusDto readingStatus, @PathVariable UUID id){
-        ReadingStatus rd =  readingStatusService.updateReadingStatus(id, readingStatus);
+    public ResponseEntity<ReadingStatusDto> updateReadingStatus(@RequestBody ReadingStatus readingStatus, @PathVariable UUID id){
+        ReadingStatus rd = readingStatusService.updateReadingStatus(id, readingStatus);
         if(rd == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(rd);
+        ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
+        return ResponseEntity.ok(readingStatusDto);
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<ReadingStatus> getReadingStatus(@PathVariable UUID id){
+    public ResponseEntity<ReadingStatusDto> getReadingStatus(@PathVariable UUID id){
         ReadingStatus rd = readingStatusService.findReadingStatus(id);
         if(rd == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(rd);
+        ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
+        return ResponseEntity.ok(readingStatusDto);
     }
 
-    @GetMapping("/idBook/{id}")
-    public ResponseEntity<ReadingStatus> getReadingStatusByIdBook(@PathVariable UUID id){
-        ReadingStatus rd = readingStatusService.findReadingStatusbyBook_IdBook(id);
+    @GetMapping("/idBookAndIdUser")
+    public ResponseEntity<ReadingStatusDto> getReadingStatusByIdBook(@RequestBody ReadingStatus readingStatus){
+        UUID bookId = readingStatus.getBook().getIdBook();
+        UUID userId = readingStatus.getUsers().getId();
+        ReadingStatus rd = readingStatusService.findReadingStatusbyBook_IdBookAndUsers_Id(bookId, userId);
         if(rd == null){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(rd);
+        ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
+        return ResponseEntity.ok(readingStatusDto);
     }
 
     @GetMapping("/idUser/{id}")
-    public ResponseEntity<Page<ReadingStatus>> getReadingStatusByIdUser(@PathVariable UUID id, Pageable pageable){
-        Page<ReadingStatus> rd = readingStatusService.findReadingStatusbyUsers_Id(id, pageable);
+    public ResponseEntity<Page<ReadingStatusDto>> getReadingStatusByIdUser(@PathVariable UUID id, Pageable pageable){
+        Page<ReadingStatusDto> rd = readingStatusService.findReadingStatusbyUsers_Id(id, pageable).map(ReadingStatusDto::new);
         if(rd == null){
             return ResponseEntity.notFound().build();
         }

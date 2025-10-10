@@ -29,17 +29,17 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     UsersRepository usersRepository;
 
     @Override
-    public ReadingStatus createReadingStatus(ReadingStatusDto readingStatus) {
+    public ReadingStatus createReadingStatus(ReadingStatus readingStatus) {
         if(readingStatus == null || readingStatus.getStatus() == null){
             return null;
         }
 
-        Users user = usersRepository.findById(readingStatus.getIduser()).orElse(null);
+        Users user = usersRepository.findById(readingStatus.getUsers().getId()).orElse(null);
         if(user == null){
             return null;
         }
 
-        Book book = bookRepository.findById(readingStatus.getIdbook()).orElse(null);
+        Book book = bookRepository.findById(readingStatus.getBook().getIdBook()).orElse(null);
         if(book == null){
             return null;
         }
@@ -55,14 +55,14 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     }
 
     @Override
-    public ReadingStatus updateReadingStatus(UUID id,ReadingStatusDto readingStatus) {
+    public ReadingStatus updateReadingStatus(UUID id, ReadingStatus readingStatus) {
 
-        ReadingStatus exists = readingStatusRepository.findById(id).orElse(null);
+        ReadingStatus exists = readingStatusRepository.findByIdReadingStatus(id);
         if(exists==null){
             return null;
         }
 
-        if(readingStatus.getIdbook() == null){
+        if(readingStatus.getBook() == null){
             return null;
         }
         if(readingStatus.getStatus() == null || readingStatus.getStatus().equals(exists.getStatus()) ){
@@ -90,8 +90,8 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     }
 
     @Override
-    public ReadingStatus findReadingStatusbyBook_IdBook(UUID idBook) {
-        return readingStatusRepository.findByBook_IdBook(idBook);
+    public ReadingStatus findReadingStatusbyBook_IdBookAndUsers_Id(UUID idBook, UUID userId) {
+        return readingStatusRepository.findByBook_IdBookAndUsersId(idBook, userId);
     }
 
     @Override

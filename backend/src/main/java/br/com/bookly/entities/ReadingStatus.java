@@ -20,7 +20,7 @@ public class ReadingStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_status_leitura")
-    private UUID readingStatus;
+    private UUID idReadingStatus;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = false)

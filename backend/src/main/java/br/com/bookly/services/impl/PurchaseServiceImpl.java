@@ -94,17 +94,17 @@ public class PurchaseServiceImpl implements PurchaseService {
             PurchaseBook persistedpb;
 
             if (pb.getIdBook() != null && purchaseBookRepository.existsById(pb.getIdBook())) {
-                // Apenas busca se realmente existe
+
                 persistedpb = purchaseBookRepository.findById(pb.getIdBook()).get();
             } else {
-                // Novo PurchaseBook, sem ID
+
                 persistedpb = new PurchaseBook();
             }
 
             persistedpb.setPurchase(exists);
             Book book = bookRepository.findById(pb.getIdBook()).orElse(null);
             if (book == null)
-                return null; // ou lançar exceção
+                return null;
             persistedpb.setBook(book);
 
             persistedpb.setQuantity(pb.getQuantity());

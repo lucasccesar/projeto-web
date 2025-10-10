@@ -9,10 +9,10 @@ import java.util.UUID;
 
 public interface ReadingStatusService {
 
-    public ReadingStatus createReadingStatus(ReadingStatusDto readingStatus);
-    public ReadingStatus updateReadingStatus(UUID uuid,  ReadingStatusDto readingStatus);
+    public ReadingStatus createReadingStatus(ReadingStatus readingStatus);
+    public ReadingStatus updateReadingStatus(UUID uuid,  ReadingStatus readingStatus);
     boolean deleteReadingStatus(UUID readingStatusId);
     public ReadingStatus findReadingStatus(UUID readingStatusId);
-    public ReadingStatus findReadingStatusbyBook_IdBook(UUID idBook);
+    public ReadingStatus findReadingStatusbyBook_IdBookAndUsers_Id(UUID idBook, UUID id);
     public Page<ReadingStatus> findReadingStatusbyUsers_Id(UUID userId, Pageable pageable);
 }
