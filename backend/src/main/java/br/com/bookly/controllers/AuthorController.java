@@ -1,6 +1,8 @@
 package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Author;
+import br.com.bookly.entities.dtos.AuthorDTO;
+import br.com.bookly.entities.dtos.RatingDTO;
 import br.com.bookly.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,12 +20,13 @@ public class AuthorController {
    AuthorService authorService;
 
     @PostMapping
-    public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
+    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody Author author) {
         Author created = authorService.createAuthor(author);
         if (created == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(201).body(created);
+        AuthorDTO authorDTO = new AuthorDTO(created);
+        return ResponseEntity.status(201).body(authorDTO);
     }
 
 
@@ -37,34 +40,37 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Author> updateAuthor(@PathVariable UUID id, @RequestBody Author author) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable UUID id, @RequestBody Author author) {
         Author updated = authorService.updateAuthor(id, author);
         if (updated == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(updated);
+        AuthorDTO authorDTO = new AuthorDTO(updated);
+        return ResponseEntity.ok(authorDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Author> findAuthorById(@PathVariable UUID id) {
+    public ResponseEntity<AuthorDTO> findAuthorById(@PathVariable UUID id) {
         Author author = authorService.findAuthorById(id);
         if (author == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(author);
+        AuthorDTO authorDTO = new AuthorDTO(author);
+        return ResponseEntity.ok(authorDTO);
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<Author>> findAuthorByName(@RequestParam String name, Pageable pageable) {
-        Page<Author> author = authorService.findAuthorByName(name, pageable);
-        if (author == null) {
+    public ResponseEntity<Page<AuthorDTO>> findAuthorByName(@RequestParam String name, Pageable pageable) {
+        Page<AuthorDTO> authors = authorService.findAuthorByName(name, pageable).map(AuthorDTO::new);
+        if (authors == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(author);
+        return ResponseEntity.ok(authors);
     }
 
     @GetMapping
-    public ResponseEntity<Page<Author>> listAllAuthors(Pageable pageable) {
-        return ResponseEntity.ok(authorService.findAllAuthors(pageable));
+    public ResponseEntity<Page<AuthorDTO>> listAllAuthors(Pageable pageable) {
+        Page<AuthorDTO> authors = authorService.findAllAuthors(pageable).map(AuthorDTO::new);
+        return ResponseEntity.ok(authors);
     }
 }
