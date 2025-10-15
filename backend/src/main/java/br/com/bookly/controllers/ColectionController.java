@@ -2,6 +2,7 @@ package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Colection;
 import br.com.bookly.entities.dtos.ColectionDTO;
+import br.com.bookly.entities.dtos.ColectionRespondeDTO;
 import br.com.bookly.services.ColectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,12 +21,14 @@ public class ColectionController {
     private ColectionService colectionService;
 
     @PostMapping
-    public ResponseEntity<Colection> createColection(@RequestBody ColectionDTO colectionDTO) {
+    public ResponseEntity<ColectionRespondeDTO> createColection(@RequestBody ColectionDTO colectionDTO) {
         Colection createdCollection = colectionService.createColection(colectionDTO);
         if (createdCollection == null) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.status(201).body(createdCollection);
+
+        ColectionRespondeDTO cd = new ColectionRespondeDTO(createdCollection);
+        return ResponseEntity.status(201).body(cd);
     }
 
     @DeleteMapping("/{id}")
@@ -39,14 +42,16 @@ public class ColectionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Colection> updateColection(@PathVariable UUID id, //O Path Variable (id) identifica o recurso
+    public ResponseEntity<ColectionRespondeDTO> updateColection(@PathVariable UUID id, //O Path Variable (id) identifica o recurso
                                                       @RequestBody Colection colection){ // o Request Body (colection) provê os novos dados.
         Colection updatedCollection = colectionService.updateColection(id, colection);
         if (updatedCollection == null) {
 
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(updatedCollection);
+
+        ColectionRespondeDTO cd = new ColectionRespondeDTO(updatedCollection);
+        return ResponseEntity.ok(cd);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +80,8 @@ public class ColectionController {
 
 
     @GetMapping
-    public ResponseEntity<Page<Colection>> listAllColections(Pageable pageable) {
-        return ResponseEntity.ok(colectionService.findAllColections(pageable));
+    public ResponseEntity<Page<ColectionRespondeDTO>> listAllColections(Pageable pageable) {
+        Page <ColectionRespondeDTO> ct = colectionService.findAllColections(pageable);
+        return ResponseEntity.ok(ct);
     }
 }

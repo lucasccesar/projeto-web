@@ -3,6 +3,7 @@ package br.com.bookly.services;
 
 import br.com.bookly.entities.Colection;
 import br.com.bookly.entities.dtos.ColectionDTO;
+import br.com.bookly.entities.dtos.ColectionRespondeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,5 +21,5 @@ public interface ColectionService {
     public Colection findColectionByName(String name);
     public Page<Colection> findByUser_Id(UUID userId, Pageable pageable);
     boolean existsByNameIgnoreCaseAndUser_Id(String name, UUID userId);
-    public Page<Colection> findAllColections(Pageable pageable);
+    public Page<ColectionRespondeDTO> findAllColections(Pageable pageable);
 }

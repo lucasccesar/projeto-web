@@ -3,6 +3,7 @@ package br.com.bookly.services.impl;
 import br.com.bookly.entities.Colection;
 import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.ColectionDTO;
+import br.com.bookly.entities.dtos.ColectionRespondeDTO;
 import br.com.bookly.repositories.ColectionRepository;
 import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.ColectionService;
@@ -25,7 +26,7 @@ public class ColectionServiceImpl implements ColectionService {
 
     @Override
     public Colection createColection(ColectionDTO colectionDTO) {
-        // 1. Validação dos dados do DTO
+
         if(colectionDTO.getName() == null || colectionDTO.getName().isBlank() || colectionDTO.getUserId() == null) {
             return null;
         }
@@ -114,7 +115,9 @@ public class ColectionServiceImpl implements ColectionService {
 
 
     @Override
-    public Page<Colection> findAllColections(Pageable pageable) {
-        return  colectionRepository.findAll(pageable);
+    public Page<ColectionRespondeDTO> findAllColections(Pageable pageable) {
+        Page<Colection> colections = colectionRepository.findAll(pageable);
+
+        return (colections.map(ColectionRespondeDTO::new));
     }
 }
