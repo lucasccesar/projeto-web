@@ -1,9 +1,13 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.BookClub;
+import br.com.bookly.exceptions.BadRequestException;
+import br.com.bookly.exceptions.ExistentBookClubException;
+import br.com.bookly.exceptions.InexistentBookClubException;
 import br.com.bookly.repositories.BookClubRepository;
 import br.com.bookly.services.BookClubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,11 +25,11 @@ public class BookClubServiceImpl implements BookClubService {
     public BookClub createBookClub(BookClub bookClub) {
 
         if (bookClub.getName() == null || bookClub.getName().isBlank()) {
-            return null;
+            throw new BadRequestException("BookClub name is required");
         }
 
         if (bookClub.getTheme() == null || bookClub.getTheme().isBlank()) {
-            return null;
+            throw new BadRequestException("BookClub theme is required");
         }
 
         // descrição não obrigatoria seta como vazio
@@ -35,7 +39,7 @@ public class BookClubServiceImpl implements BookClubService {
 
         // verifica se já tem um clube com o mesmo nome
         if (bookClubRepository.existsByNameIgnoreCase(bookClub.getName())) {
-            return null;
+            throw new ExistentBookClubException("Error: BookClub already exists, try another name!");
         }
 
         return bookClubRepository.save(bookClub);
@@ -47,21 +51,21 @@ public class BookClubServiceImpl implements BookClubService {
         BookClub exists = bookClubRepository.findById(id).orElse(null); // se o clube não existir retorna null
 
         if (exists == null) {
-            return null;
+            throw new InexistentBookClubException("Error: BookClub Not Found");
         }
 
         if (bookClub.getName() == null || bookClub.getName().isBlank()) {
-            return null;
+            throw new BadRequestException("BookClub name is required");
         }
 
         if (bookClub.getTheme() == null || bookClub.getTheme().isBlank()) {
-            return null;
+            throw new BadRequestException("BookClub theme is required");
         }
 
         // Se o nome foi alterado, verifica duplicação
         if (!exists.getName().equals(bookClub.getName()) // verifica se foi feita alteração no nome
                 && bookClubRepository.existsByNameIgnoreCase(bookClub.getName()))// verifica se existe algum clube com esse nome
-            {return null;}
+            {throw new ExistentBookClubException("Error: BookClub already exists, try another name!");}
 
 
         exists.setName(bookClub.getName());
@@ -75,7 +79,7 @@ public class BookClubServiceImpl implements BookClubService {
     public boolean deleteBookClubById(UUID id) {
 
         if (bookClubRepository.existsById(id) == false) {
-            return false;
+            throw new InexistentBookClubException("Error: BookClub Not Found");
         }
 
         bookClubRepository.deleteById(id);
