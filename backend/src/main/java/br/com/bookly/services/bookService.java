@@ -1,14 +1,12 @@
 package br.com.bookly.services;
 
-import br.com.bookly.entities.Author;
 import br.com.bookly.entities.Book;
-import br.com.bookly.entities.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
-public interface BookService {
+public interface bookService {
 
     Book addBook(Book book);
     Book updateBook(UUID id, Book book);

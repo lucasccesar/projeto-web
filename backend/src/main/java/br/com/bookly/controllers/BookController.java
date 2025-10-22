@@ -1,10 +1,8 @@
 package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Book;
-import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.BookDTO;
-import br.com.bookly.entities.dtos.UsersDTO;
-import br.com.bookly.services.BookService;
+import br.com.bookly.services.bookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +16,7 @@ import java.util.UUID;
 public class BookController {
 
     @Autowired
-    private BookService bookService;
+    private bookService bookService;
 
     @GetMapping
     public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {

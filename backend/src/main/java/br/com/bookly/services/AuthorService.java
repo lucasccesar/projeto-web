@@ -9,7 +9,6 @@ import java.util.UUID;
 public interface AuthorService {
 
     public Author createAuthor(Author author);
-    public boolean deleteAuthor(Author author);
     public boolean deleteAuthorById(UUID idAuthor);
     public Author updateAuthor(UUID idAuthor, Author author);
     public Author findAuthorById(UUID idAuthor);

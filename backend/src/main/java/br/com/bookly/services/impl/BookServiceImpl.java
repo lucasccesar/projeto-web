@@ -1,22 +1,18 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.Book;
-import br.com.bookly.entities.Enums.UserType;
-import br.com.bookly.entities.Users;
 import br.com.bookly.repositories.BookRepository;
-import br.com.bookly.repositories.UsersRepository;
-import br.com.bookly.services.BookService;
+import br.com.bookly.services.bookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl implements bookService {
 
     @Autowired
     BookRepository bookRepository;

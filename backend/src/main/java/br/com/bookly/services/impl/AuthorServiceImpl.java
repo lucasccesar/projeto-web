@@ -1,6 +1,8 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.Author;
+import br.com.bookly.exceptions.BadRequestException;
+import br.com.bookly.exceptions.InexistentAuthorException;
 import br.com.bookly.repositories.AuthorRepository;
 import br.com.bookly.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +21,14 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author createAuthor(Author author) {
         if(author.getName() == null || author.getName().isBlank())
-            return null;
-
+            throw new BadRequestException("Author name is required");
         return authorRepository.save(author);
-    }
-
-    @Override
-    public boolean deleteAuthor(Author author) {
-
-        Author exists = authorRepository.findById(author.getIdAuthor()).orElse(null);
-
-        if(exists == null)
-            return false;
-
-        authorRepository.delete(exists);
-        return true;
     }
 
     @Override
     public boolean deleteAuthorById(UUID idAuthor) {
         if(authorRepository.existsById(idAuthor) == false)
-            return false;
+            throw new InexistentAuthorException("Error: Author not found");
 
         authorRepository.deleteById(idAuthor);
         return true;
@@ -51,10 +40,10 @@ public class AuthorServiceImpl implements AuthorService {
         Author exists = authorRepository.findById(idAuthor).orElse(null);
 
         if(exists == null)
-            return null;
+            throw new InexistentAuthorException("Error: Author not found");
 
         if(author.getName() == null || author.getName().isBlank())
-            return null;
+            throw new BadRequestException("Author name is required");
 
         exists.setName(author.getName());
         return authorRepository.save(exists);
