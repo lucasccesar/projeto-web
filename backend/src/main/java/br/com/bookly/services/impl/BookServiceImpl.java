@@ -18,6 +18,11 @@ public class BookServiceImpl implements bookService {
     BookRepository bookRepository;
 
     @Override
+    public BookRepository getBookRepository() {
+        return bookRepository;
+    }
+
+    @Override
     public Book addBook(Book book) {
 
         if(book.getTitle() == null || book.getTitle().isBlank()) {

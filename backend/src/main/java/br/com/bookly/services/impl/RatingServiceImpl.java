@@ -7,6 +7,8 @@ import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.RatingRepository;
 import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.RatingService;
+import br.com.bookly.services.UsersService;
+import br.com.bookly.services.bookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,10 +26,10 @@ public class RatingServiceImpl implements RatingService {
     RatingRepository ratingRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersService usersService;
 
     @Autowired
-    BookRepository bookRepository;
+    bookService bookService;
 
     @Override
     public Page<Rating> getAllRatings(Pageable pageable) {
@@ -52,8 +54,8 @@ public class RatingServiceImpl implements RatingService {
             return null;
         }
 
-        Optional<Users> optionalUser = usersRepository.findById(rating.getUser().getId());
-        Optional<Book> optionalBook = bookRepository.findById(rating.getBook().getIdBook());
+        Optional<Users> optionalUser = usersService.getUsersRepository().findById(rating.getUser().getId());
+        Optional<Book> optionalBook = bookService.getBookRepository().findById(rating.getBook().getIdBook());
 
         if (optionalUser.isEmpty() || optionalBook.isEmpty()) {
             return null;

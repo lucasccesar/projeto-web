@@ -6,6 +6,7 @@ import br.com.bookly.entities.Users;
 import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.ReadingStatusRepository;
 import br.com.bookly.repositories.UsersRepository;
+import br.com.bookly.services.UsersService;
 import br.com.bookly.services.bookService;
 import br.com.bookly.services.ReadingStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,11 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     ReadingStatusRepository readingStatusRepository;
 
     @Autowired
-    BookRepository bookRepository;
+    bookService bookService;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersService usersService;
+
 
     @Override
     public ReadingStatus createReadingStatus(ReadingStatus readingStatus) {
@@ -33,12 +35,12 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
             return null;
         }
 
-        Users user = usersRepository.findById(readingStatus.getUsers().getId()).orElse(null);
+        Users user = usersService.getUsersRepository().findById(readingStatus.getUsers().getId()).orElse(null);
         if(user == null){
             return null;
         }
 
-        Book book = bookRepository.findById(readingStatus.getBook().getIdBook()).orElse(null);
+        Book book = bookService.getBookRepository().findById(readingStatus.getBook().getIdBook()).orElse(null);
         if(book == null){
             return null;
         }

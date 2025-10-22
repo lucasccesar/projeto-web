@@ -1,7 +1,6 @@
 package br.com.bookly.services;
 
 import br.com.bookly.entities.Purchase;
-import br.com.bookly.entities.PurchaseBook;
 import br.com.bookly.entities.dtos.PurchaseDTO;
 import br.com.bookly.entities.dtos.PurchaseResponseDto;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public interface PurchaseService {
-
     public Purchase createPurchase(PurchaseDTO purchaseDTO);
     public boolean deletePurchase(UUID id);
     public Purchase updatePurchase(UUID id,PurchaseDTO purchase);

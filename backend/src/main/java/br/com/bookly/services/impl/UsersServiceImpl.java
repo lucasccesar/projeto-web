@@ -20,6 +20,12 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     UsersRepository usersRepository;
 
+
+    @Override
+    public UsersRepository getUsersRepository() {
+        return usersRepository;
+    }
+
     @Override
     public Users signupUser(Users user) {
 

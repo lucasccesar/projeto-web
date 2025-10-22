@@ -11,7 +11,10 @@ import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.PurchaseBookRepository;
 import br.com.bookly.repositories.PurchaseRepository;
 import br.com.bookly.repositories.UsersRepository;
+import br.com.bookly.services.PurchaseBookService;
 import br.com.bookly.services.PurchaseService;
+import br.com.bookly.services.UsersService;
+import br.com.bookly.services.bookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,17 +30,18 @@ public class PurchaseServiceImpl implements PurchaseService {
     PurchaseRepository purchaseRepository;
 
     @Autowired
-    UsersRepository userRepository;
+    UsersService  usersService;
 
     @Autowired
-    PurchaseBookRepository purchaseBookRepository;
+    PurchaseBookRepository  purchaseBookRepository;
 
     @Autowired
-    BookRepository bookRepository;
+    bookService bookService;
+
 
     @Override
     public Purchase createPurchase(PurchaseDTO purchaseDTO) {
-        Users user = userRepository.findById(purchaseDTO.getIdUser()).orElse(null);
+        Users user = usersService.getUsersRepository() .findById(purchaseDTO.getIdUser()).orElse(null);
         if (user == null) return null;
 
         Purchase purchase = new Purchase();
@@ -48,7 +52,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         Purchase savedPurchase = purchaseRepository.save(purchase);
 
         for (PurchaseBookDTO bookDTO : purchaseDTO.getBooks()) {
-            Book book = bookRepository.findById(bookDTO.getIdBook()).orElse(null);
+            Book book = bookService.getBookRepository().findById(bookDTO.getIdBook()).orElse(null);
             if (book == null) continue;
 
             PurchaseBook purchaseBook = new PurchaseBook();
@@ -83,7 +87,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         if (exists == null || purchase.getIdUser() == null)
             return null;
 
-        Users user = userRepository.findById(purchase.getIdUser()).orElse(null);
+        Users user = usersService.getUsersRepository() .findById(purchase.getIdUser()).orElse(null);
         if (user == null)
             return null;
 
@@ -102,7 +106,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
 
             persistedpb.setPurchase(exists);
-            Book book = bookRepository.findById(pb.getIdBook()).orElse(null);
+            Book book = bookService.getBookRepository().findById(pb.getIdBook()).orElse(null);
             if (book == null)
                 return null;
             persistedpb.setBook(book);

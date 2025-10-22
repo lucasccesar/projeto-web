@@ -1,18 +1,14 @@
 package br.com.bookly.services;
 
-import br.com.bookly.entities.Book;
-import br.com.bookly.entities.Purchase;
+
 import br.com.bookly.entities.PurchaseBook;
 import br.com.bookly.entities.dtos.PurchaseBookDTO;
 import br.com.bookly.entities.dtos.PurchaseBookResponseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.security.PublicKey;
 import java.util.UUID;
 
 public interface PurchaseBookService {
-
     public PurchaseBook createPurchaseBook(PurchaseBookDTO purchaseBookDto);
     public boolean deletePurchaseBook(UUID id);
     public PurchaseBook updatePurchaseBook(UUID id, PurchaseBook purchaseBook);

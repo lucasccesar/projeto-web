@@ -1,6 +1,7 @@
 package br.com.bookly.services;
 
 import br.com.bookly.entities.Book;
+import br.com.bookly.repositories.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -8,6 +9,7 @@ import java.util.UUID;
 
 public interface bookService {
 
+    BookRepository getBookRepository();
     Book addBook(Book book);
     Book updateBook(UUID id, Book book);
     boolean deleteBook(UUID id);

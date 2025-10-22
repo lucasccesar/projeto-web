@@ -1,7 +1,6 @@
 package br.com.bookly.services;
 
 import br.com.bookly.entities.ReadingStatus;
-import br.com.bookly.entities.dtos.ReadingStatusDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

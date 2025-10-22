@@ -9,6 +9,8 @@ import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.PurchaseBookRepository;
 import br.com.bookly.repositories.PurchaseRepository;
 import br.com.bookly.services.PurchaseBookService;
+import br.com.bookly.services.PurchaseService;
+import br.com.bookly.services.bookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +25,10 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
     PurchaseBookRepository purchaseBookRepository;
 
     @Autowired
-    PurchaseRepository purchaseRepository;
+   PurchaseRepository purchaseRepository;
 
     @Autowired
-    BookRepository bookRepository;
+    bookService bookService;
 
     @Override
     public PurchaseBook createPurchaseBook(PurchaseBookDTO purchaseBookdto) {
@@ -40,7 +42,7 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
         }
 
         //Tabela
-        Book book = bookRepository.findById(purchaseBookdto.getIdBook()).orElse(null);
+        Book book = bookService.getBookRepository().findById(purchaseBookdto.getIdBook()).orElse(null);
         Purchase purchase = purchaseRepository.findById(purchaseBookdto.getPurchase()).orElse(null);
 
         if (book == null || purchase == null) {

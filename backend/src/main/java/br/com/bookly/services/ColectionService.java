@@ -6,9 +6,6 @@ import br.com.bookly.entities.dtos.ColectionDTO;
 import br.com.bookly.entities.dtos.ColectionRespondeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.security.PublicKey;
-import java.util.List;
 import java.util.UUID;
 
 public interface ColectionService {

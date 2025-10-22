@@ -7,6 +7,7 @@ import br.com.bookly.entities.dtos.ColectionRespondeDTO;
 import br.com.bookly.repositories.ColectionRepository;
 import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.ColectionService;
+import br.com.bookly.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class ColectionServiceImpl implements ColectionService {
     ColectionRepository colectionRepository;
 
     @Autowired
-    UsersRepository userRepository;
+    UsersService usersService;
 
     @Override
     public Colection createColection(ColectionDTO colectionDTO) {
@@ -31,7 +32,7 @@ public class ColectionServiceImpl implements ColectionService {
             return null;
         }
 
-        Users user = userRepository.findById(colectionDTO.getUserId()).orElse(null);
+        Users user = usersService.getUsersRepository().findById(colectionDTO.getUserId()).orElse(null);
 
         if (user == null) {
             return null;
