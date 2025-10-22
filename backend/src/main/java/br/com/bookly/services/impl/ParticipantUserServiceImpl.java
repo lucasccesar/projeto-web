@@ -1,9 +1,13 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.ParticipantUser;
+import br.com.bookly.exceptions.BadRequestException;
+import br.com.bookly.exceptions.ExistingParticipantUserException;
+import br.com.bookly.exceptions.InexistentParticipantUserException;
 import br.com.bookly.repositories.ParticipantUserRepository;
 import br.com.bookly.services.ParticipantUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,8 +25,12 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
     @Override
     public ParticipantUser createParticipantUser(ParticipantUser participantUser) {
 
-        if (participantUser.getUser() == null || participantUser.getClub() == null) {
-            return null;
+        if (participantUser.getUser() == null){
+            throw new BadRequestException("Error: User is required");
+        }
+
+        if(participantUser.getClub() == null){
+            throw new BadRequestException("Error: Club is required");
         }
 
         boolean exists = participantUserRepository.existsByUser_IdAndClub_IdBookClub(
@@ -31,7 +39,7 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
         );
 
         if (exists) {
-            return null;
+            throw new ExistingParticipantUserException("Error: User is already a participant of this BookClub");
         }
 
         if (participantUser.getEntryDate() == null) {
@@ -47,7 +55,7 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
         ParticipantUser exists = participantUserRepository.findById(id).orElse(null);
 
         if (exists == null) {
-            return null;
+            throw new InexistentParticipantUserException("Error: Participant User Not Found");
         }
 
         if (participantUser.getEntryDate() != null) {
@@ -56,8 +64,11 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
             exists.setEntryDate(exists.getEntryDate());
         }
 
-        if(participantUser.getUser() == null || participantUser.getClub() == null){
-            return null;
+        if(participantUser.getUser() == null){
+            throw new BadRequestException("Error: User is required");
+        }
+        if(participantUser.getClub() == null){
+            throw new BadRequestException("Error: Club is required");
         }
 
         exists.setClub(participantUser.getClub());
@@ -70,7 +81,7 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
     public boolean deleteParticipantUserById(UUID id) {
 
         if(participantUserRepository.existsById(id) == false){
-            return false;
+            throw new InexistentParticipantUserException("Error: Participant User Not Found");
         }
 
         participantUserRepository.deleteById(id);

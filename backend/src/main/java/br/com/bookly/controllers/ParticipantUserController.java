@@ -27,11 +27,7 @@ public class ParticipantUserController {
     @GetMapping("/{id}")
     public ResponseEntity<ParticipantUserDTO> getParticipantById(@PathVariable UUID id) {
         ParticipantUser participant = participantUserService.getParticipantUser(id);
-        if (participant == null) {
-            return ResponseEntity.notFound().build();
-        } else {
             return ResponseEntity.ok(new ParticipantUserDTO(participant));
-        }
     }
 
     @GetMapping("/byuser/{userId}")
@@ -49,35 +45,22 @@ public class ParticipantUserController {
     @PostMapping
     public ResponseEntity<ParticipantUserDTO> createParticipantUser(@RequestBody ParticipantUser participantUser) {
         ParticipantUser created = participantUserService.createParticipantUser(participantUser);
-
-        if (created == null) {
-           return ResponseEntity.badRequest().build();
-        } else {
             ParticipantUserDTO dto = new ParticipantUserDTO(created);
             return ResponseEntity.status(201).body(dto);
-        }
     }
 
 
     @PutMapping("/{id}")
     public ResponseEntity<ParticipantUserDTO> updateParticipant(@PathVariable UUID id, @RequestBody ParticipantUser participantUser) {
         ParticipantUser updated = participantUserService.updateParticipantUser(id, participantUser);
-        if (updated == null) {
-            return ResponseEntity.badRequest().build();
-        } else {
             ParticipantUserDTO dto = new ParticipantUserDTO(updated);
             return ResponseEntity.ok(dto);
-        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable UUID id) {
         boolean deleted = participantUserService.deleteParticipantUserById(id);
-        if (deleted) {
             return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }
 

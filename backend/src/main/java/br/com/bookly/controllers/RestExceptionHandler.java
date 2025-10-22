@@ -2,9 +2,7 @@ package br.com.bookly.controllers;
 
 
 import br.com.bookly.entities.dtos.ExceptionResponseDTO;
-import br.com.bookly.exceptions.BadRequestException;
-import br.com.bookly.exceptions.ExistentBookClubException;
-import br.com.bookly.exceptions.InexistentBookClubException;
+import br.com.bookly.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.filters.ExpiresFilter;
@@ -37,6 +35,17 @@ public class RestExceptionHandler {
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
+    @ExceptionHandler(ExistingParticipantUserException.class)
+    public ResponseEntity<ExceptionResponseDTO> existingParticipantUserExceptionHandler(ExistingParticipantUserException epu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(epu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentParticipantUserException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentParticipantUserExceptionHandler(InexistentParticipantUserException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
     //erro generico
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleGeneralException(Exception ex, HttpServletRequest request) {
