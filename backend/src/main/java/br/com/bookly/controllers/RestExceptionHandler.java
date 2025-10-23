@@ -46,6 +46,30 @@ public class RestExceptionHandler {
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
+
+    @ExceptionHandler(InexistentAuthorException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentAuthorExceptionHandler(InexistentAuthorException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(ExistingColectionByUserException.class)
+    public ResponseEntity<ExceptionResponseDTO> existingColectionByUserExceptionHandler(ExistingColectionByUserException epu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(epu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentIdUserException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentIdUserExceptionHandler(InexistentIdUserException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (InexistentColectionException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentColectionExceptionHandler(InexistentColectionException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
     //erro generico
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleGeneralException(Exception ex, HttpServletRequest request) {

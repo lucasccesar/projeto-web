@@ -23,10 +23,6 @@ public class ColectionController {
     @PostMapping
     public ResponseEntity<ColectionRespondeDTO> createColection(@RequestBody ColectionDTO colectionDTO) {
         Colection createdCollection = colectionService.createColection(colectionDTO);
-        if (createdCollection == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
         ColectionRespondeDTO cd = new ColectionRespondeDTO(createdCollection);
         return ResponseEntity.status(201).body(cd);
     }
@@ -34,10 +30,6 @@ public class ColectionController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteColectionById(@PathVariable UUID id) {
         boolean deleted = colectionService.deleteColectionById(id);
-        if (!deleted) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.noContent().build();
     }
 
@@ -45,11 +37,6 @@ public class ColectionController {
     public ResponseEntity<ColectionRespondeDTO> updateColection(@PathVariable UUID id, //O Path Variable (id) identifica o recurso
                                                       @RequestBody Colection colection){ // o Request Body (colection) provê os novos dados.
         Colection updatedCollection = colectionService.updateColection(id, colection);
-        if (updatedCollection == null) {
-
-            return ResponseEntity.badRequest().build();
-        }
-
         ColectionRespondeDTO cd = new ColectionRespondeDTO(updatedCollection);
         return ResponseEntity.ok(cd);
     }
@@ -57,18 +44,12 @@ public class ColectionController {
     @GetMapping("/{id}")
     public ResponseEntity<Colection> findColectionById(@PathVariable UUID id) {
         Colection colection = colectionService.findColectionById(id);
-        if (colection == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(colection);
     }
 
     @GetMapping("/name")
     public ResponseEntity<Colection> findColectionByName(@RequestParam String name) {
         Colection colection = colectionService.findColectionByName(name);
-        if (colection == null) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(colection);
     }
 
