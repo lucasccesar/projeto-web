@@ -25,11 +25,11 @@ public class BookClubServiceImpl implements BookClubService {
     public BookClub createBookClub(BookClub bookClub) {
 
         if (bookClub.getName() == null || bookClub.getName().isBlank()) {
-            throw new BadRequestException("BookClub name is required");
+            throw new BadRequestException("Error: BookClub name is required");
         }
 
         if (bookClub.getTheme() == null || bookClub.getTheme().isBlank()) {
-            throw new BadRequestException("BookClub theme is required");
+            throw new BadRequestException("Error: BookClub theme is required");
         }
 
         // descrição não obrigatoria seta como vazio
@@ -55,11 +55,11 @@ public class BookClubServiceImpl implements BookClubService {
         }
 
         if (bookClub.getName() == null || bookClub.getName().isBlank()) {
-            throw new BadRequestException("BookClub name is required");
+            throw new BadRequestException("Error: BookClub name is required");
         }
 
         if (bookClub.getTheme() == null || bookClub.getTheme().isBlank()) {
-            throw new BadRequestException("BookClub theme is required");
+            throw new BadRequestException("Error: BookClub theme is required");
         }
 
         // Se o nome foi alterado, verifica duplicação
@@ -88,12 +88,17 @@ public class BookClubServiceImpl implements BookClubService {
 
     @Override
     public BookClub findBookClubById(UUID id) {
-        return bookClubRepository.findById(id).orElse(null);
+        return bookClubRepository.findById(id)
+                .orElseThrow(() ->  new InexistentBookClubException("Error: BookClub Not Found with this id"));
     }
 
     @Override
     public BookClub findBookClubByName(String name) {
-        return bookClubRepository.findBookClubByNameIgnoreCase(name);
+        BookClub bookClub = bookClubRepository.findBookClubByNameIgnoreCase(name);
+        if(bookClub == null) {
+            throw new InexistentBookClubException("Error: BookClub Not Found with this name");
+        }
+        return bookClub;
     }
 
     @Override

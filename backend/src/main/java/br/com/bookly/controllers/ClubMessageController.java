@@ -30,12 +30,7 @@ public class ClubMessageController {
     @GetMapping("/{id}")
     ResponseEntity<ClubMessageDTO> findClubMessageById(@PathVariable UUID id) {
         ClubMessage clubMessage = clubMessageService.findClubMessageById(id);
-
-        if (clubMessage == null) {
-            return ResponseEntity.notFound().build();
-        } else{
             return ResponseEntity.ok(new ClubMessageDTO(clubMessage));
-        }
     }
 
     @GetMapping("/club/{clubId}")
@@ -53,27 +48,13 @@ public class ClubMessageController {
     @PostMapping
     public ResponseEntity<ClubMessageDTO> createClubMessage(@RequestBody ClubMessage clubMessage) {
         ClubMessage created = clubMessageService.createClubMessage(clubMessage);
-
-        if (created == null) {
-            return ResponseEntity.badRequest().build();
-        } else {
             ClubMessageDTO dto = new ClubMessageDTO(created);
             return ResponseEntity.status(201).body(dto);
-        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClubMessageDTO> updateClubMessage(@PathVariable UUID id, @RequestBody ClubMessage clubMessage){
         ClubMessage updated = clubMessageService.updateClubMessage(id, clubMessage);
-
-        if (updated == null) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        if (updated.getMessageDate() == null) {
-            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-        }
-
         ClubMessageDTO dto = new ClubMessageDTO(updated);
         return ResponseEntity.ok().body(dto);
     }
@@ -81,10 +62,6 @@ public class ClubMessageController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ClubMessage> deleteClubMessage(@PathVariable UUID id){
         boolean deleted = clubMessageService.deleteClubMessageById(id);
-        if (deleted == false) {
-            return ResponseEntity.badRequest().build();
-        } else {
             return ResponseEntity.ok().build();
-        }
     }
 }

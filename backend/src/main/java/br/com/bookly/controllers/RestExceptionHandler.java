@@ -25,7 +25,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(InexistentBookClubException.class)
     public ResponseEntity<ExceptionResponseDTO> inexistentBookClubExceptionHandler(InexistentBookClubException ibc, HttpServletRequest request) {
-        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ibc.getMessage(), 400, request.getRequestURI());
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ibc.getMessage(), 404, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
@@ -43,9 +43,40 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(InexistentParticipantUserException.class)
     public ResponseEntity<ExceptionResponseDTO> inexistentParticipantUserExceptionHandler(InexistentParticipantUserException ipu, HttpServletRequest request) {
-        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
+
+    @ExceptionHandler(ExistentBookClubAssignmentException.class)
+    public ResponseEntity<ExceptionResponseDTO> existentBookClubAssignmentExceptionHandler(ExistentBookClubAssignmentException ebca, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ebca.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentBookClubAssignmentException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentBookClubAssignmentExceptionHandler(InexistentBookClubAssignmentException ibca, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ibca.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InvalidDateBookCluAssignmentException.class)
+    public ResponseEntity<ExceptionResponseDTO> invalidDateBookClubAssignmentExceptionHandler(InvalidDateBookCluAssignmentException idbca, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(idbca.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentClubMessageException.class)
+    public ResponseEntity<ExceptionResponseDTO> inexistentClubMessageExceptionHandler(InexistentClubMessageException icm, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(icm.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(NotModifiedClubMessageException.class)
+    public ResponseEntity<ExceptionResponseDTO> notModifiedClubMessageExceptionHandler(NotModifiedClubMessageException nmcm, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(nmcm.getMessage(), 409, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
 
     @ExceptionHandler(InexistentAuthorException.class)
     public ResponseEntity<ExceptionResponseDTO> inexistentAuthorExceptionHandler(InexistentAuthorException ipu, HttpServletRequest request) {
@@ -70,6 +101,7 @@ public class RestExceptionHandler {
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
+
     //erro generico
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleGeneralException(Exception ex, HttpServletRequest request) {

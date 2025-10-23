@@ -90,7 +90,8 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
 
     @Override
     public ParticipantUser getParticipantUser(UUID id) {
-        return participantUserRepository.findById(id).orElse(null);
+        return participantUserRepository.findById(id).
+                orElseThrow(() -> new InexistentParticipantUserException("Error: Participant User Not Found with this id"));
     }
 
     @Override
@@ -100,11 +101,19 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
 
     @Override
     public Page<ParticipantUser> getByUserId(UUID idUser, Pageable pageable) {
-        return participantUserRepository.findByUser_Id(idUser, pageable);
+        Page<ParticipantUser> participantUsers = participantUserRepository.findByUser_Id(idUser, pageable);
+        if(participantUsers.isEmpty()){
+            throw new InexistentParticipantUserException("Error: No clubs found for this User");
+        }
+        return participantUsers;
     }
 
     @Override
     public Page<ParticipantUser> getByClubId(UUID idClub, Pageable pageable) {
-        return participantUserRepository.findByClub_IdBookClub(idClub, pageable);
+        Page<ParticipantUser> participantUsers = participantUserRepository.findByClub_IdBookClub(idClub, pageable);
+        if(participantUsers.isEmpty()){
+            throw new InexistentParticipantUserException("Error: No users in this Club");
+        }
+        return participantUsers;
     }
 }
