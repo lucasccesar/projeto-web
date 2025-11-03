@@ -14,6 +14,6 @@ import java.util.UUID;
 @Repository
 public interface PurchaseBookRepository extends JpaRepository<PurchaseBook, UUID> {
     public PurchaseBook findPurchaseBookByPurchase_IdPurchase(UUID idPurchase);
-    public PurchaseBook findPurchaseBookByBook_IdBook(UUID idbook);
+    public Page<PurchaseBook> findPurchaseBookByBook_IdBook(UUID idbook,  Pageable pageable);
     public Page<PurchaseBook> findByPurchase_IdPurchase(UUID idPurchase, Pageable pageable);
 }

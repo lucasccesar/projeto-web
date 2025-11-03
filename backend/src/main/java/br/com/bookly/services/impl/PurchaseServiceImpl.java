@@ -7,14 +7,15 @@ import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.PurchaseBookDTO;
 import br.com.bookly.entities.dtos.PurchaseDTO;
 import br.com.bookly.entities.dtos.PurchaseResponseDto;
-import br.com.bookly.repositories.BookRepository;
-import br.com.bookly.repositories.PurchaseBookRepository;
+import br.com.bookly.exceptions.InexistentBookException;
+import br.com.bookly.exceptions.InexistentIdUserException;
+import br.com.bookly.exceptions.InexistentPurchaseException;
 import br.com.bookly.repositories.PurchaseRepository;
-import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.PurchaseBookService;
 import br.com.bookly.services.PurchaseService;
 import br.com.bookly.services.UsersService;
 import br.com.bookly.services.bookService;
+import br.com.bookly.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +34,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     UsersService  usersService;
 
     @Autowired
-    PurchaseBookRepository  purchaseBookRepository;
+    PurchaseBookService purchaseBookService;
 
     @Autowired
     bookService bookService;
@@ -41,7 +42,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public Purchase createPurchase(PurchaseDTO purchaseDTO) {
-        Users user = usersService.getUsersRepository() .findById(purchaseDTO.getIdUser()).orElse(null);
+        Users user = usersService.getUsersRepository()
+                .findById(purchaseDTO.getIdUser()).orElse(null);
         if (user == null) return null;
 
         Purchase purchase = new Purchase();
@@ -53,7 +55,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         for (PurchaseBookDTO bookDTO : purchaseDTO.getBooks()) {
             Book book = bookService.getBookRepository().findById(bookDTO.getIdBook()).orElse(null);
-            if (book == null) continue;
+            if (book == null)
+                continue;
 
             PurchaseBook purchaseBook = new PurchaseBook();
             purchaseBook.setPurchase(savedPurchase);
@@ -61,7 +64,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             purchaseBook.setQuantity(bookDTO.getQuantity());
             purchaseBook.setUnitPrice(bookDTO.getUnitPrice());
 
-            purchaseBookRepository.save(purchaseBook);
+            purchaseBookService.getPurchaseBookRepository().save(purchaseBook);
 
             savedPurchase.getPurchaseBooks().add(purchaseBook);
         }
@@ -72,8 +75,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public boolean deletePurchase(UUID id) {
-        if(!purchaseRepository.existsById(id)){
-            return false;
+        if(purchaseRepository.existsById(id) == false){
+            throw new InexistentPurchaseException();
         }
 
         purchaseRepository.deleteById(id);
@@ -84,12 +87,17 @@ public class PurchaseServiceImpl implements PurchaseService {
     @Override
     public Purchase updatePurchase(UUID id, PurchaseDTO purchase) {
         Purchase exists = purchaseRepository.findById(id).orElse(null);
-        if (exists == null || purchase.getIdUser() == null)
-            return null;
+        if (exists == null)
+            throw new InexistentPurchaseException("Error: Purchase with this id doesn't exist");
 
-        Users user = usersService.getUsersRepository() .findById(purchase.getIdUser()).orElse(null);
+        if(purchase.getIdUser() == null){
+            throw new InexistentIdUserException("Error: User ID must not be null");
+        }
+
+        Users user = usersService.getUsersRepository()
+                .findById(purchase.getIdUser()).orElse(null);
         if (user == null)
-            return null;
+            throw new InexistentIdUserException("Error: User with this ID not found");
 
         exists.setUser(user);
         exists.getPurchaseBooks().clear();
@@ -97,18 +105,23 @@ public class PurchaseServiceImpl implements PurchaseService {
         for (PurchaseBookDTO pb : purchase.getBooks()) {
             PurchaseBook persistedpb;
 
-            if (pb.getIdBook() != null && purchaseBookRepository.existsById(pb.getIdBook())) {
-
-                persistedpb = purchaseBookRepository.findById(pb.getIdBook()).get();
+            if (pb.getIdBook() != null && purchaseBookService.
+                    getPurchaseBookRepository().
+                    existsById(pb.getIdBook()))
+            {
+                persistedpb = purchaseBookService.
+                        getPurchaseBookRepository().
+                        findById(pb.getIdBook()).get();
             } else {
-
                 persistedpb = new PurchaseBook();
             }
 
             persistedpb.setPurchase(exists);
-            Book book = bookService.getBookRepository().findById(pb.getIdBook()).orElse(null);
+            Book book = bookService.getBookRepository().
+                    findById(pb.getIdBook()).orElse(null);
             if (book == null)
-                return null;
+                throw new InexistentBookException("Error: Book with this ID not found");
+
             persistedpb.setBook(book);
 
             persistedpb.setQuantity(pb.getQuantity());
@@ -120,33 +133,33 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseRepository.save(exists);
     }
 
-
-
     @Override
     public Purchase findPurchaseById(UUID id) {
-        return purchaseRepository.findById(id).orElse(null);
+        Purchase exists = purchaseRepository.findById(id).orElse(null);
+        if (exists == null)
+            throw new InexistentPurchaseException("Error: Purchase with this id doesn't exist");
+        return exists;
     }
 
     @Override
     public Page<PurchaseResponseDto> findPurchaseByUser_id(UUID id, Pageable pageable) {
-
-        if(id == null){
-            Page <Purchase> pg = purchaseRepository.findAll(pageable);
-            return pg.map(PurchaseResponseDto::new);
-        }
+        if (id == null)
+            throw new BadRequestException("Error: User ID must not be null");
 
         Page <Purchase> pg = purchaseRepository.findByUserId_id(id, pageable);
+
+        if(pg.isEmpty()){
+            throw new InexistentIdUserException("Error: User with this ID not found");
+        }
         return pg.map(PurchaseResponseDto::new);
-        // Dúvida, se será preciso colocar o pageable.
-        /* O pageable será para os usuários ou para as purchases, pq se
-            for para os usuários não será necessário, mas se for para as purchases
-            fará sentido
-         */
     }
 
 
     @Override
     public Page<PurchaseResponseDto> findPurchaseByDate_purchaseDate(LocalDate date, Pageable pageable) {
+        if(date == null || date.isAfter(LocalDate.now())){
+            throw new BadRequestException("Invalid date");
+        }
         Page<Purchase> pg = purchaseRepository.findByPurchaseDate(date, pageable);
         return pg.map(PurchaseResponseDto::new);
     }

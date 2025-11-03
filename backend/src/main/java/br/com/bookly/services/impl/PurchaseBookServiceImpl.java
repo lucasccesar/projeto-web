@@ -24,76 +24,9 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
     @Autowired
     PurchaseBookRepository purchaseBookRepository;
 
-    @Autowired
-   PurchaseRepository purchaseRepository;
-
-    @Autowired
-    bookService bookService;
-
     @Override
-    public PurchaseBook createPurchaseBook(PurchaseBookDTO purchaseBookdto) {
-        if (purchaseBookdto.getQuantity() == null) {
-            return null;
-        }
-
-        //Nulo
-        if (purchaseBookdto.getIdBook() == null || purchaseBookdto.getPurchase() == null) {
-            return null;
-        }
-
-        //Tabela
-        Book book = bookService.getBookRepository().findById(purchaseBookdto.getIdBook()).orElse(null);
-        Purchase purchase = purchaseRepository.findById(purchaseBookdto.getPurchase()).orElse(null);
-
-        if (book == null || purchase == null) {
-            return null;
-        }
-
-        PurchaseBook purchaseBook = new PurchaseBook();
-        purchaseBook.setBook(book);
-        purchaseBook.setPurchase(purchase);
-        purchaseBook.setUnitPrice(purchaseBookdto.getUnitPrice());
-        purchaseBook.setQuantity(purchaseBookdto.getQuantity());
-
-        return purchaseBookRepository.save(purchaseBook);
-    }
-
-    @Override
-    public boolean deletePurchaseBook(UUID id) {
-
-        PurchaseBook exists = purchaseBookRepository.findById(id).orElse(null);
-        if(exists == null){
-            return false;
-        }
-
-        purchaseBookRepository.delete(exists);
-        return true;
-    }
-
-    @Override
-    public PurchaseBook updatePurchaseBook(UUID id, PurchaseBook purchaseBook) {
-        PurchaseBook exists = purchaseBookRepository.findById(id).orElse(null);
-        if(exists == null){
-            return null;
-        }
-
-        if(purchaseBook.getQuantity() == null){
-            return null;
-        }
-
-        if(purchaseBook.getBook() == null){
-            return null;
-        }
-
-        exists.setQuantity(purchaseBook.getQuantity());
-        exists.setBook(purchaseBook.getBook());
-
-        return purchaseBookRepository.save(exists);
-    }
-
-    @Override
-    public PurchaseBook findPurchaseBookById(UUID id) {
-        return purchaseBookRepository.findById(id).orElse(null);
+    public PurchaseBookRepository getPurchaseBookRepository() {
+        return purchaseBookRepository;
     }
 
     @Override
@@ -102,21 +35,14 @@ public class PurchaseBookServiceImpl implements PurchaseBookService {
     }
 
     @Override
-    public PurchaseBook findPurchaseBookByBook_IdBook(UUID idbook) {
-        return purchaseBookRepository.findPurchaseBookByBook_IdBook(idbook);
+    public Page<PurchaseBookResponseDTO> findPurchaseBookByBook_IdBook(UUID idbook, Pageable pageable) {
+        Page<PurchaseBook> pg =  purchaseBookRepository.findPurchaseBookByBook_IdBook(idbook, pageable);
+        return pg.map(PurchaseBookResponseDTO::new) ;
     }
 
     @Override
     public Page<PurchaseBookResponseDTO> findByPurchase_IdPurchase(UUID idPurchase, Pageable pageable) {
         Page<PurchaseBook> page = purchaseBookRepository.findByPurchase_IdPurchase(idPurchase, pageable);
-        return page.map(PurchaseBookResponseDTO::new);
-    }
-
-
-
-    @Override
-    public Page<PurchaseBookResponseDTO> findAllPurchaseBooks(Pageable pageable) {
-        Page<PurchaseBook> page = purchaseBookRepository.findAll(pageable);
         return page.map(PurchaseBookResponseDTO::new);
     }
 }
