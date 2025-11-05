@@ -3,9 +3,8 @@ package br.com.bookly.services.impl;
 import br.com.bookly.entities.Book;
 import br.com.bookly.entities.Rating;
 import br.com.bookly.entities.Users;
-import br.com.bookly.repositories.BookRepository;
+import br.com.bookly.exceptions.*;
 import br.com.bookly.repositories.RatingRepository;
-import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.RatingService;
 import br.com.bookly.services.UsersService;
 import br.com.bookly.services.bookService;
@@ -38,16 +37,29 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating addRating(Rating rating) {
-        if (rating.getUser() == null || rating.getBook() == null) {
+
+        if (rating.getUser() == null) {
             return null;
         }
 
-        if (rating.getUser().getId() == null || rating.getBook().getIdBook() == null) {
+        if (rating.getBook() == null){
             return null;
         }
 
-        if (rating.getRatingValue() < 0 || rating.getRatingValue() > 10) {
+        if (rating.getUser().getId() == null) {
             return null;
+        }
+
+        if(rating.getBook().getIdBook() == null){
+            return null;
+        }
+
+        if (rating.getRatingValue() < 0) {
+            throw new InvalidRatingException("Error: Invalid value rating, the minimum value is 0");
+        }
+
+        if(rating.getRatingValue() > 10) {
+            throw new InvalidRatingException("Error: Invalid value rating, the maximum value is 10");
         }
 
         if (!ratingRepository.findByUserIdAndBook_IdBook(rating.getUser().getId(), rating.getBook().getIdBook()).isEmpty()) {
@@ -57,8 +69,12 @@ public class RatingServiceImpl implements RatingService {
         Optional<Users> optionalUser = usersService.getUsersRepository().findById(rating.getUser().getId());
         Optional<Book> optionalBook = bookService.getBookRepository().findById(rating.getBook().getIdBook());
 
-        if (optionalUser.isEmpty() || optionalBook.isEmpty()) {
-            return null;
+        if (optionalUser.isEmpty()) {
+            throw new InexistentIdUserException("Error: User not found");
+        }
+
+        if (optionalBook.isEmpty()) {
+            throw new InexistentBookException("Error: Book not found");
         }
 
         rating.setUser(optionalUser.get());
@@ -70,25 +86,37 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating updateRating(UUID id, Rating rating) {
-        if(rating == null || id == null){
-            return null;
+        if(rating == null){
+            throw new BadRequestException("Error: Rating must not be null");
+        }
+
+        if(id == null){
+            throw new BadRequestException("Error: Rating ID must not be null");
         }
 
         Rating ratingDB = ratingRepository.findById(id).orElse(null);
 
         if(ratingDB == null){
-            return null;
+            throw new InexistentRatingException();
         }
 
-        if (!ratingDB.getBook().getIdBook().equals(rating.getBook().getIdBook()) ||
-                !ratingDB.getUser().getId().equals(rating.getUser().getId())) {
-            return null;
+        if (!ratingDB.getBook().getIdBook().equals(rating.getBook().getIdBook())) {
+            throw new InvalidRatingException("Error: Book ID did you pass and correct Book ID do not match");
+        }
+
+        if (!ratingDB.getUser().getId().equals(rating.getUser().getId())) {
+            throw new InvalidRatingException("Error: User ID did you pass and correct User ID do not match");
+
         }
 
         ratingDB.setComment(rating.getComment());
 
-        if(rating.getRatingValue() < 0 || rating.getRatingValue() > 10){
-            return null;
+        if (rating.getRatingValue() < 0) {
+            throw new InvalidRatingException("Error: Invalid value rating, the minimum value is 0");
+        }
+
+        if(rating.getRatingValue() > 10) {
+            throw new InvalidRatingException("Error: Invalid value rating, the maximum value is 10");
         }
 
         ratingDB.setRatingValue(rating.getRatingValue());
@@ -100,9 +128,12 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public boolean deleteRating(UUID id) {
         if(!ratingRepository.existsById(id)){
-            return false;
+            throw new InexistentRatingException("ID reating not exists");
+
         }
+
         ratingRepository.deleteById(id);
+
         if(!ratingRepository.existsById(id)){
             return true;
         }
@@ -113,7 +144,6 @@ public class RatingServiceImpl implements RatingService {
     public Page<Rating> getRatingsByBookId(UUID bookId, Pageable pageable) {
         return ratingRepository.findByBook_IdBook(bookId, pageable);
     }
-
     @Override
     public double getAverageRatingByBookId(UUID bookId) {
         double avg = 0;
