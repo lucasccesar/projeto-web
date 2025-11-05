@@ -40,22 +40,15 @@ public class RatingController {
     @PutMapping("/{id}")
     public ResponseEntity<RatingDTO> updateRating(@PathVariable UUID id, @RequestBody Rating rating) {
         Rating updated = ratingService.updateRating(id, rating);
-        if (updated != null) {
-            RatingDTO ratingDTO = new RatingDTO(updated);
-            return ResponseEntity.ok(ratingDTO);
-        } else{
-            return ResponseEntity.badRequest().build();
-        }
+        RatingDTO ratingDTO = new RatingDTO(updated);
+        return ResponseEntity.ok(ratingDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteRating(@PathVariable UUID id) {
         boolean deleted = ratingService.deleteRating(id);
-        if (deleted) {
-            return ResponseEntity.ok().build();
-        } else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().build();
+
     }
 
     @GetMapping("/{id}/all")
@@ -67,9 +60,6 @@ public class RatingController {
     @GetMapping("/{id}/average")
     public ResponseEntity<Double> getAverageRatingByBookId(@PathVariable UUID id) {
         Double avg = ratingService.getAverageRatingByBookId(id);
-        if(avg == -1){
-            return ResponseEntity.badRequest().build();
-        }
         return ResponseEntity.ok().body(avg);
     }
 }

@@ -131,9 +131,7 @@ public class RatingServiceImpl implements RatingService {
             throw new InexistentRatingException("ID reating not exists");
 
         }
-
         ratingRepository.deleteById(id);
-
         if(!ratingRepository.existsById(id)){
             return true;
         }
@@ -149,9 +147,14 @@ public class RatingServiceImpl implements RatingService {
     public double getAverageRatingByBookId(UUID bookId) {
         double avg = 0;
         List<Rating> ratings = ratingRepository.findByBook_IdBook(bookId);
-        if(bookId == null || ratings.isEmpty()){
-            return -1;
+        if(bookId == null){
+            throw new BadRequestException("Error: Book ID must not be null");
         }
+
+        if(ratings == null){
+            throw new BadRequestException("Error: Ratings must not be null");
+        }
+
         for(Rating rating : ratings){
             avg += rating.getRatingValue();
         }
