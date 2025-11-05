@@ -20,14 +20,17 @@ public class PurchaseBookController {
     @Autowired
     PurchaseBookService purchaseBookService;
 
-
+    @GetMapping("/{idPurchaseBook}")
+    public ResponseEntity<PurchaseBookResponseDTO> getPurchaseBook(@PathVariable UUID idPurchaseBook){
+        PurchaseBook purchaseBook = purchaseBookService.findPurchaseBook(idPurchaseBook);
+        PurchaseBookResponseDTO purchaseBookResponseDTO = new PurchaseBookResponseDTO(purchaseBook);
+        return ResponseEntity.ok(purchaseBookResponseDTO);
+    }
 
     @GetMapping("/purchase/{idPurchase}")
     public ResponseEntity<PurchaseBookResponseDTO> findByPurchase_IdPurchase(@PathVariable UUID idPurchase) {
-        PurchaseBook purchaseBook = purchaseBookService.findPurchaseBookByPurchase_IdPurchase(idPurchase);
-        if (purchaseBook == null)
-            return ResponseEntity.notFound().build();
-
+        PurchaseBook purchaseBook = purchaseBookService.
+                findPurchaseBookByPurchase_IdPurchase(idPurchase);
         PurchaseBookResponseDTO dto = new PurchaseBookResponseDTO(purchaseBook);
         return ResponseEntity.ok(dto);
     }
@@ -35,19 +38,15 @@ public class PurchaseBookController {
 
     @GetMapping("/book/{idBook}")
     public ResponseEntity<Page<PurchaseBookResponseDTO>> findPurchaseBookBy_Id(@PathVariable UUID idBook, Pageable pageable) {
-        Page<PurchaseBookResponseDTO> purchaseBook = purchaseBookService.findPurchaseBookByBook_IdBook(idBook, pageable);
-
-        if (purchaseBook == null)
-            return ResponseEntity.notFound().build();
-
+        Page<PurchaseBookResponseDTO> purchaseBook = purchaseBookService.
+                findPurchaseBookByBook_IdBook(idBook, pageable);
         return ResponseEntity.ok(purchaseBook);
-
-        //Da erro quando um livro está em mais de uma lista de compra de livros, rever isso!
     }
 
     @GetMapping("/bypurchase/{idPurchase}")
     public ResponseEntity<Page<PurchaseBookResponseDTO>> findAllByPurchase(@PathVariable UUID idPurchase, Pageable pageable) {
-         Page<PurchaseBookResponseDTO> page = purchaseBookService.findByPurchase_IdPurchase(idPurchase, pageable);
+         Page<PurchaseBookResponseDTO> page = purchaseBookService.
+                 findByPurchase_IdPurchase(idPurchase, pageable);
         return ResponseEntity.ok(page);
     }
 }
