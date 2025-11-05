@@ -12,7 +12,6 @@ import java.util.UUID;
 public interface PurchaseBookService {
 
     PurchaseBookRepository getPurchaseBookRepository();
-    public PurchaseBook findPurchaseBook(UUID id);
     public PurchaseBook findPurchaseBookByPurchase_IdPurchase(UUID idPurchase);
     public Page<PurchaseBookResponseDTO> findPurchaseBookByBook_IdBook(UUID idbook, Pageable pageable);
     public Page<PurchaseBookResponseDTO> findByPurchase_IdPurchase(UUID idPurchase, Pageable pageable);
