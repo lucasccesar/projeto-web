@@ -59,8 +59,8 @@ public class RestExceptionHandler {
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
-    @ExceptionHandler(InvalidDateBookCluAssignmentException.class)
-    public ResponseEntity<ExceptionResponseDTO> invalidDateBookClubAssignmentExceptionHandler(InvalidDateBookCluAssignmentException idbca, HttpServletRequest request) {
+    @ExceptionHandler(invalidDateException.class)
+    public ResponseEntity<ExceptionResponseDTO> invalidDateBookClubAssignmentExceptionHandler(invalidDateException idbca, HttpServletRequest request) {
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(idbca.getMessage(), 400, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }

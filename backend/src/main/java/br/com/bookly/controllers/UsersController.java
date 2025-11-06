@@ -30,10 +30,6 @@ public class    UsersController {
     @PostMapping
     public ResponseEntity<UsersDTO> signupUser(@RequestBody Users user) {
         Users userSignedUp = usersService.signupUser(user);
-
-        if (userSignedUp == null) {
-            return ResponseEntity.badRequest().build();
-        }
         UsersDTO userDTO = new UsersDTO(userSignedUp);
         return ResponseEntity.status(201).body(userDTO);
     }
@@ -41,35 +37,21 @@ public class    UsersController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         boolean deleted = usersService.deleteUser(id);
-        if (deleted) {
-            return ResponseEntity.ok().build();
-        } else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok().build();
+
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsersDTO> updateUser(@PathVariable UUID id, @RequestBody Users user) {
         Users updated = usersService.updateUser(id, user);
-        if (updated != null) {
-            UsersDTO userDTO = new UsersDTO(updated);
-            return ResponseEntity.ok(userDTO);
-        } else{
-            return ResponseEntity.badRequest().build();
-        }
+        UsersDTO userDTO = new UsersDTO(updated);
+        return ResponseEntity.ok(userDTO);
     }
 
     @PostMapping("/login")
     public ResponseEntity<UsersDTO> loginUser(@RequestBody UsersLoginDTO loginDto) {
         Users user = usersService.loginUser(loginDto.getEmail(), loginDto.getPassword());
-
-        if (user != null) {
             UsersDTO userDTO = new UsersDTO(user);
             return ResponseEntity.ok(userDTO);
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
     }
-
-
 }

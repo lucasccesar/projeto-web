@@ -3,6 +3,7 @@ package br.com.bookly.services.impl;
 import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Enums.UserType;
 import br.com.bookly.entities.Users;
+import br.com.bookly.exceptions.*;
 import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +31,23 @@ public class UsersServiceImpl implements UsersService {
     public Users signupUser(Users user) {
 
         if(user.getName() == null || user.getName().isBlank()) {
-            return null;
+            throw new BadRequestException("Error: Username not must be null or blank");
         }
 
-        if(user.getEmail() == null || user.getEmail().isBlank() || usersRepository.findByEmail(user.getEmail()) != null) {
-            return null;
+        if(user.getEmail() == null || user.getEmail().isBlank() ) {
+            throw new BadRequestException("Error: Email not must be null or blank");
+        }
+
+        if(usersRepository.findByEmail(user.getEmail()) != null){
+            throw new ExistentEmailException("Error: User with this Email already exists");
         }
 
         if(user.getPassword() == null || user.getPassword().isBlank()) {
-            return null;
+            throw new BadRequestException("Error: Password not must be null or blank");
         }
 
         if(user.getBirthday().isAfter(LocalDate.now())) {
-            return null;
+            throw new invalidDateException("Error: Birthday not after now");
         }
 
         if(user.getType() == null) {
@@ -58,11 +63,15 @@ public class UsersServiceImpl implements UsersService {
         Users userByEmail = usersRepository.findByEmail(email);
 
         if(userByEmail == null) {
-            return null;
+            throw new InexistentUserByEmailException("Error: Inexistent user with email " + email);
         }
 
-        if(!userByEmail.getEmail().equals(email) || !userByEmail.getPassword().equals(password)) {
-            return null;
+        if(!userByEmail.getEmail().equals(email)) {
+            throw new DifferentException("Error: Email not match");
+        }
+
+        if(!userByEmail.getPassword().equals(password)) {
+            throw new DifferentException("Error: Password not match");
         }
 
         return userByEmail;
@@ -72,14 +81,18 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Users updateUser(UUID id, Users user) {
 
-        if(user == null || id == null){
-            return null;
+        if(user == null){
+            throw new BadRequestException("Error: User not must be null ");
+        }
+
+        if(id==null){
+            throw new BadRequestException("Error: ID not must be null ");
         }
 
         Users userById = usersRepository.findById(id).orElse(null);
 
         if(userById == null) {
-            return null;
+            throw new InexistentIdUserException("Error: User with this id not found") ;
         }
 
         userById.setName(user.getName());
@@ -87,8 +100,11 @@ public class UsersServiceImpl implements UsersService {
         boolean isSameEmail = user.getEmail().equals(userById.getEmail());
 
         if(!isSameEmail) {
-            if(user.getEmail() == null || user.getEmail().isBlank() || usersRepository.existsByEmail(user.getEmail())){
-                return null;
+            if(user.getEmail() == null || user.getEmail().isBlank()){
+                throw new BadRequestException("Error: Email not must be null or blank");
+            }
+            if(usersRepository.existsByEmail(user.getEmail())){
+                throw new ExistentEmailException("Error: Email already exists");
             }
             userById.setEmail(user.getEmail());
         }
@@ -103,17 +119,13 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public boolean deleteUser(UUID id) {
         if(!usersRepository.existsById(id)){
-            return false;
+            throw new InexistentIdUserException("Error: User with this id not found");
         }
 
         usersRepository.deleteById(id);
-
-        if(!usersRepository.existsById(id)){
-            return true;
-        }
-
-        return false;
+        return true;
     }
+
 
     @Override
     public Page<Users> getUsers(Pageable pageable) {
