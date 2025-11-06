@@ -3,11 +3,9 @@ package br.com.bookly.services.impl;
 import br.com.bookly.entities.Book;
 import br.com.bookly.entities.ReadingStatus;
 import br.com.bookly.entities.Users;
-import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.ReadingStatusRepository;
-import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.UsersService;
-import br.com.bookly.services.bookService;
+import br.com.bookly.services.BookService;
 import br.com.bookly.services.ReadingStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +21,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     ReadingStatusRepository readingStatusRepository;
 
     @Autowired
-    bookService bookService;
+    BookService bookService;
 
     @Autowired
     UsersService usersService;

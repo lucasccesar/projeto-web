@@ -7,7 +7,7 @@ import br.com.bookly.exceptions.*;
 import br.com.bookly.repositories.RatingRepository;
 import br.com.bookly.services.RatingService;
 import br.com.bookly.services.UsersService;
-import br.com.bookly.services.bookService;
+import br.com.bookly.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +28,7 @@ public class RatingServiceImpl implements RatingService {
     UsersService usersService;
 
     @Autowired
-    bookService bookService;
+    BookService bookService;
 
     @Override
     public Page<Rating> getAllRatings(Pageable pageable) {

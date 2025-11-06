@@ -14,7 +14,7 @@ import br.com.bookly.repositories.PurchaseRepository;
 import br.com.bookly.services.PurchaseBookService;
 import br.com.bookly.services.PurchaseService;
 import br.com.bookly.services.UsersService;
-import br.com.bookly.services.bookService;
+import br.com.bookly.services.BookService;
 import br.com.bookly.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     PurchaseBookService purchaseBookService;
 
     @Autowired
-    bookService bookService;
+    BookService bookService;
 
 
     @Override
