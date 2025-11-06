@@ -3,6 +3,7 @@ package br.com.bookly.controllers;
 
 import br.com.bookly.entities.dtos.ExceptionResponseDTO;
 import br.com.bookly.exceptions.*;
+import jakarta.el.ELException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.filters.ExpiresFilter;
@@ -125,6 +126,56 @@ public class RestExceptionHandler {
         ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
+
+    @ExceptionHandler(DifferentException.class)
+    public ResponseEntity<ExceptionResponseDTO> DifferentExceptionHandler(DifferentException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(ExistentEmailException.class)
+    public ResponseEntity<ExceptionResponseDTO> ExistentEmailExceptionHandler(ExistentEmailException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentEmailException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentEmailExceptionHandler(InexistentEmailException ipu, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+
+    @ExceptionHandler(InexistentPurchaseException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentPurchaseExceptionHandler(InexistentPurchaseException ipu, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (InexistentPurchaseBookException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentPurchaseBookExceptionHandler(InexistentPurchaseBookException ipu, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (InexistentRatingException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentRatingExceptionHandler(InexistentRatingException ipu, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InexistentUserByEmailException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentUserExceptionHandler(InexistentUserByEmailException ipu, HttpServletRequest request){
+        ExceptionResponseDTO  exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(InvalidRatingException.class)
+    public ResponseEntity<ExceptionResponseDTO> InvalidRatingExceptionHandler(InvalidRatingException ipu, HttpServletRequest request){
+        ExceptionResponseDTO  exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
 
     //erro generico
     @ExceptionHandler(Exception.class)

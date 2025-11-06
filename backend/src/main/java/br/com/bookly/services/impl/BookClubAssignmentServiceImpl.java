@@ -4,7 +4,7 @@ import br.com.bookly.entities.BookClubAssignment;
 import br.com.bookly.exceptions.BadRequestException;
 import br.com.bookly.exceptions.ExistentBookClubAssignmentException;
 import br.com.bookly.exceptions.InexistentBookClubAssignmentException;
-import br.com.bookly.exceptions.InvalidDateBookCluAssignmentException;
+import br.com.bookly.exceptions.invalidDateException;
 import br.com.bookly.repositories.BookClubAssignmentRepository;
 import br.com.bookly.services.BookClubAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +34,12 @@ public class BookClubAssignmentServiceImpl implements BookClubAssignmentService 
 
         //Não permite datas igual (inicio/fim)
         if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFinishDate())){
-            throw new InvalidDateBookCluAssignmentException("Error: Start and finish dates cannot be the same");
+            throw new invalidDateException("Error: Start and finish dates cannot be the same");
         }
 
         //Data final menor do que inicial
         if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFinishDate())){
-            throw new InvalidDateBookCluAssignmentException("Error: Start date cannot be after finish date");
+            throw new invalidDateException("Error: Start date cannot be after finish date");
         }
 
         boolean exists = bookClubAssignmentRepository.existsByBook_IdBookAndBookClub_IdBookClubAndStartDateAndFinishDate(bookClubAssignment.getBook().getIdBook(), bookClubAssignment.getBookClub().getIdBookClub(),
@@ -83,11 +83,11 @@ public class BookClubAssignmentServiceImpl implements BookClubAssignmentService 
         }
 
         if (bookClubAssignment.getStartDate().isEqual(bookClubAssignment.getFinishDate())){
-            throw new InvalidDateBookCluAssignmentException("Error: Start and finish dates cannot be the same");
+            throw new invalidDateException("Error: Start and finish dates cannot be the same");
         }
 
         if (bookClubAssignment.getStartDate().isAfter(bookClubAssignment.getFinishDate())){
-            throw new InvalidDateBookCluAssignmentException("Error: Start date cannot be after finish date");
+            throw new invalidDateException("Error: Start date cannot be after finish date");
         }
 
         exists.setFinishDate(bookClubAssignment.getFinishDate());
