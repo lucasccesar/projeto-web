@@ -102,6 +102,30 @@ public class RestExceptionHandler {
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
+    @ExceptionHandler (InexistentBookException.class)
+    public ResponseEntity<ExceptionResponseDTO> InexistentBookExceptionHandler(InexistentBookException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (InvalidBookDataException.class)
+    public ResponseEntity<ExceptionResponseDTO> InvalidBookDataExceptionHandler(InvalidBookDataException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (InvalidReadingStatusException.class)
+    public ResponseEntity<ExceptionResponseDTO> InvalidReadingStatusExceptionHandler(InvalidReadingStatusException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 400, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler (ReadingStatusNotFoundException.class)
+    public ResponseEntity<ExceptionResponseDTO> ReadingStatusNotFoundExceptionHandler(ReadingStatusNotFoundException ipu, HttpServletRequest request) {
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
     //erro generico
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleGeneralException(Exception ex, HttpServletRequest request) {

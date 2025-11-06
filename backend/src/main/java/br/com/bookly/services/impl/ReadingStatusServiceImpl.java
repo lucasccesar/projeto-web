@@ -3,11 +3,10 @@ package br.com.bookly.services.impl;
 import br.com.bookly.entities.Book;
 import br.com.bookly.entities.ReadingStatus;
 import br.com.bookly.entities.Users;
-import br.com.bookly.repositories.BookRepository;
+import br.com.bookly.exceptions.*;
 import br.com.bookly.repositories.ReadingStatusRepository;
-import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.UsersService;
-import br.com.bookly.services.bookService;
+import br.com.bookly.services.BookService;
 import br.com.bookly.services.ReadingStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +22,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     ReadingStatusRepository readingStatusRepository;
 
     @Autowired
-    bookService bookService;
+    BookService bookService;
 
     @Autowired
     UsersService usersService;
@@ -32,17 +31,17 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     @Override
     public ReadingStatus createReadingStatus(ReadingStatus readingStatus) {
         if(readingStatus == null || readingStatus.getStatus() == null){
-            return null;
+            throw new InvalidReadingStatusException("Error: Null or Invalid Reading Status");
         }
 
         Users user = usersService.getUsersRepository().findById(readingStatus.getUsers().getId()).orElse(null);
         if(user == null){
-            return null;
+            throw new InexistentIdUserException("Error: User not found");
         }
 
         Book book = bookService.getBookRepository().findById(readingStatus.getBook().getIdBook()).orElse(null);
         if(book == null){
-            return null;
+            throw new InexistentBookException("Error: Book not found");
         }
 
 
@@ -60,14 +59,17 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
         ReadingStatus exists = readingStatusRepository.findByIdReadingStatus(id);
         if(exists==null){
-            return null;
+            throw new ReadingStatusNotFoundException("Error: Reading Status Not Found");
         }
 
         if(readingStatus.getBook() == null){
-            return null;
+            throw new InvalidReadingStatusException("Error: Null Book List");
         }
-        if(readingStatus.getStatus() == null || readingStatus.getStatus().equals(exists.getStatus()) ){
-            return null;
+        if(readingStatus.getStatus() == null){
+            throw new InvalidReadingStatusException("Error: Null Reading Status");
+        }
+        if(readingStatus.getStatus().equals(exists.getStatus())){
+            throw new InvalidReadingStatusException("Error: Same Reading Status");
         }
 
         exists.setStatus(readingStatus.getStatus());
@@ -78,7 +80,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
     @Override
     public boolean deleteReadingStatus(UUID readingStatusId) {
         if(readingStatusRepository.existsById(readingStatusId) == false){
-            return false;
+            throw new ReadingStatusNotFoundException("Error: Reading Status Not Found");
         }
 
         readingStatusRepository.deleteById(readingStatusId);
@@ -87,7 +89,11 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
     @Override
     public ReadingStatus findReadingStatus(UUID readingStatusId) {
-        return  readingStatusRepository.findById(readingStatusId).orElse(null);
+        ReadingStatus readingStatus = readingStatusRepository.findById(readingStatusId).orElse(null);
+        if(readingStatus==null){
+            throw new ReadingStatusNotFoundException("Error: Reading Status Not Found");
+        }
+        return readingStatusRepository.findById(readingStatusId).orElse(null);
     }
 
     @Override

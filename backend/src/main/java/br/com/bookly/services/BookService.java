@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
-public interface bookService {
+public interface BookService {
 
     BookRepository getBookRepository();
     Book addBook(Book book);
