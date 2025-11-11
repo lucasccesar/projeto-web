@@ -62,6 +62,14 @@ public class UsersServiceImpl implements UsersService {
 
         Users userByEmail = usersRepository.findByEmail(email);
 
+        if(email == null || email.isBlank()) {
+            throw new BadRequestException("Error: Email can't be null");
+        }
+
+        if(password == null || password.isBlank()) {
+            throw new BadRequestException("Error: Password can't be null");
+        }
+
         if(userByEmail == null) {
             throw new InexistentUserByEmailException("Error: Inexistent user with email " + email);
         }
@@ -98,6 +106,14 @@ public class UsersServiceImpl implements UsersService {
         userById.setName(user.getName());
 
         boolean isSameEmail = user.getEmail().equals(userById.getEmail());
+
+        if(user.getName() == null || user.getName().isBlank()) {
+            throw new BadRequestException("Error: Name not must be null or blank");
+        }
+
+        if(user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new BadRequestException("Error: Password not must be null or blank");
+        }
 
         if(!isSameEmail) {
             if(user.getEmail() == null || user.getEmail().isBlank()){
