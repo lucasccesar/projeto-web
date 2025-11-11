@@ -120,6 +120,11 @@ public class ColectionServiceImpl implements ColectionService {
         if (idUser == null)
             return colectionRepository.findAll(pageable);
 
+        Users user = usersService.getUsersRepository().findById(idUser).orElse(null);
+        if (user == null){
+            throw new InexistentIdUserException("Error: User id Not Found");
+        }
+
         return colectionRepository.findByUser_Id(idUser, pageable);
     }
 
