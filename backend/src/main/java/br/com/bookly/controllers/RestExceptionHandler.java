@@ -176,6 +176,11 @@ public class RestExceptionHandler {
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
+    @ExceptionHandler(ExistentAuthorException.class)
+    public ResponseEntity<ExceptionResponseDTO> ExistentAuthorExceptionHandler(ExistentAuthorException ipu, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ipu.getMessage(), 404, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
 
     //erro generico
     @ExceptionHandler(Exception.class)

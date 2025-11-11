@@ -2,6 +2,7 @@ package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.Author;
 import br.com.bookly.exceptions.BadRequestException;
+import br.com.bookly.exceptions.ExistentAuthorException;
 import br.com.bookly.exceptions.InexistentAuthorException;
 import br.com.bookly.repositories.AuthorRepository;
 import br.com.bookly.services.AuthorService;
@@ -43,7 +44,11 @@ public class AuthorServiceImpl implements AuthorService {
             throw new InexistentAuthorException("Error: Author not found");
 
         if(author.getName() == null || author.getName().isBlank())
-            throw new BadRequestException("Author name is required");
+            throw new BadRequestException("Error: Author name is required");
+
+        if(exists.getName().equals(author.getName())){
+            throw new ExistentAuthorException("Error: Author name already exists");
+        }
 
         exists.setName(author.getName());
         return authorRepository.save(exists);
@@ -51,12 +56,31 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findAuthorById(UUID idAuthor) {
-        return authorRepository.findById(idAuthor).orElse(null);
+        if(idAuthor == null){
+            throw new BadRequestException("Error: Id is required");
+        }
+
+        Author author = authorRepository.findById(idAuthor).orElse(null);
+
+        if(author == null){
+            throw new InexistentAuthorException("Error: Author not found");
+        }
+
+        return author;
     }
 
     @Override
     public Page<Author> findAuthorByName(String name, Pageable pageable) {
-        return authorRepository.findAuthorByNameIgnoreCase(name, pageable);
+        if(name == null || name.isBlank()){
+            throw new BadRequestException("Author name is required");
+        }
+
+        Page<Author> exists = authorRepository.findAuthorByNameIgnoreCase(name, pageable);
+
+        if(exists == null || exists.getContent().isEmpty()){
+            throw new InexistentAuthorException("Error: Author not found");
+        }
+        return exists;
     }
 
     @Override
@@ -64,3 +88,4 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll(pageable);
     }
 }
+
