@@ -135,6 +135,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public Purchase findPurchaseById(UUID id) {
+        if(id ==  null)
+            throw new BadRequestException("Error: Purchase ID must not be null");
         Purchase exists = purchaseRepository.findById(id).orElse(null);
         if (exists == null)
             throw new InexistentPurchaseException("Error: Purchase with this id doesn't exist");
