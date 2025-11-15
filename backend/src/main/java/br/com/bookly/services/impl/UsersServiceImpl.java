@@ -26,6 +26,7 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
     PasswordEncoder passwordEncoder;
 
 
@@ -159,7 +160,17 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public Users getUserByEmail(String email) {
+        return usersRepository.findByEmail(email);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Users user = usersRepository.findByEmail(email);
+
+        if(user == null){
+            throw new UsernameNotFoundException("Error: User not found with email " + email);
+        }
+        return user;
     }
 }

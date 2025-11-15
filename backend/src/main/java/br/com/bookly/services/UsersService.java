@@ -19,6 +19,7 @@ public interface UsersService {
     Users updateUser(UUID id, Users user);
     boolean deleteUser(UUID id);
     Page<Users> getUsers(Pageable pageable);
+    public Users getUserByEmail(String email);
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException;
 
 }

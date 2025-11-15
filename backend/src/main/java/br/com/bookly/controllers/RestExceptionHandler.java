@@ -182,6 +182,18 @@ public class RestExceptionHandler {
         return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
     }
 
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ExceptionResponseDTO> InvalidTokenExceptionHandler(InvalidTokenException ite, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(ite.getMessage(), 401, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
+    @ExceptionHandler(TokenGenerationException.class)
+    public ResponseEntity<ExceptionResponseDTO> TokenGenerationExceptionHandler(TokenGenerationException tge, HttpServletRequest request){
+        ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(tge.getMessage(), 500, request.getRequestURI());
+        return ResponseEntity.status(exceptionResponseDTO.getStatusCode()).body(exceptionResponseDTO);
+    }
+
     //erro generico
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionResponseDTO> handleGeneralException(Exception ex, HttpServletRequest request) {
