@@ -38,6 +38,8 @@ public class SecurityConfig {
                         //TODO:teste mudar dps
                         //TODO:add outras rotas
                         .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/bookclub").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/users/").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

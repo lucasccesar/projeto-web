@@ -17,7 +17,7 @@ import java.time.ZoneOffset;
 @Service
 public class TokenServiceImpl implements TokenService {
 
-    @Value("@{api.token.secret}")
+    @Value("${api.token.secret}")
     private String tokenSecret;
 
     @Override
@@ -28,7 +28,7 @@ public class TokenServiceImpl implements TokenService {
                     .withIssuer("bookly") // dono da aplicação
                     .withSubject(user.getEmail()) // identificador do user
                     .withExpiresAt( // configs de expiração do token
-                            LocalDateTime.now().plusHours(1).toInstant(
+                            LocalDateTime.now().plusHours(2).toInstant(
                                     ZoneOffset.of("-03:00")
                             )
                     )
