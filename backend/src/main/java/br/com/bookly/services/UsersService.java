@@ -5,6 +5,8 @@ import br.com.bookly.entities.Users;
 import br.com.bookly.repositories.UsersRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
 import java.util.UUID;
@@ -17,5 +19,6 @@ public interface UsersService {
     Users updateUser(UUID id, Users user);
     boolean deleteUser(UUID id);
     Page<Users> getUsers(Pageable pageable);
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException;
 
 }

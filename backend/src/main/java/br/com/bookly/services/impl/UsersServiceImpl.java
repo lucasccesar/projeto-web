@@ -9,6 +9,11 @@ import br.com.bookly.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -16,10 +21,12 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
-public class UsersServiceImpl implements UsersService {
+public class UsersServiceImpl implements UsersService, UserDetailsService {
 
     @Autowired
     UsersRepository usersRepository;
+
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -54,6 +61,9 @@ public class UsersServiceImpl implements UsersService {
             user.setType(UserType.CLIENT);
         }
 
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+
         return usersRepository.save(user);
     }
 
@@ -78,7 +88,7 @@ public class UsersServiceImpl implements UsersService {
             throw new DifferentException("Error: Email not match");
         }
 
-        if(!userByEmail.getPassword().equals(password)) {
+        if(!passwordEncoder.matches(password, userByEmail.getPassword())) {
             throw new DifferentException("Error: Password not match");
         }
 
@@ -146,5 +156,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Page<Users> getUsers(Pageable pageable) {
         return usersRepository.findAll(pageable);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }
