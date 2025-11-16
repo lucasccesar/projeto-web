@@ -42,21 +42,21 @@ public class ColectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Colection> findColectionById(@PathVariable UUID id) {
+    public ResponseEntity<ColectionRespondeDTO> findColectionById(@PathVariable UUID id) {
         Colection colection = colectionService.findColectionById(id);
-        return ResponseEntity.ok(colection);
+        return ResponseEntity.ok(new ColectionRespondeDTO(colection));
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Colection> findColectionByName(@RequestParam String name) {
+    public ResponseEntity<ColectionRespondeDTO> findColectionByName(@RequestParam String name) {
         Colection colection = colectionService.findColectionByName(name);
-        return ResponseEntity.ok(colection);
+        return ResponseEntity.ok(new ColectionRespondeDTO(colection));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Page<Colection>> findColectionsByIdUser(@PathVariable UUID userId, Pageable pageable) {
-        Page<Colection> colecoes = colectionService.findByUser_Id(userId, pageable);
-        return ResponseEntity.ok(colecoes);
+    public ResponseEntity<Page<ColectionRespondeDTO>> findColectionsByIdUser(@PathVariable UUID userId, Pageable pageable) {
+        Page<ColectionRespondeDTO> colection = colectionService.findByUser_Id(userId, pageable).map(ColectionRespondeDTO::new);
+        return ResponseEntity.ok(colection);
     }
 
 
