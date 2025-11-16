@@ -35,11 +35,19 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
-                        //TODO:teste mudar dps
-                        //TODO:add outras rotas
+                        //Users
                         .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/users/").hasRole("ADMINISTRATOR")
+                        //Bookclub
                         .requestMatchers(HttpMethod.POST, "/api/bookclub").hasRole("ADMINISTRATOR")
-                        .requestMatchers(HttpMethod.PUT, "/api/users/").hasRole("ADMINISTRADOR")
+                        //Author
+                        .requestMatchers(HttpMethod.POST, "/api/authors").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/authors/**").hasRole("ADMINISTRATOR") //ID
+                        .requestMatchers(HttpMethod.GET, "/api/authors/name").hasRole("CLIENT") //Nome
+                        .requestMatchers(HttpMethod.GET, "/api/authors").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/authors/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/authors/*").hasRole("ADMINISTRATOR")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
