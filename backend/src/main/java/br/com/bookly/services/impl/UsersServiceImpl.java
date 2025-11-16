@@ -136,8 +136,12 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
             userById.setEmail(user.getEmail());
         }
 
-        userById.setPassword(user.getPassword());
-        userById.setType(user.getType());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        userById.setPassword(hashedPassword);
+
+        if (user.getType() != null) {
+            userById.setType(user.getType());
+        }
 
         return usersRepository.save(userById);
 

@@ -65,7 +65,6 @@ public class Users implements UserDetails{
     )
     private Set<Book> favoriteBooks = new HashSet<>();
 
-    public Users (String name, String email, String password) {}
 
     public Users(UsersRegisterDTO usersRegisterDTO) {
         this.name = usersRegisterDTO.name();
