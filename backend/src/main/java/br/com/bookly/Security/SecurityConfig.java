@@ -47,7 +47,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/authors").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/api/authors/*").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/authors/*").hasRole("ADMINISTRATOR")
-
+                        //ClubMessage
+                        .requestMatchers(HttpMethod.GET, "/api/clubmessage").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/clubmessage/*").hasRole("CLIENT") //Id
+                        .requestMatchers(HttpMethod.GET, "/api/clubmessage/user/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/clubmessage/club/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.POST, "/api/clubmessage").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/clubmessage/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/clubmessage/*").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
