@@ -91,6 +91,22 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/bookclubassignment/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/bookclubassignment/*").hasRole("CLIENT")
 
+                        //Purchase
+                        .requestMatchers(HttpMethod.POST, "/api/purchase").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/purchase/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/purchase/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/purchase/id/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/purchase/date/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/purchase/PageIdUser/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/purchase").hasRole("ADMINISTRATOR")
+
+
+                        //PurhcaseBook
+                        .requestMatchers(HttpMethod.GET, "/api/purchaseBook/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/purchaseBook/purchase/*").hasRole("CLIENT") //so uma
+                        .requestMatchers(HttpMethod.GET, "/api/purchaseBook/book/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/purchaseBook/bypurchase/*").hasRole("ADMINISTRATOR") //lista de compras
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

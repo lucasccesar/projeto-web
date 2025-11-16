@@ -12,14 +12,14 @@ import java.util.UUID;
 public class PurchaseBookResponseDTO {
 
     //DTO para a saída
-    private UUID id;
+    private UUID idPurchaseBook;
     private UUID idBook;
     private UUID idPurchase;
     private BigDecimal unitPrice;
     private Integer quantity;
 
     public PurchaseBookResponseDTO(PurchaseBook pb) {
-        this.id = pb.getIdPurchaseBook(); // se você tem o id da entidade
+        this.idPurchaseBook = pb.getIdPurchaseBook(); // se você tem o id da entidade
         this.idBook = pb.getBook().getIdBook();
         this.idPurchase = pb.getPurchase().getIdPurchase();
         this.unitPrice = pb.getUnitPrice();
