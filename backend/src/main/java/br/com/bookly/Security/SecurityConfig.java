@@ -64,6 +64,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/bookclub/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/bookclub/*").hasRole("CLIENT")
 
+                        //ParticipantUser
+                        .requestMatchers(HttpMethod.GET, "/api/participantuser/byclub/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/participantuser/byuser/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/participantuser/*").hasRole("CLIENT") //Id
+                        .requestMatchers(HttpMethod.GET, "/api/participantuser").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.POST, "/api/participantuser").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/participantuser/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/participantuser/*").hasRole("ADMINISTRATOR")
 
                         .anyRequest().authenticated()
                 )
