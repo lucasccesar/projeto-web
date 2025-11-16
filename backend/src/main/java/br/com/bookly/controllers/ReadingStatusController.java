@@ -24,10 +24,6 @@ public class ReadingStatusController {
     public ResponseEntity<ReadingStatusDto> createReadingStatus(@RequestBody ReadingStatus readingStatus){
 
         ReadingStatus created = readingStatusService.createReadingStatus(readingStatus);
-
-        if(created == null){
-            return ResponseEntity.notFound().build();
-        }
         ReadingStatusDto readingStatusDto = new ReadingStatusDto(created);
 
         return ResponseEntity.status(201).body(readingStatusDto);
@@ -36,18 +32,12 @@ public class ReadingStatusController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ReadingStatus> deleteReadingStatus(@PathVariable UUID id){
         boolean delete =   readingStatusService.deleteReadingStatus(id);
-        if(delete == false){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ReadingStatusDto> updateReadingStatus(@RequestBody ReadingStatus readingStatus, @PathVariable UUID id){
         ReadingStatus rd = readingStatusService.updateReadingStatus(id, readingStatus);
-        if(rd == null){
-            return ResponseEntity.notFound().build();
-        }
         ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
         return ResponseEntity.ok(readingStatusDto);
     }
@@ -55,9 +45,6 @@ public class ReadingStatusController {
     @GetMapping("/id/{id}")
     public ResponseEntity<ReadingStatusDto> getReadingStatus(@PathVariable UUID id){
         ReadingStatus rd = readingStatusService.findReadingStatus(id);
-        if(rd == null){
-            return ResponseEntity.notFound().build();
-        }
         ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
         return ResponseEntity.ok(readingStatusDto);
     }
@@ -67,9 +54,6 @@ public class ReadingStatusController {
         UUID bookId = readingStatus.getBook().getIdBook();
         UUID userId = readingStatus.getUsers().getId();
         ReadingStatus rd = readingStatusService.findReadingStatusbyBook_IdBookAndUsers_Id(bookId, userId);
-        if(rd == null){
-            return ResponseEntity.notFound().build();
-        }
         ReadingStatusDto readingStatusDto = new ReadingStatusDto(rd);
         return ResponseEntity.ok(readingStatusDto);
     }
@@ -77,9 +61,6 @@ public class ReadingStatusController {
     @GetMapping("/idUser/{id}")
     public ResponseEntity<Page<ReadingStatusDto>> getReadingStatusByIdUser(@PathVariable UUID id, Pageable pageable){
         Page<ReadingStatusDto> rd = readingStatusService.findReadingStatusbyUsers_Id(id, pageable).map(ReadingStatusDto::new);
-        if(rd == null){
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(rd);
     }
 }

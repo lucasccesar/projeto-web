@@ -30,9 +30,6 @@ public class RatingController {
     @PostMapping
     public ResponseEntity<RatingDTO> addRating(@RequestBody Rating rating) {
         Rating savedRating = ratingService.addRating(rating);
-        if(savedRating == null) {
-            return ResponseEntity.badRequest().build();
-        }
         RatingDTO ratingDTO = new RatingDTO(savedRating);
         return ResponseEntity.ok().body(ratingDTO);
     }

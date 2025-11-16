@@ -107,6 +107,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/purchaseBook/book/*").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/purchaseBook/bypurchase/*").hasRole("ADMINISTRATOR") //lista de compras
 
+                        //ReadingStatus
+                        .requestMatchers(HttpMethod.POST, "/api/purchaseBook/*").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
