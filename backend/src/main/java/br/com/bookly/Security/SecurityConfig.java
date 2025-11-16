@@ -38,8 +38,7 @@ public class SecurityConfig {
                         //Users
                         .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/users/").hasRole("ADMINISTRATOR")
-                        //Bookclub
-                        .requestMatchers(HttpMethod.POST, "/api/bookclub").hasRole("ADMINISTRATOR")
+
                         //Author
                         .requestMatchers(HttpMethod.POST, "/api/authors").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/authors/**").hasRole("ADMINISTRATOR") //ID
@@ -47,6 +46,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/authors").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/api/authors/*").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/authors/*").hasRole("ADMINISTRATOR")
+
                         //ClubMessage
                         .requestMatchers(HttpMethod.GET, "/api/clubmessage").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/clubmessage/*").hasRole("CLIENT") //Id
@@ -55,6 +55,16 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/clubmessage").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/clubmessage/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/clubmessage/*").hasRole("CLIENT")
+
+                        //BookClub
+                        .requestMatchers(HttpMethod.GET, "/api/bookclub").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/bookclub/*").hasRole("ADMINISTRATOR") //Id
+                        .requestMatchers(HttpMethod.GET, "/api/bookclub/name/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/api/bookclub").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/bookclub/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/bookclub/*").hasRole("CLIENT")
+
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
