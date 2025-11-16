@@ -82,6 +82,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/colection/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.POST, "/api/colection").hasRole("CLIENT")
 
+                        //BookClubAssignment
+                        .requestMatchers(HttpMethod.GET, "/api/bookclubassignment").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/bookclubassignment/book/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/bookclubassignment/club/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/bookclubassignment/*").hasRole("ADMINISTRATOR")//Id
+                        .requestMatchers(HttpMethod.POST, "/api/bookclubassignment").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/bookclubassignment/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/bookclubassignment/*").hasRole("CLIENT")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
