@@ -109,6 +109,16 @@ public class SecurityConfig {
 
                         //ReadingStatus
                         .requestMatchers(HttpMethod.POST, "/api/purchaseBook/*").hasRole("CLIENT")
+
+                        //Book
+                        .requestMatchers(HttpMethod.GET, "/api/books").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/books**").hasRole("CLIENT") //title e genre
+                        .requestMatchers(HttpMethod.GET, "/api/books/availables").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/books/unavailables").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/api/books").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.PUT, "/api/books/**").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/books/*").hasRole("ADMINISTRATOR")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
