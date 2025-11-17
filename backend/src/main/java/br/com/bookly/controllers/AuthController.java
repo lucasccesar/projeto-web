@@ -1,10 +1,7 @@
 package br.com.bookly.controllers;
 
 import br.com.bookly.entities.Users;
-import br.com.bookly.entities.dtos.UsDTO;
-import br.com.bookly.entities.dtos.UsersDTO;
-import br.com.bookly.entities.dtos.UsersLoginDTO;
-import br.com.bookly.entities.dtos.UsersRegisterDTO;
+import br.com.bookly.entities.dtos.*;
 import br.com.bookly.services.TokenService;
 import br.com.bookly.services.UsersService;
 import org.apache.catalina.User;
@@ -34,7 +31,7 @@ public class AuthController {
         var usernamepassword = new UsernamePasswordAuthenticationToken(usersLoginDTO.email(), usersLoginDTO.password());
         var auth = this.authenticationManager.authenticate(usernamepassword);
         String token = tokenService.generateToken((Users) auth.getPrincipal());
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
