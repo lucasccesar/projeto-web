@@ -31,14 +31,4 @@ public class RatingDTO {
         this.ratingDate = ratingDate;
     }
 
-    public RatingDTO(Rating rating){
-        this.id = rating.getIdRating();
-        this.user = new UsersDTO(rating.getUser());
-        this.book = new BookDTO(rating.getBook());
-        this.comment = rating.getComment();
-        this.ratingValue = rating.getRatingValue();
-        this.ratingDate = rating.getRatingDate();
-
-    }
-
 }

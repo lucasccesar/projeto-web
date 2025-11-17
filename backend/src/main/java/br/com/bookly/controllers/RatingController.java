@@ -4,6 +4,7 @@ import br.com.bookly.entities.Book;
 import br.com.bookly.entities.Rating;
 import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.RatingDTO;
+import br.com.bookly.entities.dtos.RatingResponseDto;
 import br.com.bookly.entities.dtos.UsersDTO;
 import br.com.bookly.services.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,22 @@ public class RatingController {
     RatingService ratingService;
 
     @GetMapping
-    public ResponseEntity<Page<RatingDTO>> getRatings(Pageable pageable) {
-        Page<RatingDTO> ratings = ratingService.getAllRatings(pageable).map(RatingDTO::new);
+    public ResponseEntity<Page<RatingResponseDto>> getRatings(Pageable pageable) {
+        Page<RatingResponseDto> ratings = ratingService.getAllRatings(pageable).map(RatingResponseDto::new);
         return ResponseEntity.ok().body(ratings);
     }
 
     @PostMapping
-    public ResponseEntity<RatingDTO> addRating(@RequestBody Rating rating) {
+    public ResponseEntity<RatingResponseDto> addRating(@RequestBody Rating rating) {
         Rating savedRating = ratingService.addRating(rating);
-        RatingDTO ratingDTO = new RatingDTO(savedRating);
+        RatingResponseDto ratingDTO = new RatingResponseDto(savedRating);
         return ResponseEntity.ok().body(ratingDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RatingDTO> updateRating(@PathVariable UUID id, @RequestBody Rating rating) {
+    public ResponseEntity<RatingResponseDto> updateRating(@PathVariable UUID id, @RequestBody Rating rating) {
         Rating updated = ratingService.updateRating(id, rating);
-        RatingDTO ratingDTO = new RatingDTO(updated);
+        RatingResponseDto ratingDTO = new RatingResponseDto(updated);
         return ResponseEntity.ok(ratingDTO);
     }
 
@@ -48,13 +49,13 @@ public class RatingController {
 
     }
 
-    @GetMapping("/{id}/all")
-    public ResponseEntity<Page<RatingDTO>> getRatingsByBook(@PathVariable UUID id, Pageable pageable) {
-        Page<RatingDTO> ratings = ratingService.getRatingsByBookId(id, pageable).map(RatingDTO::new);
+    @GetMapping("/all/{id}")
+    public ResponseEntity<Page<RatingResponseDto>> getRatingsByBook(@PathVariable UUID id, Pageable pageable) {
+        Page<RatingResponseDto> ratings = ratingService.getRatingsByBookId(id, pageable).map(RatingResponseDto::new);
         return ResponseEntity.ok().body(ratings);
     }
 
-    @GetMapping("/{id}/average")
+    @GetMapping("/average/{id}")
     public ResponseEntity<Double> getAverageRatingByBookId(@PathVariable UUID id) {
         Double avg = ratingService.getAverageRatingByBookId(id);
         return ResponseEntity.ok().body(avg);

@@ -108,7 +108,20 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/purchaseBook/bypurchase/*").hasRole("ADMINISTRATOR") //lista de compras
 
                         //ReadingStatus
-                        .requestMatchers(HttpMethod.POST, "/api/purchaseBook/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.POST, "/api/readingstatus").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/readingstatus/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/readingstatus/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/readingstatus/id/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/readingstatus/idUser/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/readingstatus/idBookAndIdUser/*").hasRole("CLIENT")
+
+                        //Rating
+                        .requestMatchers(HttpMethod.POST, "/api/ratings").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/ratings/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.DELETE, "/api/ratings/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/ratings").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/ratings/all/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/ratings/average/*").hasRole("CLIENT")
 
                         //Book
                         .requestMatchers(HttpMethod.GET, "/api/books").hasRole("CLIENT")

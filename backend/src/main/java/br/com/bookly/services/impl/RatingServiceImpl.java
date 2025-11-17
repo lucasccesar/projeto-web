@@ -38,22 +38,17 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public Rating addRating(Rating rating) {
 
-        if (rating.getUser() == null) {
-            return null;
+        if (rating == null) {
+            throw new BadRequestException("Rating cannot be null.");
         }
 
-        if (rating.getBook() == null){
-            return null;
+        if (rating.getUser() == null || rating.getUser().getId() == null) {
+            throw new BadRequestException("User ID is required.");
         }
 
-        if (rating.getUser().getId() == null) {
-            return null;
+        if (rating.getBook() == null || rating.getBook().getIdBook() == null) {
+            throw new BadRequestException("Book ID is required.");
         }
-
-        if(rating.getBook().getIdBook() == null){
-            return null;
-        }
-
         if (rating.getRatingValue() < 0) {
             throw new InvalidRatingException("Error: Invalid value rating, the minimum value is 0");
         }
@@ -62,9 +57,15 @@ public class RatingServiceImpl implements RatingService {
             throw new InvalidRatingException("Error: Invalid value rating, the maximum value is 10");
         }
 
-        if (!ratingRepository.findByUserIdAndBook_IdBook(rating.getUser().getId(), rating.getBook().getIdBook()).isEmpty()) {
-            return null;
+        Optional<Rating> existingRating = ratingRepository.findByUserIdAndBook_IdBook(
+                rating.getUser().getId(),
+                rating.getBook().getIdBook()
+        );
+
+        if (existingRating.isPresent()) {
+            throw new BadRequestException("User has already rated this book.");
         }
+
 
         Optional<Users> optionalUser = usersService.getUsersRepository().findById(rating.getUser().getId());
         Optional<Book> optionalBook = bookService.getBookRepository().findById(rating.getBook().getIdBook());
