@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -20,6 +22,7 @@ public class UsersDTO {
     private String email;
     private String password;
     private UserType type;
+    private Set<BookDTO> favoriteBooks;
 
     public UsersDTO(UUID id, String name, LocalDate birthDate, String email, String password, UserType type) {
         this.id = id;
@@ -38,6 +41,13 @@ public class UsersDTO {
         this.password = user.getPassword();
         this.type = user.getType();
 
+        this.favoriteBooks = user.getFavoriteBooks()
+                .stream()
+                .map(book -> {
+                    book.getAuthors().size();
+                    return new BookDTO(book);
+                })
+                .collect(Collectors.toSet());
     }
 
 }

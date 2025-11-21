@@ -22,27 +22,27 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "Usuarios")
-public class Users implements UserDetails{
+public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_usuario")
     private UUID id;
 
-    @Column(name = "nome",nullable = false)
+    @Column(name = "nome", nullable = false)
     private String name;
 
-    @Column(name = "data_nascimento",nullable = false)
+    @Column(name = "data_nascimento", nullable = false)
     private LocalDate birthday;
 
     @Column(unique = true, nullable = false, length = 50)
     private String email;
 
-    @Column(name = "senha",nullable = false)
+    @Column(name = "senha", nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "tipo",nullable = false)
+    @Column(name = "tipo", nullable = false)
     private UserType type;
 
     // relação de usuário com ClubMessage
@@ -57,7 +57,7 @@ public class Users implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Rating> ratings = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "livros_favoritos",
             joinColumns = @JoinColumn(name = "id_usuario"),
@@ -74,7 +74,7 @@ public class Users implements UserDetails{
         this.type = usersRegisterDTO.userType();
     }
 
-    public Users(UsDTO user){
+    public Users(UsDTO user) {
         this.name = user.name();
         this.email = user.email();
         this.password = user.password();

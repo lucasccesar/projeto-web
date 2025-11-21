@@ -1,0 +1,155 @@
+main{
+    width: 85vw;
+    margin: 2vw 0 0 7.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+#mainHeaderWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mainHeaderWrapper a{
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+    display: flex;
+    gap: 0.5vw;
+    border: none;
+}
+
+#mainHeaderWrapper a span, #mainHeaderWrapper a p{
+    color: white;
+}
+
+#searchForm{
+    display: flex;
+    gap: 2vw;
+}
+
+#bookTitle{
+    width: 90%;
+    border: none;
+    border-radius: 2vw;
+    padding: 0vw 1.2vw;
+    background-color: #f5f0e6;
+}
+
+#searchBook{
+    background-color: #5a4632;
+    color: white;
+    padding: 0.4vw 0.5vw;
+    border-radius: 2vw;
+    border: none;
+    width: 10%;
+}
+
+#searchBook:hover{
+    cursor: pointer;
+}
+
+#userLists{
+    display: flex;
+    gap: 1vw;
+}
+
+.userOptions{
+    display: flex;
+    border: 1px solid #5a4632;
+    padding: 0.5vw 0.7vw;
+    border-radius: 2vw;
+    gap: 0.5vw;
+    justify-content: center;
+}
+
+.emptyCatalogue{
+    width: 85vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vw;
+    align-items: center;
+    gap: 1vw;
+}
+
+.emptyCatalogue span{
+    font-size: 4vw;
+}
+
+#addBookButton{
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+    display: flex;
+    gap: 0.5vw;
+    border: none;
+    align-items: center;
+}
+
+#addBookButton p{
+    color: white;
+}
+
+#addBookButton span{
+    color: white;
+    font-size: 1.5vw;
+}
+
+#catalogue{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1vw;
+    justify-content: space-between;
+}
+
+.bookItem{
+    max-width: 18vw;
+    width: 18vw;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd6cb;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    background-color: #F5F0E6;
+    gap: 0.7vw;
+}
+
+.titleDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favoriteBtn{
+    background: none;
+    border: none;
+}
+
+.ratingDiv{
+    display: flex;
+    align-items: center;
+    gap: 0.1vw;
+}
+
+.infoDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.favoriteBtn span, .starSpan, .priceP{
+    color: #7A8C63;
+}
+
+.favorited{
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

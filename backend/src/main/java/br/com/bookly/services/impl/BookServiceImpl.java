@@ -1,10 +1,12 @@
 package br.com.bookly.services.impl;
 
+import br.com.bookly.entities.Author;
 import br.com.bookly.entities.Book;
 import br.com.bookly.exceptions.InexistentAuthorException;
 import br.com.bookly.exceptions.InexistentBookException;
 import br.com.bookly.exceptions.InvalidBookDataException;
 import br.com.bookly.repositories.BookRepository;
+import br.com.bookly.services.AuthorService;
 import br.com.bookly.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,13 +14,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    private AuthorService authorService;
 
     @Override
     public BookRepository getBookRepository() {
@@ -47,6 +54,13 @@ public class BookServiceImpl implements BookService {
         if(book.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             throw new InvalidBookDataException("Error: Invalid Book Price (Negative Value)");
         }
+
+        List<Author> processedAuthors = book.getAuthors()
+                .stream()
+                .map(a -> authorService.getOrCreateAuthorByName(a.getName()))
+                .collect(Collectors.toList());
+
+        book.setAuthors(processedAuthors);
 
         return bookRepository.save(book);
 

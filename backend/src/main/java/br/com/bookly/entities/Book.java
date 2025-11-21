@@ -45,7 +45,7 @@ public class Book{
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseBook> purchaseBooks = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "livro_autor",
             joinColumns = @JoinColumn(name = "id_livro"),

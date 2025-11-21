@@ -22,4 +22,6 @@ public interface UsersService {
     public Users getUserByEmail(String email);
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException;
 
+    void addFavoriteBook(UUID userId, UUID bookId);
+    void removeFavoriteBook(UUID userId, UUID bookId);
 }

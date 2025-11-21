@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -81,6 +82,18 @@ public class AuthorServiceImpl implements AuthorService {
             throw new InexistentAuthorException("Error: Author not found");
         }
         return exists;
+    }
+
+    @Override
+    public Author getOrCreateAuthorByName(String name) {
+        List<Author> authors = authorRepository.findByNameContainingIgnoreCase(name);
+        if (authors.isEmpty()) {
+            Author newAuthor = new Author();
+            newAuthor.setName(name.trim());
+            return authorRepository.save(newAuthor);
+        } else {
+            return authors.get(0); // pega o primeiro encontrado
+        }
     }
 
     @Override

@@ -15,4 +15,5 @@ public interface AuthorService {
     public Page<Author> findAuthorByName(String name, Pageable pageable);
     public Page<Author> findAllAuthors(Pageable pageable);
 
+    Author getOrCreateAuthorByName(String name);
 }

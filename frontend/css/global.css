@@ -5,11 +5,76 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
-    color:#5a4632
+    color:#5a4632;
+    font-size: 1vw;
+    text-decoration: none;
+}
+
+.lightText{
+    color:#886f56;
+}
+
+button:hover{
+    cursor: pointer;
 }
 
 body{
     background-color: #FFFDF7;
     width: 100vw;
     height: 100vh;
+}
+
+header{
+    width: 100vw;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    padding: 1vw 7.5vw;
+    background-color: #f5f0e6;
+    align-items: center;
+    border-bottom: 1px solid #ddd6cb;
+}
+
+header div, header nav, header a{
+    display: flex;
+    align-items: center;
+}
+
+#headerLogo{
+    gap: 0.5vw;
+}
+
+#headerLogo span, #headerLogo p{
+    color: #7A8C63;
+}
+
+header nav{
+    gap: 2vw;
+}
+
+header nav a{
+    gap: 0.4vw;
+}
+
+.currentPage{
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+}
+
+.currentPage p, .currentPage span{
+    color: white;
+}
+
+#headerRightDiv{
+    gap: 1.3vw;
+}
+
+#headerRightDiv a{
+    gap: 0.4vw;
+}
+
+#headerRightDiv button{
+    background: none;
+    border: none;
 }

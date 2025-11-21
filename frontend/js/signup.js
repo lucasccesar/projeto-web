@@ -14,7 +14,7 @@ form.addEventListener("submit", async (e) => {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
     const birthday = birthdayInput.value.trim();
-    const type = typeSelect.value;
+    const userType = document.getElementById("inputType").value;
 
     if (!name || !email || !password || !birthday) {
         alert("Please fill in all fields.");
@@ -25,7 +25,7 @@ form.addEventListener("submit", async (e) => {
         const response = await fetch(API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password, birthday, type })
+            body: JSON.stringify({ name, email, password, birthday, userType })
         });
 
         if (!response.ok) {

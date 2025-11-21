@@ -3,6 +3,7 @@ package br.com.bookly.controllers;
 import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Users;
 import br.com.bookly.entities.dtos.ParticipantUserDTO;
+import br.com.bookly.entities.dtos.UsDTO;
 import br.com.bookly.entities.dtos.UsersDTO;
 import br.com.bookly.entities.dtos.UsersLoginDTO;
 import br.com.bookly.services.UsersService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -53,5 +55,28 @@ public class    UsersController {
         Users user = usersService.loginUser(loginDto.email(),  loginDto.password());
             UsersDTO userDTO = new UsersDTO(user);
             return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal Users user) {
+        return ResponseEntity.ok(new UsersDTO(user));
+    }
+
+    @PostMapping("/{userId}/favorites/{bookId}")
+    public ResponseEntity<?> addFavorite(
+            @PathVariable UUID userId,
+            @PathVariable UUID bookId) {
+
+        usersService.addFavoriteBook(userId, bookId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{userId}/favorites/{bookId}")
+    public ResponseEntity<?> removeFavorite(
+            @PathVariable UUID userId,
+            @PathVariable UUID bookId) {
+
+        usersService.removeFavoriteBook(userId, bookId);
+        return ResponseEntity.ok().build();
     }
 }

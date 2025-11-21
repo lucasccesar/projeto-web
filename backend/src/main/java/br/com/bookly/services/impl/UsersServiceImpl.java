@@ -1,9 +1,11 @@
 package br.com.bookly.services.impl;
 
+import br.com.bookly.entities.Book;
 import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Enums.UserType;
 import br.com.bookly.entities.Users;
 import br.com.bookly.exceptions.*;
+import br.com.bookly.repositories.BookRepository;
 import br.com.bookly.repositories.UsersRepository;
 import br.com.bookly.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
 
     @Autowired
     UsersRepository usersRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -176,5 +181,23 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
             throw new UsernameNotFoundException("Error: User not found with email " + email);
         }
         return user;
+    }
+
+    @Override
+    public void addFavoriteBook(UUID userId, UUID bookId) {
+        Users user = usersRepository.findById(userId).orElseThrow();
+        Book book = bookRepository.findById(bookId).orElseThrow();
+
+        user.getFavoriteBooks().add(book);
+        usersRepository.save(user);
+    }
+
+    @Override
+    public void removeFavoriteBook(UUID userId, UUID bookId) {
+        Users user = usersRepository.findById(userId).orElseThrow();
+        Book book = bookRepository.findById(bookId).orElseThrow();
+
+        user.getFavoriteBooks().remove(book);
+        usersRepository.save(user);
     }
 }

@@ -9,7 +9,9 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -21,6 +23,7 @@ public class BookDTO {
     private String genre;
     private int availableQuantity;
     private BigDecimal price;
+    private List<AuthorDTO> authors;
 
     public BookDTO(UUID id, String title, String synopsis, String genre, int availableQuantity, BigDecimal price) {
         this.id = id;
@@ -38,5 +41,9 @@ public class BookDTO {
         this.genre = book.getGenre();
         this.availableQuantity = book.getAvailableQuantity();
         this.price = book.getPrice();
+        this.authors = book.getAuthors()
+                .stream()
+                .map(AuthorDTO::new)
+                .collect(Collectors.toList());
     }
 }
