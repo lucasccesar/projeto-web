@@ -78,9 +78,9 @@ public class SecurityConfig {
 
                         //Colection
                         .requestMatchers(HttpMethod.POST, "/api/colection").hasAnyRole("ADMINISTRATOR", "CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/colection/**").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/colection/**").hasAnyRole("ADMINISTRATOR", "CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/colection/name").hasAnyRole("ADMINISTRATOR", "CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/colection/user/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/colection/user/*").hasAnyRole("ADMINISTRATOR", "CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/colection").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/colection/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.POST, "/api/colection").hasRole("CLIENT")
@@ -111,12 +111,12 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/purchaseBook/bypurchase/*").hasRole("ADMINISTRATOR") //lista de compras
 
                         //ReadingStatus
+                        .requestMatchers(HttpMethod.GET, "/api/readingstatus/byBookAndUser").hasAnyRole("CLIENT", "ADMINISTRATOR")
                         .requestMatchers(HttpMethod.POST, "/api/readingstatus").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/readingstatus/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/readingstatus/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/readingstatus/id/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/readingstatus/idUser/*").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/readingstatus/idBookAndIdUser/*").hasRole("CLIENT")
 
                         //Rating
                         .requestMatchers(HttpMethod.POST, "/api/ratings").hasRole("CLIENT")
@@ -128,12 +128,13 @@ public class SecurityConfig {
 
                         //Book
                         .requestMatchers(HttpMethod.GET, "/api/books").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/books**").hasRole("CLIENT") //title e genre
+                        .requestMatchers(HttpMethod.GET, "/api/books/**").hasRole("CLIENT") //title e genre
                         .requestMatchers(HttpMethod.GET, "/api/books/availables").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/books/unavailables").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.POST, "/api/books").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/api/books/**").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/books/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/books/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
 
                         .anyRequest().authenticated()
                 )

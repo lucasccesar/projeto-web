@@ -98,7 +98,7 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
 
     @Override
     public ReadingStatus findReadingStatusbyBook_IdBookAndUsers_Id(UUID idBook, UUID userId) {
-        return readingStatusRepository.findByBook_IdBookAndUsersId(idBook, userId);
+        return readingStatusRepository.findByBook_IdBookAndUsers_Id(idBook, userId);
     }
 
     @Override
@@ -108,5 +108,18 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
         }
 
         return readingStatusRepository.findByUsers_id(userId, pageable);
+    }
+
+    @Override
+    public ReadingStatus createOrUpdateReadingStatus(ReadingStatus readingStatus) {
+        ReadingStatus existing = readingStatusRepository
+                .findByBook_IdBookAndUsers_Id(readingStatus.getBook().getIdBook(), readingStatus.getUsers().getId());
+
+        if (existing != null) {
+            existing.setStatus(readingStatus.getStatus());
+            return readingStatusRepository.save(existing);
+        } else {
+            return readingStatusRepository.save(readingStatus);
+        }
     }
 }

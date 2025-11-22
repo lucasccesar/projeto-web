@@ -165,6 +165,10 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findByGenre(pageable, genre);
     }
 
+    public Book getBookById(UUID id) {
+        return bookRepository.findById(id).orElse(null);
+    }
+
     @Override
     public Page<Book> getAvailableBooks(Pageable pageable) {
         return bookRepository.findAvailable(pageable);

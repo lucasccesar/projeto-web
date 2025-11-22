@@ -14,4 +14,5 @@ public interface ReadingStatusService {
     public ReadingStatus findReadingStatus(UUID readingStatusId);
     public ReadingStatus findReadingStatusbyBook_IdBookAndUsers_Id(UUID idBook, UUID id);
     public Page<ReadingStatus> findReadingStatusbyUsers_Id(UUID userId, Pageable pageable);
+    ReadingStatus createOrUpdateReadingStatus(ReadingStatus readingStatus);
 }

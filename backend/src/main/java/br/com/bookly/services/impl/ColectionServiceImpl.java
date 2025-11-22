@@ -93,6 +93,7 @@ public class ColectionServiceImpl implements ColectionService {
 
         exists.setName(colection.getName());
         exists.setDescription(colection.getDescription());
+        exists.setBooks(colection.getBooks());
 
         return  colectionRepository.save(exists);
     }

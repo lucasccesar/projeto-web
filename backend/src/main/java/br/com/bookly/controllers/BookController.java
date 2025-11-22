@@ -35,6 +35,13 @@ public class BookController {
         return ResponseEntity.status(201).body(bookDTO);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDTO> getBookById(@PathVariable UUID id) {
+        Book book = bookService.getBookById(id);
+        if (book == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new BookDTO(book));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<BookDTO> updateBook(@PathVariable UUID id, @RequestBody Book book) {
         Book updated = bookService.updateBook(id, book);

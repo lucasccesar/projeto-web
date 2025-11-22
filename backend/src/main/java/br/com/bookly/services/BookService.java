@@ -21,5 +21,6 @@ public interface BookService {
     Page<Book> getBooksByGenre(Pageable pageable, String genre);
     Page<Book> getAvailableBooks(Pageable pageable);
     Page<Book> getUnavailableBooks(Pageable pageable);
+    Book getBookById(UUID id);
 
 }

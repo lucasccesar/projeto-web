@@ -50,13 +50,14 @@ public class ReadingStatusController {
         return ResponseEntity.ok(readingStatusDto);
     }
 
-    @GetMapping("/idBookAndIdUser")
-    public ResponseEntity<ReadingStatusResponseDto> getReadingStatusByIdBook(@RequestBody ReadingStatus readingStatus){
-        UUID bookId = readingStatus.getBook().getIdBook();
-        UUID userId = readingStatus.getUsers().getId();
+    @GetMapping("/byBookAndUser")
+    public ResponseEntity<ReadingStatusResponseDto> getReadingStatus(
+            @RequestParam UUID bookId,
+            @RequestParam UUID userId) {
+
         ReadingStatus rd = readingStatusService.findReadingStatusbyBook_IdBookAndUsers_Id(bookId, userId);
-        ReadingStatusResponseDto readingStatusDto = new ReadingStatusResponseDto(rd);
-        return ResponseEntity.ok(readingStatusDto);
+        if (rd == null) return ResponseEntity.ok(null); // retorna null para o front
+        return ResponseEntity.ok(new ReadingStatusResponseDto(rd));
     }
 
     @GetMapping("/idUser/{id}")

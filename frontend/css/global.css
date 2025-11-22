@@ -14,7 +14,7 @@
     color:#886f56;
 }
 
-button:hover{
+a:hover, button:hover{
     cursor: pointer;
 }
 
@@ -77,4 +77,8 @@ header nav a{
 #headerRightDiv button{
     background: none;
     border: none;
+}
+
+.bookItem{
+    cursor: pointer;
 }

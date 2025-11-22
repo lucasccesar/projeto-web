@@ -101,7 +101,6 @@ if(books == 0){
 
         const authorP = document.createElement("p");
         authorP.classList.add("authorP", "lightText");
-        // Lista de autores separados por vírgula
         authorP.textContent = b.authors.map(a => a.name).join(", ");
 
         const ratingDiv = document.createElement("div");

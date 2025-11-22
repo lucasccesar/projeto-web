@@ -1,0 +1,79 @@
+#collectionForm {
+    border: 1px solid #ddd6cb;
+    display: flex;
+    flex-direction: column;
+    width: 40vw;
+    padding: 2vw;
+    border-radius: 0.5vw;
+    background-color: #F5F0E6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    gap: 1vw;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#formTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+#formTitle span {
+    color: #7A8C63;
+    font-size: 2vw;
+}
+
+#collectionForm input,
+#collectionForm textarea {
+    background: none;
+    border: 1px solid #aca499;
+    border-radius: 0.5vw;
+    padding: 0.4vw;
+}
+
+#collectionForm button {
+    background-color: #7A8C63;
+    padding: 0.6vw 0.7vw;
+    border-radius: 2vw;
+    border: none;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+}
+
+.booksList {
+    border: 1px solid #ccc;
+    padding: 0.5vw;
+    border-radius: 0.5vw;
+    background-color: #faf7f2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+}
+
+.bookItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4vw;
+    border-bottom: 1px solid #ddd;
+}
+
+.bookItem:last-child {
+    border-bottom: none;
+}
+
+.removeBtn {
+    background-color: #b84b4b;
+    color: white;
+    border: none;
+    padding: 0.2vw 0.6vw;
+    border-radius: 0.3vw;
+    cursor: pointer;
+}

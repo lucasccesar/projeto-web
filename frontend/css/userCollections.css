@@ -1,0 +1,89 @@
+main {
+    width: 85vw;
+    margin: 2vw 0 0 7.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+#mainHeaderWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mainHeaderWrapper a {
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+    display: flex;
+    gap: 0.5vw;
+    border: none;
+}
+
+#mainHeaderWrapper a span,
+#mainHeaderWrapper a p {
+    color: white;
+}
+
+.emptyCatalogue {
+    width: 85vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vw;
+    align-items: center;
+    gap: 1vw;
+}
+
+.emptyCatalogue span {
+    font-size: 4vw;
+}
+
+#collectionsList {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+}
+
+.bookItem {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd6cb;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    background-color: #F5F0E6;
+    gap: 0.7vw;
+    width: 100%;
+}
+
+.titleDiv {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+.titleDiv span{
+    color: #7A8C63;
+}
+
+#createFirstCollection{
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+    display: flex;
+    gap: 0.5vw;
+    border: none;
+    align-items: center;
+}
+
+#createFirstCollection p{
+    color: white;
+}
+
+#createFirstCollection span{
+    color: white;
+    font-size: 1.5vw;
+}
