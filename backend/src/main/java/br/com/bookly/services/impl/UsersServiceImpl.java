@@ -1,7 +1,6 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.Book;
-import br.com.bookly.entities.BookClub;
 import br.com.bookly.entities.Enums.UserType;
 import br.com.bookly.entities.Users;
 import br.com.bookly.exceptions.*;
@@ -14,12 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -171,6 +170,11 @@ public class UsersServiceImpl implements UsersService, UserDetailsService {
     @Override
     public Users getUserByEmail(String email) {
         return usersRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<Users> getUserById(UUID id) {
+        return usersRepository.findById(id);
     }
 
     @Override

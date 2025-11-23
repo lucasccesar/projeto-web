@@ -2,8 +2,6 @@ package br.com.bookly.repositories;
 
 import br.com.bookly.entities.Enums.UserType;
 import br.com.bookly.entities.Users;
-import br.com.bookly.services.UsersService;
-import br.com.bookly.services.impl.UsersServiceImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -208,3 +208,29 @@ form button{
 .list label { 
     display: flex; align-items: center; gap: 6px; padding: 6px; cursor: pointer;
 }
+
+#ratingsContainer{
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.ratingItem{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1vw;
+    border: 1px solid #ddd6cb;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    background-color: #F5F0E6;
+}
+
+.ratingItem div{
+    display: flex;
+    justify-content: space-between;
+}
+
+.userRate{
+    font-size: 1vw;
+    font-weight: bold;
+}

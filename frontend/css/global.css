@@ -82,3 +82,8 @@ header nav a{
 .bookItem{
     cursor: pointer;
 }
+
+.pageTitle{
+    font-size: 1.8vw;
+    font-weight: bold;
+}

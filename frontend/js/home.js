@@ -50,7 +50,7 @@ if(books == 0){
     const catalogue = document.getElementById("catalogue");
     const userId = user.id;
 
-    books.forEach(b => {
+    for (const b of books) {
         const bookElement = document.createElement("div");
         bookElement.classList.add("bookItem");
         bookElement.setAttribute("data-bookId", b.id);
@@ -107,17 +107,25 @@ if(books == 0){
         ratingDiv.classList.add("ratingDiv");
 
         const starSpan = document.createElement("span");
-        starSpan.classList.add("material-symbols-rounded");
-        starSpan.classList.add("starSpan");
+        starSpan.classList.add("material-symbols-rounded", "starSpan");
         starSpan.textContent = "star";
 
+        const ratingsAvgRes = await fetch(`http://localhost:8080/api/ratings/average/${b.id}`, {
+            headers: { "Authorization": "Bearer " + token }
+        });
+
+        const ratingsAvg = await ratingsAvgRes.json();
+
         const avgP = document.createElement("p");
-        /* avgP.textContent = `${b.average}`; */
-        avgP.textContent = 0;
+        avgP.textContent = ratingsAvg;
+
+        const ratingsRes = await fetch(`http://localhost:8080/api/ratings/all/${b.id}`, {
+            headers: { "Authorization": "Bearer " + token }
+        });
+        const ratingsData = await ratingsRes.json();
 
         const quantityP = document.createElement("p");
-        /* quantityP.textContent = `(${b.ratingQuantity})`; */
-        quantityP.textContent = "(0)";
+        quantityP.textContent = `(${ratingsData.content.length})`;
         quantityP.classList.add("lightText");
 
         ratingDiv.appendChild(starSpan);
@@ -147,8 +155,8 @@ if(books == 0){
 
         bookElement.addEventListener("click", () => {
             window.location.href = `./book.html?id=${b.id}`;
-        })
-    });
+        });
+    }
 }
 
 function updateCount(){

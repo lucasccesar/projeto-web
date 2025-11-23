@@ -15,7 +15,7 @@ public class RatingResponseDto {
 
     private UUID id;
     private UUID user;
-    private String book;
+    private UUID book;
     private String comment;
     private int ratingValue;
     private LocalDate ratingDate;
@@ -23,7 +23,7 @@ public class RatingResponseDto {
     public RatingResponseDto(Rating rating) {
         this.id = rating.getIdRating();
         this.user = rating.getUser().getId();
-        this.book = rating.getBook().getTitle();
+        this.book = rating.getBook().getIdBook();
         this.comment = rating.getComment();
         this.ratingValue = rating.getRatingValue();
         this.ratingDate = rating.getRatingDate();

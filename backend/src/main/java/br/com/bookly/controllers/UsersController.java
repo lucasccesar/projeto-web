@@ -62,6 +62,15 @@ public class    UsersController {
         return ResponseEntity.ok(new UsersDTO(user));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsersDTO> getUser(@PathVariable UUID id) {
+        Users user = usersService.getUserById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        UsersDTO dto = new UsersDTO(user);
+        return ResponseEntity.ok(dto);
+    }
+
     @PostMapping("/{userId}/favorites/{bookId}")
     public ResponseEntity<?> addFavorite(
             @PathVariable UUID userId,

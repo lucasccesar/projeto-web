@@ -17,14 +17,13 @@ public class ReadingStatusResponseDto {
     private UUID id;
     private UUID userId;
     private Status status;
-    private String book;
+    private BookDTO book;
 
-
-    public ReadingStatusResponseDto (ReadingStatus readingStatus) {
+    public ReadingStatusResponseDto(ReadingStatus readingStatus) {
         this.id = readingStatus.getIdReadingStatus();
         this.userId = readingStatus.getUsers().getId();
         this.status = readingStatus.getStatus();
-        this.book = readingStatus.getBook().getTitle();
+        this.book = new BookDTO(readingStatus.getBook());
     }
 
 }

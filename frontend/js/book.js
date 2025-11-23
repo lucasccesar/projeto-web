@@ -74,6 +74,7 @@ async function fetchBook() {
     });
 
     let readingStatus = await statusRes.json().catch(() => null);
+    console.log(readingStatus)
 
     if (readingStatus) {
         document.getElementById("readingStatusSelect").value = readingStatus.status || "";
@@ -243,16 +244,41 @@ async function fetchBook() {
     if (ratingsData.content.length > 0) {
         ratingsContainer.style.display = "flex";
         emptyRatings.style.display = "none";
-        ratingsContainer.innerHTML = ratingsData.content.map(r => `
-            <div class="ratingItem">
-                <p>${r.user.name}: ${r.ratingValue}/5</p>
-                <p>${r.comment}</p>
-            </div>
-        `).join("");
+        const ratingItems = await Promise.all(
+            ratingsData.content.map(async r => {
+                const userRes = await fetch(`http://localhost:8080/api/users/${r.user}`, {
+                    headers: { "Authorization": "Bearer " + token }
+                });
+
+                const user = await userRes.json();
+
+                return `
+                    <div class="ratingItem">
+                        <div>
+                            <p class="userRate">${user.name}</p>
+                            <p class="userRate">Nota: ${r.ratingValue}/10</p>
+                        </div>
+                        <p>${r.comment}</p>
+                    </div>
+                `;
+            })
+        );
+
+        ratingsContainer.innerHTML = ratingItems.join("");
     } else {
         ratingsContainer.style.display = "none";
         emptyRatings.style.display = "flex";
     }
+
+    document.getElementById("ratingQuantity").textContent = `${ratingsData.content.length} Avaliações`
+    
+    const ratingsAvgRes = await fetch(`http://localhost:8080/api/ratings/average/${book.id}`, {
+        headers: { "Authorization": "Bearer " + token }
+    });
+    const ratingsAvg = await ratingsAvgRes.json();
+
+    document.getElementById("averageRating").textContent = ratingsAvg
+
 }
 
 document.getElementById("deleteBookBtn").addEventListener("click", async () => {

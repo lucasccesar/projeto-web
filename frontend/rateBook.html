@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/global.css"/>
-    <link rel="stylesheet" href="./css/home.css"/>
+    <link rel="stylesheet" href="./css/rateBook.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Favoritos</title>
+    <title>Avaliar Livro</title>
 </head>
 <body>
 <header>
@@ -14,6 +14,7 @@
         <span class="material-symbols-rounded">import_contacts</span>
         <p>Biblioteca Digital</p>
     </div>
+
     <nav>
         <a href="./home.html" class="pageLink">
             <span class="material-symbols-rounded">home</span>
@@ -28,6 +29,7 @@
             <p>Compras</p>
         </a>
     </nav>
+
     <div id="headerRightDiv">
         <a href="./account.html" id="headerProfile">
             <span class="material-symbols-rounded">account_circle</span>
@@ -39,20 +41,29 @@
     </div>
 </header>
 
-<main>
-    <div id="mainHeaderWrapper">
-        <p class="pageTitle">Livros Favoritos</p>
+<form id="ratingForm">
+    <div id="formTitle">
+        <span class="material-symbols-rounded">reviews</span>
+        <div>
+            <p id="ratingHeader">Avaliar: ...</p>
+            <p class="lightText">Sua avaliação</p>
+        </div>
     </div>
 
-    <div id="emptyCatalogueClient" class="emptyCatalogue">
-        <span class="material-symbols-rounded">sentiment_dissatisfied</span>
-        <p>Nenhum favorito encontrado</p>
-        <p>Você ainda não marcou nenhum livro como favorito.</p>
+    <div class="inputWrapper">
+        <label for="ratingValue">Sua avaliação:</label>
+        <input type="number" id="ratingValue" name="ratingValue" min="0" max="10" required>
     </div>
 
-    <div id="catalogue"></div>
-</main>
+    <div class="inputWrapper">
+        <label for="comment">Comentário:</label>
+        <textarea id="comment" name="comment" rows="4"></textarea>
+    </div>
+
+    <button type="submit">Publicar Avaliação</button>
+</form>
+
 </body>
 <script src="./js/global.js" type="module"></script>
-<script src="./js/favoritesBooks.js" type="module"></script>
+<script src="./js/rateBook.js" type="module"></script>
 </html>

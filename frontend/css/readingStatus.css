@@ -1,0 +1,112 @@
+main{
+    width: 85vw;
+    margin: 2vw 0 0 7.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+}
+
+/* ------- Header ------- */
+
+#mainHeaderWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+/* ------- Botões de Status ------- */
+
+#statusButtons{
+    display: flex;
+    gap: 1vw;
+}
+
+.statusBtn{
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 0.5vw 1vw;
+    border-radius: 2vw;
+    font-size: 1vw;
+    cursor: pointer;
+    color: #5a4632;
+    display: flex;
+    gap: 0.5vw;
+    align-items: center;
+    transition: 0.2s ease;
+}
+
+.statusBtn:hover{
+    background-color: #e8e0d4;
+}
+
+.statusBtn.active{
+    background-color: #7A8C63;
+    color: white;
+    border-color: #7A8C63;
+}
+
+/* ------- Empty Catalogue ------- */
+
+.emptyCatalogue{
+    width: 85vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vw;
+    align-items: center;
+    gap: 1vw;
+}
+
+.emptyCatalogue span{
+    font-size: 4vw;
+}
+
+/* ------- Grid de Livros ------- */
+
+#catalogue{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+}
+
+/* ------- Card ------- */
+
+.bookItem{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd6cb;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    background-color: #f5f0e6;
+    gap: 0.7vw;
+    width: 100%;
+}
+
+.titleDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.authorP{
+    margin-top: 0.3vw;
+    color: #5a4632;
+}
+
+.ratingDiv{
+    display: flex;
+    align-items: center;
+    gap: 0.2vw;
+}
+
+.infoDiv{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.starSpan, .priceP{
+    color: #7A8C63;
+}

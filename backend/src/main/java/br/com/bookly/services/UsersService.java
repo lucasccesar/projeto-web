@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UsersService {
@@ -19,6 +20,7 @@ public interface UsersService {
     Users updateUser(UUID id, Users user);
     boolean deleteUser(UUID id);
     Page<Users> getUsers(Pageable pageable);
+    Optional<Users> getUserById(UUID id);
     public Users getUserByEmail(String email);
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException;
 
