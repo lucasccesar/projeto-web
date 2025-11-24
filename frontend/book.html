@@ -33,6 +33,10 @@
                 <span class="material-symbols-rounded">account_circle</span>
                 <p>Perfil</p>
             </a>
+            <a href="./cartPage.html">
+                <span id="cartIcon" class="material-symbols-rounded">shopping_cart</span>
+                <p id="cartBookCount">(0)</p>
+            </a>
             <button id="logoutBtn">
                 <span class="material-symbols-rounded">logout</span>
             </button>
@@ -106,11 +110,12 @@
             <div>
                 <p class="lightText">Preço:</p>
                 <p id="bookPrice"></p>
+                <p class="lightText" id="bookQuantity"></p>
             </div>
-            <a href="buyBook.html" id="buyBookLink">
+            <button class="buttonAction" id="buyBookBtn">
                 <span class="material-symbols-rounded">shopping_cart</span>
-                <p>Comprar</p>
-            </a>
+                <p id="buyBookText">Comprar</p>
+            </button>
         </div>
 
         <p>Avaliações:</p>

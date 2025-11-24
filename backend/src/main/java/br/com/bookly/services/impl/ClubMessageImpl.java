@@ -1,6 +1,7 @@
 package br.com.bookly.services.impl;
 
 import br.com.bookly.entities.ClubMessage;
+import br.com.bookly.entities.ParticipantUser;
 import br.com.bookly.exceptions.BadRequestException;
 import br.com.bookly.exceptions.InexistentClubMessageException;
 import br.com.bookly.exceptions.NotModifiedClubMessageException;
@@ -36,9 +37,7 @@ public class ClubMessageImpl implements ClubMessageService {
     @Override
     public Page<ClubMessage> getByClubId(UUID idClub, Pageable pageable) {
         Page<ClubMessage> clubMessages = clubMessageRepository.findByClub_IdBookClub(idClub, pageable);
-        if(clubMessages.isEmpty()){
-            throw new InexistentClubMessageException("Error: Message Not Found for this Club");
-        }
+
         return clubMessages;
     }
 

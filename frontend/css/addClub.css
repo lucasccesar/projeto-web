@@ -1,0 +1,73 @@
+body{
+    overflow-x: hidden;
+    height: fit-content;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    margin: 3vw 0;
+}
+
+#clubForm {
+    border: 1px solid #ddd6cb;
+    background-color: #F5F0E6;
+    border-radius: 0.5vw;
+    padding: 2vw;
+    width: 45vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+}
+
+#formTitle {
+    display: flex;
+    gap: 0.8vw;
+    align-items: center;
+}
+
+#formTitle span {
+    color: #7A8C63;
+    font-size: 2.5vw;
+}
+
+.inputWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4vw;
+}
+
+#clubForm input,
+#clubForm textarea,
+#clubForm select {
+    background: none;
+    border: 1px solid #aca499;
+    border-radius: 0.5vw;
+    padding: 0.4vw;
+}
+
+#datesContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 2vw;
+}
+
+#datesContainer .inputWrapper {
+    width: 50%;
+}
+
+#createBtn {
+    background-color: #7A8C63;
+    padding: 0.6vw;
+    border-radius: 2vw;
+    border: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    gap: 0.5vw;
+    cursor: pointer;
+}
+
+#createBtn span {
+    color: white;
+}

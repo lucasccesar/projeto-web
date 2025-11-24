@@ -110,10 +110,9 @@ public class ParticipantUserServiceImpl implements ParticipantUserService {
 
     @Override
     public Page<ParticipantUser> getByClubId(UUID idClub, Pageable pageable) {
-        Page<ParticipantUser> participantUsers = participantUserRepository.findByClub_IdBookClub(idClub, pageable);
-        if(participantUsers.isEmpty()){
-            throw new InexistentParticipantUserException("Error: No users in this Club");
-        }
+        Page<ParticipantUser> participantUsers =
+                participantUserRepository.findByClub_IdBookClub(idClub, pageable);
+
         return participantUsers;
     }
 }

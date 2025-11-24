@@ -35,6 +35,6 @@ public class PurchaseBook {
     @Column(name = "quantidade", nullable = false)
     private Integer quantity;
 
-    @Column(name = "preco_unidade",nullable = false, columnDefinition = "NUMERIC(4,2)")
+    @Column(name = "preco_unidade",nullable = false, columnDefinition = "NUMERIC(10,2)")
     private BigDecimal unitPrice;
 }

@@ -33,7 +33,7 @@ public class Purchase {
     @Column(name = "data_compra",nullable = false)
     private LocalDate purchaseDate;
 
-    @Column(name = "valor_total",nullable = false, columnDefinition = "NUMERIC(4,2)")
+    @Column(name = "valor_total",nullable = false, columnDefinition = "NUMERIC(10,2)")
     private BigDecimal totalValuation;
 
     // Relação de Compra com CompraLivro (PurchaseBook)

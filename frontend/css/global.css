@@ -8,6 +8,13 @@
     color:#5a4632;
     font-size: 1vw;
     text-decoration: none;
+    /* overflow-x: hidden;
+    overflow-y: hidden; */
+}
+
+body{
+    height: fit-content;
+    overflow-y: auto;
 }
 
 .lightText{
@@ -16,6 +23,10 @@
 
 a:hover, button:hover{
     cursor: pointer;
+}
+
+button{
+    border: none;
 }
 
 body{
@@ -77,6 +88,7 @@ header nav a{
 #headerRightDiv button{
     background: none;
     border: none;
+    display: flex;
 }
 
 .bookItem{

@@ -55,27 +55,27 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/clubmessage").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/clubmessage/*").hasRole("CLIENT") //Id
                         .requestMatchers(HttpMethod.GET, "/api/clubmessage/user/*").hasRole("ADMINISTRATOR")
-                        .requestMatchers(HttpMethod.GET, "/api/clubmessage/club/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.GET, "/api/clubmessage/club/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
                         .requestMatchers(HttpMethod.POST, "/api/clubmessage").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/clubmessage/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/clubmessage/*").hasRole("CLIENT")
 
                         //BookClub
                         .requestMatchers(HttpMethod.GET, "/api/bookclub").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.GET, "/api/bookclub/*").hasRole("ADMINISTRATOR") //Id
+                        .requestMatchers(HttpMethod.GET, "/api/bookclub/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/bookclub/name/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.POST, "/api/bookclub").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/bookclub/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.DELETE, "/api/bookclub/*").hasRole("CLIENT")
 
                         //ParticipantUser
-                        .requestMatchers(HttpMethod.GET, "/api/participantuser/byclub/*").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.GET, "/api/participantuser/byclub/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/participantuser/byuser/*").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/participantuser/*").hasRole("CLIENT") //Id
                         .requestMatchers(HttpMethod.GET, "/api/participantuser").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.POST, "/api/participantuser").hasRole("CLIENT")
                         .requestMatchers(HttpMethod.PUT, "/api/participantuser/*").hasRole("ADMINISTRATOR")
-                        .requestMatchers(HttpMethod.DELETE, "/api/participantuser/*").hasRole("ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/participantuser/*").hasAnyRole("CLIENT", "ADMINISTRATOR")
 
                         //Colection
                         .requestMatchers(HttpMethod.POST, "/api/colection").hasAnyRole("ADMINISTRATOR", "CLIENT")

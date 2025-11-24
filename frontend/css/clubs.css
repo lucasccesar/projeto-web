@@ -1,0 +1,138 @@
+main{
+    width: 85vw;
+    margin: 2vw 0 0 7.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+#mainHeaderWrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#mainHeaderWrapper a{
+    background-color: #7A8C63;
+    padding: 0.4vw 0.7vw;
+    border-radius: 2vw;
+    display: flex;
+    gap: 0.5vw;
+    border: none;
+}
+
+#mainHeaderWrapper a span, #mainHeaderWrapper a p{
+    color: white;
+}
+
+#searchForm{
+    display: flex;
+    gap: 2vw;
+}
+
+#clubName{
+    width: 90%;
+    border: none;
+    border-radius: 2vw;
+    padding: 0vw 1.2vw;
+    background-color: #f5f0e6;
+}
+
+#searchClub{
+    background-color: #5a4632;
+    color: white;
+    padding: 0.4vw 0.5vw;
+    border-radius: 2vw;
+    border: none;
+    width: 10%;
+}
+
+#searchClub:hover{
+    cursor: pointer;
+}
+
+.emptyCatalogue{
+    width: 85vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1vw;
+    align-items: center;
+    gap: 1vw;
+}
+
+#clubsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1vw;
+    margin-top: 1vw;
+}
+
+.clubCard {
+    background-color: #F5F0E6;
+    border: 1px solid #ddd6cb;
+    padding: 1vw;
+    border-radius: 0.8vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6vw;
+    min-height: 10rem;
+}
+
+.clubTitleRow {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.clubTitleRow p {
+    font-weight: 600;
+    margin: 0;
+}
+
+.clubTheme {
+    font-size: 0.9rem;
+    color: #7A8C63;
+    margin: 0;
+}
+
+.clubDescription {
+    color: #504939;
+    font-size: 0.95rem;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.clubButtons {
+    display:flex;
+    gap: 0.6vw;
+    margin-top: auto;
+}
+
+.btn {
+    padding: 0.4vw 0.7vw;
+    border-radius: 1vw;
+    border: none;
+    cursor: pointer;
+}
+
+.joinBtn {
+    background-color: #7A8C63;
+    color: white;
+}
+
+.leaveBtn {
+    background-color: transparent;
+    color: #7A8C63;
+    border: 1px solid #7A8C63;
+}
+
+.infoSmall {
+    font-size: 0.85rem;
+    color: #6b665d;
+}

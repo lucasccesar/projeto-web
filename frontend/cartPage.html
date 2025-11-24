@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/global.css"/>
-    <link rel="stylesheet" href="./css/userCollections.css"/>
+    <link rel="stylesheet" href="./css/cartPage.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <title>Coleções</title>
+    <title>Carrinho de Compras</title>
 </head>
 <body>
 <header>
@@ -44,28 +44,25 @@
 </header>
 
 <main>
-    <div id="mainHeaderWrapper">
-        <p class="pageTitle">Minhas Coleções</p>
-        <a href="./createCollection.html" id="createCollectionBtn">
-            <span class="material-symbols-rounded">add</span>
-            <p>Criar Coleção</p>
-        </a>
+    <h1 class="pageTitle">Carrinho de Compras</h1>
+    <p id="cartItemCount" class="lightText">0 itens no carrinho</p>
+
+    <div id="emptyCart" class="emptyCatalogue">
+        <span class="material-symbols-rounded">shopping_cart</span>
+        <p>Nenhum livro no carrinho</p>
+        <p>Adicione livros para visualizar aqui.</p>
     </div>
 
-    <div id="emptyCollections" class="emptyCatalogue">
-        <span class="material-symbols-rounded">shelves</span>
-        <p>Nenhuma coleção encontrada</p>
-        <p>Crie sua primeira coleção!</p>
-        <a href="./createCollection.html" id="createFirstCollection">
-            <span class="material-symbols-rounded">add</span>
-            <p>Criar Coleção</p>
-        </a>
-    </div>
+    <div id="cartBooksList"></div>
 
-    <div id="collectionsList"></div>
+    <div id="cartSummary">
+        <p>Total: <span id="cartTotal">R$0,00</span></p>
+        <p>Quantidade de livros: <span id="cartQuantity">0</span></p>
+        <button id="checkoutBtn">Finalizar Compra</button>
+    </div>
 </main>
-</body>
 
-<script src="./js/global.js" type="module"></script>
-<script src="./js/userCollections.js" type="module"></script>
+<script type="module" src="./js/global.js"></script>
+<script type="module" src="./js/cartPage.js"></script>
+</body>
 </html>

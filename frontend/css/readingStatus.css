@@ -6,15 +6,11 @@ main{
     gap: 1.2vw;
 }
 
-/* ------- Header ------- */
-
 #mainHeaderWrapper{
     display: flex;
     flex-direction: column;
     gap: 1vw;
 }
-
-/* ------- Botões de Status ------- */
 
 #statusButtons{
     display: flex;
@@ -45,8 +41,6 @@ main{
     border-color: #7A8C63;
 }
 
-/* ------- Empty Catalogue ------- */
-
 .emptyCatalogue{
     width: 85vw;
     background-color: #f5f0e6;
@@ -63,15 +57,11 @@ main{
     font-size: 4vw;
 }
 
-/* ------- Grid de Livros ------- */
-
 #catalogue{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1vw;
 }
-
-/* ------- Card ------- */
 
 .bookItem{
     display: flex;

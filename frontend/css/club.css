@@ -1,0 +1,63 @@
+main {
+    width: 85vw;
+    margin: 2vw auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+#clubButtons span{
+    color: white;
+}
+
+.sectionCard {
+    background-color: #F5F0E6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+#clubButtons {
+    display: flex;
+    gap: 1vw;
+    margin-top: 1vw;
+}
+
+.buttonGreen {
+    display: flex;
+    align-items: center;
+    gap: .5vw;
+    padding: .8vw 1.3vw;
+    background-color: #7A8C63;
+    color: white;
+    border-radius: 1vw;
+}
+
+.buttonRed {
+    display: flex;
+    align-items: center;
+    gap: .5vw;
+    padding: .8vw 1.3vw;
+    background-color: #b64343;
+    color: white;
+    border-radius: 1vw;
+    border: none;
+}
+
+.infoRow {
+    font-size: 1rem;
+    color: #6d665c;
+}
+
+.bookTitle {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.bookDescription {
+    font-size: 1rem;
+    color: #514a3f;
+}

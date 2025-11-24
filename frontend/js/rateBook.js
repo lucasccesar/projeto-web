@@ -1,51 +1,51 @@
-const token = localStorage.getItem("token");
-const bookId = new URLSearchParams(window.location.search).get("bookId");
+const token = localStorage.getItem('token');
+const bookId = new URLSearchParams(window.location.search).get('bookId');
 
 if (!bookId) {
-    window.location.href = "./home.html";
+    window.location.href = './home.html';
 }
 
 async function getUser() {
-    const response = await fetch("http://localhost:8080/api/users/me", {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token }
+    const response = await fetch('http://localhost:8080/api/users/me', {
+        method: 'GET',
+        headers: { Authorization: 'Bearer ' + token },
     });
     return await response.json();
 }
 
 async function getBook() {
     const response = await fetch(`http://localhost:8080/api/books/${bookId}`, {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token }
+        method: 'GET',
+        headers: { Authorization: 'Bearer ' + token },
     });
     return await response.json();
 }
 
 async function getUserRating(userId) {
     const res = await fetch(`http://localhost:8080/api/ratings/all/${bookId}?page=0&size=999`, {
-        headers: { Authorization: "Bearer " + token }
+        headers: { Authorization: 'Bearer ' + token },
     });
     const data = await res.json();
-    return data.content.find(r => r.user === userId);
+    return data.content.find((r) => r.user === userId);
 }
 
-const ratingForm = document.getElementById("ratingForm");
-const ratingValueInput = document.getElementById("ratingValue");
-const commentInput = document.getElementById("comment");
-const ratingHeader = document.getElementById("ratingHeader");
+const ratingForm = document.getElementById('ratingForm');
+const ratingValueInput = document.getElementById('ratingValue');
+const commentInput = document.getElementById('comment');
+const ratingHeader = document.getElementById('ratingHeader');
 
 let user = await getUser();
 let book = await getBook();
 let existingRating = await getUserRating(user.id);
 
-ratingHeader.textContent = "Avaliar: " + book.title;
+ratingHeader.textContent = 'Avaliar: ' + book.title;
 
 if (existingRating) {
     ratingValueInput.value = existingRating.ratingValue;
-    commentInput.value = existingRating.comment || "";
+    commentInput.value = existingRating.comment || '';
 }
 
-ratingForm.addEventListener("submit", async (e) => {
+ratingForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const payload = {
@@ -53,36 +53,36 @@ ratingForm.addEventListener("submit", async (e) => {
         book: { idBook: bookId },
         comment: commentInput.value.trim(),
         ratingValue: parseInt(ratingValueInput.value),
-        ratingDate: new Date().toISOString().split("T")[0]
+        ratingDate: new Date().toISOString().split('T')[0],
     };
 
     let response;
 
     if (existingRating) {
         response = await fetch(`http://localhost:8080/api/ratings/${existingRating.id}`, {
-            method: "PUT",
+            method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
         });
     } else {
-        response = await fetch("http://localhost:8080/api/ratings", {
-            method: "POST",
+        response = await fetch('http://localhost:8080/api/ratings', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(payload),
         });
     }
 
     if (!response.ok) {
-        alert("Erro ao publicar a avaliação.");
+        alert('Erro ao publicar a avaliação.');
         return;
     }
 
-    alert("Avaliação publicada com sucesso!");
-    window.location.href = "./book.html?id=" + bookId;
+    alert('Avaliação publicada com sucesso!');
+    window.location.href = './book.html?id=' + bookId;
 });

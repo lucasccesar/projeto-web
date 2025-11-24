@@ -1,0 +1,96 @@
+main {
+    width: 85vw;
+    margin: 2vw 0 0 7.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.pageTitle {
+    font-size: 2rem;
+    margin-bottom: 0.5vw;
+}
+
+#cartItemCount {
+    font-size: 1rem;
+    color: #555;
+}
+
+#cartBooksList {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    margin-top: 1vw;
+}
+
+.cartBookItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5f0e6;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    border: 1px solid #ddd6cb;
+    width: 100%;
+}
+
+.cartBookInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3vw;
+}
+
+.cartBookInfo p {
+    margin: 0;
+}
+
+.cartBookInfo .price {
+    color: #7A8C63;
+    font-weight: bold;
+}
+
+.removeBtn {
+    background-color: #ff4747;
+    color: white;
+    border: none;
+    padding: 0.5vw 1vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+#cartSummary {
+    margin-top: 2vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 1.5vw;
+    border-radius: 0.5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+}
+
+#checkoutBtn {
+    background-color: #7A8C63;
+    color: white;
+    border: none;
+    padding: 0.7vw 1vw;
+    border-radius: 0.5vw;
+    cursor: pointer;
+}
+
+.emptyCatalogue{
+    width: 85vw;
+    background-color: #f5f0e6;
+    border: 1px solid #ddd6cb;
+    padding: 2vw;
+    display: none;
+    flex-direction: column;
+    border-radius: 1vw;
+    align-items: center;
+    gap: 1vw;
+}
+
+.emptyCatalogue span{
+    font-size: 4vw;
+    color: #5a4632;
+}

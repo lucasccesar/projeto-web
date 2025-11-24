@@ -1,9 +1,9 @@
-const token = localStorage.getItem("token");
+const token = localStorage.getItem('token');
 
 async function getUser() {
-    const response = await fetch("http://localhost:8080/api/users/me", {
-        method: "GET",
-        headers: { Authorization: "Bearer " + token }
+    const response = await fetch('http://localhost:8080/api/users/me', {
+        method: 'GET',
+        headers: { Authorization: 'Bearer ' + token },
     });
     const user = await response.json();
     return user;
@@ -12,17 +12,17 @@ async function getUser() {
 const user = await getUser();
 
 if (!user || !user.id) {
-    localStorage.removeItem("token");
-    window.location.href = "./home.html";
+    localStorage.removeItem('token');
+    window.location.href = './home.html';
 }
 
-const API_URL = "http://localhost:8080/api/colection";
+const API_URL = 'http://localhost:8080/api/colection';
 
-const collectionForm = document.getElementById("collectionForm");
-const nameInput = document.getElementById("name");
-const descriptionInput = document.getElementById("description");
+const collectionForm = document.getElementById('collectionForm');
+const nameInput = document.getElementById('name');
+const descriptionInput = document.getElementById('description');
 
-collectionForm.addEventListener("submit", async e => {
+collectionForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = nameInput.value.trim();
@@ -30,33 +30,32 @@ collectionForm.addEventListener("submit", async e => {
     const userId = user.id;
 
     if (!name || !description) {
-        alert("Por favor, preencha todos os campos.");
+        alert('Por favor, preencha todos os campos.');
         return;
     }
 
     try {
         const response = await fetch(API_URL, {
-            method: "POST",
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
             },
             body: JSON.stringify({
                 name,
                 description,
-                userId
-            })
+                userId,
+            }),
         });
 
         if (!response.ok) {
-            alert("Falha ao criar coleção.");
+            alert('Falha ao criar coleção.');
             return;
         }
 
-        alert("Coleção criada com sucesso!");
-        window.location.href = "./userCollections.html";
-
+        alert('Coleção criada com sucesso!');
+        window.location.href = './userCollections.html';
     } catch (error) {
-        alert("Falha ao conectar com o servidor.");
+        alert('Falha ao conectar com o servidor.');
     }
 });

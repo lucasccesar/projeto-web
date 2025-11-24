@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/global.css"/>
-    <link rel="stylesheet" href="./css/addBook.css"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/clubs.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Editar Livro</title>
+    <title>Clubes</title>
 </head>
 <body>
     <header>
@@ -19,7 +19,7 @@
                 <span class="material-symbols-rounded">home</span>
                 <p>Catálogo</p>
             </a>
-            <a href="./clubs.html" class="pageLink">
+            <a href="./clubs.html" class="pageLink currentPage">
                 <span class="material-symbols-rounded">book</span>
                 <p>Clubes</p>
             </a>
@@ -42,37 +42,35 @@
             </button>
         </div>
     </header>
-    <form id="bookForm">
-        <div id="formTitle">
-            <span class="material-symbols-rounded">edit</span>
-            <div>
-                <p>Editar Livro</p>
-                <p class="lightText">Atualize as informações do livro</p>
-            </div>
-        </div>
-        <div class="inputWrapper">
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" required>
+
+    <main>
+        <div id="mainHeaderWrapper">
+            <p class="pageTitle">Clubes de Leitura</p>
+            <a href="./addClub.html" id="createClubBtn">
+                <span class="material-symbols-rounded">library_add</span>
+                <p>Criar Clube</p>
+            </a>
         </div>
 
-        <div class="inputWrapper">
-            <label for="synopsis">Sinopse:</label>
-            <textarea id="synopsis" name="synopsis" rows="4" required></textarea>
+        <form action="" id="searchForm">
+            <input type="text" id="clubName" placeholder="Buscar por nome do clube">
+            <input type="submit" value="Buscar" id="searchClub">
+        </form>
+
+        <div id="emptyClubs" class="emptyCatalogue" style="display: none;">
+            <span class="material-symbols-rounded">sentiment_dissatisfied</span>
+            <p>Sem Clubes</p>
+            <p>Ainda não há clubes criados. Seja o primeiro a criar um!</p>
+            <a href="./addClub.html" id="addClubButton">
+                <span class="material-symbols-rounded">add</span>
+                <p>Criar Clube</p>
+            </a>
         </div>
 
-        <div class="inputWrapper">
-            <label for="genre">Gênero:</label>
-            <input type="text" id="genre" name="genre" required>
-        </div>
+        <div id="clubsContainer"></div>
+    </main>
 
-        <div class="inputWrapper">
-            <label for="price">Preço:</label>
-            <input type="number" id="price" name="price" step="0.01" min="0" required>
-        </div>
-
-        <button type="submit">Atualizar livro</button>
-    </form>
+    <script type="module" src="./js/global.js"></script>
+    <script type="module" src="./js/clubs.js"></script>
 </body>
-<script src="./js/global.js" type="module"></script>
-<script src="./js/editBook.js" type="module"></script>
 </html>
