@@ -26,7 +26,7 @@ public class ReadingStatus {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Users users;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_livro", nullable = false)
     private Book book;
 

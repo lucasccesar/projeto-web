@@ -34,6 +34,9 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
             throw new InvalidReadingStatusException("Error: Null or Invalid Reading Status");
         }
 
+        UUID userId = readingStatus.getUsers().getId();
+        UUID bookId = readingStatus.getBook().getIdBook();
+
         Users user = usersService.getUsersRepository().findById(readingStatus.getUsers().getId()).orElse(null);
         if(user == null){
             throw new InexistentIdUserException("Error: User not found");
@@ -44,6 +47,12 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
             throw new InexistentBookException("Error: Book not found");
         }
 
+        ReadingStatus existing = readingStatusRepository.findByBook_IdBookAndUsers_Id(bookId, userId);
+
+        if (existing != null) {
+            existing.setStatus(readingStatus.getStatus());
+            return readingStatusRepository.save(existing);
+        }
 
         ReadingStatus rd = new ReadingStatus();
         rd.setStatus(readingStatus.getStatus());
