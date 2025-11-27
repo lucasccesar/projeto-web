@@ -15,7 +15,6 @@ async function getUser() {
 
 const user = await getUser();
 if (user.type !== 'ADMINISTRATOR') {
-    localStorage.removeItem('token');
     window.location.href = './home.html';
 }
 
@@ -77,6 +76,8 @@ form.addEventListener('submit', async (e) => {
         description: descriptionInput.value.trim(),
         books: currentBooks.map((b) => ({ idBook: b.id })),
     };
+
+    console.log(body)
 
     const res = await fetch(`http://localhost:8080/api/colection/${collectionId}`, {
         method: 'PUT',
