@@ -176,7 +176,8 @@ async function renderPage() {
 
         const rating = await getRating(assignment.bookId);
         const ratingAvg = await getRatingAvg(assignment.bookId);
-        bookRating.textContent = `Nota média: ${ratingAvg == 'NaN' ? 0 : ratingsAvg} (${rating.content.length} avaliações)`;
+        console.log(ratingAvg)
+        bookRating.textContent = `Nota média: ${ratingAvg == 'NaN' ? 0 : ratingAvg} (${rating.content.length} avaliações)`;
     } else {
         clubPeriod.textContent = 'Nenhum livro atribuído.';
     }
