@@ -13,6 +13,19 @@ async function getCollection() {
 
 const collection = await getCollection();
 
+async function getUser() {
+    const res = await fetch('http://localhost:8080/api/users/me', {
+        headers: { Authorization: 'Bearer ' + token },
+    });
+    return await res.json();
+}
+
+const user = await getUser();
+
+if(user.type === "CLIENT"){
+    document.getElementById('editCollectionBtn').style.display = "none"
+}
+
 document.getElementById('collectionName').textContent = collection.name;
 document.getElementById('collectionDesc').textContent = collection.description;
 
