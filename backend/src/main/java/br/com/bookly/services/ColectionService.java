@@ -11,7 +11,6 @@ import java.util.UUID;
 public interface ColectionService {
 
     public Colection createColection(ColectionDTO colectionDTO);
-    public boolean deleteColection(Colection colection);
     public boolean deleteColectionById(UUID idColection);
     Colection updateColection(UUID idColection, Colection colection);
     public Colection findColectionById(UUID idColection);

@@ -57,17 +57,6 @@ public class ColectionServiceImpl implements ColectionService {
         return colectionRepository.save(newColection);
     }
 
-    @Override
-    public boolean deleteColection(Colection colection) {
-
-        Colection exists = colectionRepository.findById(colection.getIdColection()).orElse(null);
-
-        if(exists == null)
-            throw new InexistentColectionException();
-
-        colectionRepository.delete(exists);
-        return true;
-    }
 
     @Override
     public boolean deleteColectionById(UUID idColection) {

@@ -34,9 +34,6 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
             throw new InvalidReadingStatusException("Error: Null or Invalid Reading Status");
         }
 
-        UUID userId = readingStatus.getUsers().getId();
-        UUID bookId = readingStatus.getBook().getIdBook();
-
         Users user = usersService.getUsersRepository().findById(readingStatus.getUsers().getId()).orElse(null);
         if(user == null){
             throw new InexistentIdUserException("Error: User not found");
@@ -46,6 +43,9 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
         if(book == null){
             throw new InexistentBookException("Error: Book not found");
         }
+
+        UUID userId = readingStatus.getUsers().getId();
+        UUID bookId = readingStatus.getBook().getIdBook();
 
         ReadingStatus existing = readingStatusRepository.findByBook_IdBookAndUsers_Id(bookId, userId);
 
@@ -117,18 +117,5 @@ public class ReadingStatusServiceImpl implements ReadingStatusService {
         }
 
         return readingStatusRepository.findByUsers_id(userId, pageable);
-    }
-
-    @Override
-    public ReadingStatus createOrUpdateReadingStatus(ReadingStatus readingStatus) {
-        ReadingStatus existing = readingStatusRepository
-                .findByBook_IdBookAndUsers_Id(readingStatus.getBook().getIdBook(), readingStatus.getUsers().getId());
-
-        if (existing != null) {
-            existing.setStatus(readingStatus.getStatus());
-            return readingStatusRepository.save(existing);
-        } else {
-            return readingStatusRepository.save(readingStatus);
-        }
     }
 }

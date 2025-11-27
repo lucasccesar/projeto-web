@@ -84,7 +84,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/colection/user/*").hasAnyRole("ADMINISTRATOR", "CLIENT")
                         .requestMatchers(HttpMethod.GET, "/api/colection").hasRole("ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/colection/*").hasRole("CLIENT")
-                        .requestMatchers(HttpMethod.POST, "/api/colection").hasRole("CLIENT")
+                        .requestMatchers(HttpMethod.PUT, "/api/colection/*").hasRole("CLIENT")
 
                         //BookClubAssignment
                         .requestMatchers(HttpMethod.GET, "/api/bookclubassignment").hasRole("ADMINISTRATOR")
