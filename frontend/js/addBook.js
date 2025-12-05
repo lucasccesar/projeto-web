@@ -15,7 +15,7 @@ const accountType = user.type;
 
 if (accountType != 'ADMINISTRATOR') {
     localStorage.removeItem('token');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 const API_URL = 'https://projeto-web-backend.onrender.com/api/books';
@@ -85,7 +85,7 @@ bookForm.addEventListener('submit', async (e) => {
         }
 
         alert('Livro salvo com sucesso!');
-        window.location.href = './home.html';
+        window.location.href = './index.html';
     } catch (error) {
         console.error('Erro:', error);
         alert('Falha ao conectar com o servidor.');

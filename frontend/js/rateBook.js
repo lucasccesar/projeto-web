@@ -2,7 +2,7 @@ const token = localStorage.getItem('token');
 const bookId = new URLSearchParams(window.location.search).get('bookId');
 
 if (!bookId) {
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 async function getUser() {

@@ -355,7 +355,7 @@ document.getElementById('deleteBookBtn').addEventListener('click', async () => {
         }
 
         alert('Livro excluído!');
-        window.location.href = './home.html';
+        window.location.href = './index.html';
     } catch (err) {
         console.error(err);
         alert(err.message || 'Erro ao tentar excluir o livro.');

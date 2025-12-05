@@ -3,7 +3,7 @@ const bookId = new URLSearchParams(window.location.search).get('bookId');
 
 if (!bookId) {
     alert('ID do livro não fornecido.');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 async function getUser() {
@@ -17,7 +17,7 @@ async function getUser() {
 const user = await getUser();
 if (user.type !== 'ADMINISTRATOR') {
     localStorage.removeItem('token');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 const bookForm = document.getElementById('bookForm');
@@ -32,7 +32,7 @@ async function loadBook() {
     });
     if (!res.ok) {
         alert('Erro ao carregar livro.');
-        window.location.href = './home.html';
+        window.location.href = './index.html';
         return;
     }
     const book = await res.json();
@@ -80,7 +80,7 @@ bookForm.addEventListener('submit', async (e) => {
         }
 
         alert('Livro atualizado com sucesso!');
-        window.location.href = './home.html';
+        window.location.href = './index.html';
     } catch (err) {
         console.error(err);
         alert('Erro ao conectar com o servidor.');

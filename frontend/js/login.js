@@ -1,6 +1,6 @@
 const token = localStorage.getItem('token');
 if (token) {
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 const API_URL = 'https://projeto-web-backend.onrender.com/api/auth/login';
@@ -45,7 +45,7 @@ form.addEventListener('submit', async (e) => {
 
         alert('Login successful!');
 
-        window.location.href = './home.html';
+        window.location.href = './index.html';
     } catch (error) {
         console.error('Error:', error);
         alert('Failed to connect to the server.');

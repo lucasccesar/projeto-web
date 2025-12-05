@@ -13,7 +13,7 @@ const user = await getUser();
 
 if (!user || !user.id) {
     localStorage.removeItem('token');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 const API_URL = 'https://projeto-web-backend.onrender.com/api/colection';

@@ -3,7 +3,7 @@ const collectionId = new URLSearchParams(window.location.search).get('id');
 
 if (!collectionId) {
     alert('ID da coleção não fornecido.');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 async function getUser() {
@@ -15,7 +15,7 @@ async function getUser() {
 
 const user = await getUser();
 if (user.type !== 'ADMINISTRATOR') {
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 const nameInput = document.getElementById('name');
@@ -31,7 +31,7 @@ async function loadCollection() {
 
     if (!res.ok) {
         alert('Erro ao carregar coleção.');
-        window.location.href = './home.html';
+        window.location.href = './index.html';
     }
 
     const data = await res.json();

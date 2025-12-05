@@ -11,7 +11,7 @@ const user = await getUser();
 
 if (user.type !== 'ADMINISTRATOR') {
     alert('Apenas administradores podem criar clubes.');
-    window.location.href = './home.html';
+    window.location.href = './index.html';
 }
 
 async function getBooks() {
