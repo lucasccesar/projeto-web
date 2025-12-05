@@ -3,7 +3,7 @@ if (token) {
     window.location.href = './home.html';
 }
 
-const API_URL = 'http://localhost:8080/api/auth/login';
+const API_URL = 'https://projeto-web-backend.onrender.com/api/auth/login';
 
 const form = document.querySelector('form');
 const emailInput = document.getElementById('inputEmail');

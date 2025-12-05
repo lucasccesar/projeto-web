@@ -1,7 +1,8 @@
 const token = localStorage.getItem('token');
 
+
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -17,7 +18,7 @@ if (accountType != 'ADMINISTRATOR') {
     window.location.href = './home.html';
 }
 
-const API_URL = 'http://localhost:8080/api/books';
+const API_URL = 'https://projeto-web-backend.onrender.com/api/books';
 const bookForm = document.getElementById('bookForm');
 const titleInput = document.getElementById('title');
 const synopsisInput = document.getElementById('synopsis');
@@ -48,7 +49,7 @@ bookForm.addEventListener('submit', async (e) => {
         const authors = [];
 
         for (const name of authorNames) {
-            const res = await fetch(`http://localhost:8080/api/authors/name?name=${encodeURIComponent(name)}&page=0&size=1`, {
+            const res = await fetch(`${API_URL}/api/authors/name?name=${encodeURIComponent(name)}&page=0&size=1`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
@@ -56,7 +57,7 @@ bookForm.addEventListener('submit', async (e) => {
             if (data.content && data.content.length > 0) {
                 authors.push({ id: data.content[0].id, name: data.content[0].name });
             } else {
-                const createRes = await fetch('http://localhost:8080/api/authors', {
+                const createRes = await fetch('https://projeto-web-backend.onrender.com/api/authors', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

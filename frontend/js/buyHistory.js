@@ -1,14 +1,14 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await res.json();
 }
 
 async function getPurchases(userId) {
-    const res = await fetch(`http://localhost:8080/api/purchase/PageId/${userId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/purchase/PageId/${userId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const data = await res.json();
@@ -17,7 +17,7 @@ async function getPurchases(userId) {
 
 async function fetchBookTitle(bookId) {
     try {
-        const res = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+        const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
             headers: { Authorization: 'Bearer ' + token },
         });
         if (!res.ok) return `Livro: ${bookId}`;

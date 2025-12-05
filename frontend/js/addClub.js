@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
@@ -15,14 +15,14 @@ if (user.type !== 'ADMINISTRATOR') {
 }
 
 async function getBooks() {
-    const res = await fetch('http://localhost:8080/api/books', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/books', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
 }
 
 async function createClub(data) {
-    const res = await fetch('http://localhost:8080/api/bookclub', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/bookclub', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ async function createClub(data) {
 }
 
 async function createAssignment(data) {
-    return await fetch('http://localhost:8080/api/bookclubassignment', {
+    return await fetch('https://projeto-web-backend.onrender.com/api/bookclubassignment', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

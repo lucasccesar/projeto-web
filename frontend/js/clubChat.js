@@ -15,14 +15,14 @@ let user = null;
 let canParticipate = false;
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
 }
 
 async function checkParticipant() {
-    const res = await fetch(`http://localhost:8080/api/participantuser/byclub/${clubId}`, { headers: { Authorization: 'Bearer ' + token } });
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/byclub/${clubId}`, { headers: { Authorization: 'Bearer ' + token } });
 
     const data = await res.json();
     canParticipate = data.content.some((p) => p.userId === user.id);
@@ -34,12 +34,12 @@ async function checkParticipant() {
 }
 
 async function getMessageUser(id) {
-    const res = await fetch(`http://localhost:8080/api/users/${id}`, { headers: { Authorization: 'Bearer ' + token } });
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/users/${id}`, { headers: { Authorization: 'Bearer ' + token } });
     return await res.json();
 }
 
 async function loadMessages() {
-    const res = await fetch(`http://localhost:8080/api/clubmessage/club/${clubId}`, { headers: { Authorization: 'Bearer ' + token } });
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/clubmessage/club/${clubId}`, { headers: { Authorization: 'Bearer ' + token } });
 
     const data = await res.json();
 
@@ -102,7 +102,7 @@ async function sendMessage() {
     const text = input.value.trim();
     if (!text) return;
 
-    await fetch('http://localhost:8080/api/clubmessage', {
+    await fetch('https://projeto-web-backend.onrender.com/api/clubmessage', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

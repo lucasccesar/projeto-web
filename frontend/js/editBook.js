@@ -7,7 +7,7 @@ if (!bookId) {
 }
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: `Bearer ${token}` },
     });
     const user = await res.json();
@@ -27,7 +27,7 @@ const genreInput = document.getElementById('genre');
 const priceInput = document.getElementById('price');
 
 async function loadBook() {
-    const res = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
         headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) {
@@ -59,7 +59,7 @@ bookForm.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+        const response = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

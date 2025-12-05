@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8080/api/auth/register';
+const API_URL = 'https://projeto-web-backend.onrender.com/api/auth/register';
 
 const form = document.querySelector('form');
 const nameInput = document.getElementById('name');

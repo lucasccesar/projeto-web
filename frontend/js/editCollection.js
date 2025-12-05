@@ -7,7 +7,7 @@ if (!collectionId) {
 }
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await res.json();
@@ -25,7 +25,7 @@ const form = document.getElementById('collectionForm');
 let currentBooks = [];
 
 async function loadCollection() {
-    const res = await fetch(`http://localhost:8080/api/colection/${collectionId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/colection/${collectionId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
 
@@ -79,7 +79,7 @@ form.addEventListener('submit', async (e) => {
 
     console.log(body)
 
-    const res = await fetch(`http://localhost:8080/api/colection/${collectionId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/colection/${collectionId}`, {
         method: 'PUT',
         headers: {
             Authorization: 'Bearer ' + token,

@@ -27,7 +27,7 @@ const bookAuthors = document.getElementById('bookAuthors');
 let participantId = null;
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
@@ -36,21 +36,21 @@ async function getUser() {
 const user = await getUser();
 
 async function getClub() {
-    const res = await fetch(`http://localhost:8080/api/bookclub/${clubId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/bookclub/${clubId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
 }
 
 async function getParticipants() {
-    const res = await fetch(`http://localhost:8080/api/participantuser/byclub/${clubId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/byclub/${clubId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     return res.json();
 }
 
 async function getBook(bookId) {
-    const res = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const book = await res.json();
@@ -58,14 +58,14 @@ async function getBook(bookId) {
 }
 
 async function getRating(bookId) {
-    const ratingsRes = await fetch(`http://localhost:8080/api/ratings/all/${bookId}`, {
+    const ratingsRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/all/${bookId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await ratingsRes.json();
 }
 
 async function getRatingAvg(bookId) {
-    const ratingsAvgRes = await fetch(`http://localhost:8080/api/ratings/average/${bookId}`, {
+    const ratingsAvgRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/average/${bookId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await ratingsAvgRes.json();
@@ -77,7 +77,7 @@ async function joinClub() {
         club: { idBookClub: clubId },
     };
 
-    const res = await fetch(`http://localhost:8080/api/participantuser`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ async function joinClub() {
 async function deleteClub() {
     if (!confirm('Tem certeza que deseja excluir o clube? Esta ação não pode ser desfeita!')) return;
 
-    const res = await fetch(`http://localhost:8080/api/bookclub/${clubId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/bookclub/${clubId}`, {
         method: 'DELETE',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -113,7 +113,7 @@ async function deleteClub() {
 async function leaveClub() {
     if (!participantId) return alert('Erro: você não está registrado no clube.');
 
-    const res = await fetch(`http://localhost:8080/api/participantuser/${participantId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/${participantId}`, {
         method: 'DELETE',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -153,7 +153,7 @@ async function renderPage() {
 
     let assignment;
     try {
-        const assignmentPage = await fetch(`http://localhost:8080/api/bookclubassignment/club/${clubId}`, {
+        const assignmentPage = await fetch(`https://projeto-web-backend.onrender.com/api/bookclubassignment/club/${clubId}`, {
             headers: { Authorization: 'Bearer ' + token },
         }).then((r) => r.json());
 

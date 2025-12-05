@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,
@@ -11,7 +11,7 @@ async function getUser() {
 }
 
 async function getCollections(id) {
-    const response = await fetch(`http://localhost:8080/api/colection/user/${id}?page=0&size=50`, {
+    const response = await fetch(`https://projeto-web-backend.onrender.com/api/colection/user/${id}?page=0&size=50`, {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,

@@ -6,7 +6,7 @@ if (!bookId) {
 }
 
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -14,7 +14,7 @@ async function getUser() {
 }
 
 async function getBook() {
-    const response = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+    const response = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -22,7 +22,7 @@ async function getBook() {
 }
 
 async function getUserRating(userId) {
-    const res = await fetch(`http://localhost:8080/api/ratings/all/${bookId}?page=0&size=999`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/all/${bookId}?page=0&size=999`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const data = await res.json();
@@ -59,7 +59,7 @@ ratingForm.addEventListener('submit', async (e) => {
     let response;
 
     if (existingRating) {
-        response = await fetch(`http://localhost:8080/api/ratings/${existingRating.id}`, {
+        response = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/${existingRating.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ ratingForm.addEventListener('submit', async (e) => {
             body: JSON.stringify(payload),
         });
     } else {
-        response = await fetch('http://localhost:8080/api/ratings', {
+        response = await fetch('https://projeto-web-backend.onrender.com/api/ratings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

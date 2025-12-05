@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,
@@ -17,7 +17,7 @@ const accountType = user.type;
 document.getElementById('favoriteCount').innerText = `(${user.favoriteBooks.length})`;
 
 async function getBooks() {
-    const response = await fetch('http://localhost:8080/api/books', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/books', {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,
@@ -77,7 +77,7 @@ if (books == 0) {
             const isFavorited = favoriteBtn.classList.contains('favorited');
 
             try {
-                const response = await fetch(`http://localhost:8080/api/users/${userId}/favorites/${b.id}`, {
+                const response = await fetch(`https://projeto-web-backend.onrender.com/api/users/${userId}/favorites/${b.id}`, {
                     method: isFavorited ? 'DELETE' : 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ if (books == 0) {
         starSpan.classList.add('material-symbols-rounded', 'starSpan');
         starSpan.textContent = 'star';
 
-        const ratingsAvgRes = await fetch(`http://localhost:8080/api/ratings/average/${b.id}`, {
+        const ratingsAvgRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/average/${b.id}`, {
             headers: { Authorization: 'Bearer ' + token },
         });
 
@@ -116,7 +116,7 @@ if (books == 0) {
         const avgP = document.createElement('p');
         avgP.textContent = ratingsAvg == 'NaN' ? '0' : ratingsAvg;
 
-        const ratingsRes = await fetch(`http://localhost:8080/api/ratings/all/${b.id}`, {
+        const ratingsRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/all/${b.id}`, {
             headers: { Authorization: 'Bearer ' + token },
         });
         const ratingsData = await ratingsRes.json();
@@ -172,7 +172,7 @@ searchForm.addEventListener('submit', async (e) => {
     catalogue.innerHTML = '';
 
     try {
-        let url = 'http://localhost:8080/api/books';
+        let url = 'https://projeto-web-backend.onrender.com/api/books';
         if (title) {
             url += `?title=${encodeURIComponent(title)}`;
         }
@@ -222,7 +222,7 @@ searchForm.addEventListener('submit', async (e) => {
                 const isFavorited = favoriteBtn.classList.contains('favorited');
 
                 try {
-                    const res = await fetch(`http://localhost:8080/api/users/${user.id}/favorites/${b.id}`, {
+                    const res = await fetch(`https://projeto-web-backend.onrender.com/api/users/${user.id}/favorites/${b.id}`, {
                         method: isFavorited ? 'DELETE' : 'POST',
                         headers: {
                             'Content-Type': 'application/json',

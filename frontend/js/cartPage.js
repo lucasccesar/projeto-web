@@ -7,7 +7,7 @@ const cartQuantity = document.getElementById('cartQuantity');
 const checkoutBtn = document.getElementById('checkoutBtn');
 
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -19,7 +19,7 @@ const user = await getUser();
 let booksData = [];
 
 async function fetchBook(id) {
-    const res = await fetch(`http://localhost:8080/api/books/${id}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${id}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     if (!res.ok) return null;
@@ -115,7 +115,7 @@ checkoutBtn.addEventListener('click', async () => {
         books: booksData.map((b) => ({ idBook: b.id, quantity: 1, unitPrice: b.price })),
     };
 
-    const res = await fetch('http://localhost:8080/api/purchase', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/purchase', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ checkoutBtn.addEventListener('click', async () => {
 });
 
 async function decreaseBookQnt(id) {
-    const res = await fetch(`http://localhost:8080/api/books/${id}/decrease?amount=1`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${id}/decrease?amount=1`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

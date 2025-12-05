@@ -3,7 +3,7 @@ const params = new URLSearchParams(window.location.search);
 const collectionId = params.get('id');
 
 async function getCollection() {
-    const response = await fetch(`http://localhost:8080/api/colection/${collectionId}`, {
+    const response = await fetch(`https://projeto-web-backend.onrender.com/api/colection/${collectionId}`, {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -14,7 +14,7 @@ async function getCollection() {
 const collection = await getCollection();
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await res.json();

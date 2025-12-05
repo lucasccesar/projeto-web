@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     return await res.json();
@@ -35,7 +35,7 @@ form.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/api/users/${user.id}`, {
+        const response = await fetch(`https://projeto-web-backend.onrender.com/api/users/${user.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

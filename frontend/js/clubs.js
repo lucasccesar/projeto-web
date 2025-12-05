@@ -6,7 +6,7 @@ if (!token) {
 }
 
 async function getUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: {
             Authorization: 'Bearer ' + token,
         },
@@ -16,7 +16,7 @@ async function getUser() {
 }
 
 async function fetchClubs(name) {
-    let url = 'http://localhost:8080/api/bookclub';
+    let url = 'https://projeto-web-backend.onrender.com/api/bookclub';
 
     const res = await fetch(url, {
         headers: { Authorization: 'Bearer ' + token },
@@ -26,10 +26,10 @@ async function fetchClubs(name) {
 }
 
 async function fetchBook(id) {
-    const assignmentPage = await fetch(`http://localhost:8080/api/bookclubassignment/club/${id}`, {
+    const assignmentPage = await fetch(`https://projeto-web-backend.onrender.com/api/bookclubassignment/club/${id}`, {
         headers: { Authorization: 'Bearer ' + token },
     }).then((r) => r.json());
-    const res = await fetch(`http://localhost:8080/api/books/${assignmentPage.content[0].bookId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${assignmentPage.content[0].bookId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     if (!res.ok) return null;
@@ -37,7 +37,7 @@ async function fetchBook(id) {
 }
 
 async function fetchUserParticipants(userId) {
-    const res = await fetch(`http://localhost:8080/api/participantuser/byuser/${userId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/byuser/${userId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     if (!res.ok) {
@@ -139,7 +139,7 @@ async function fetchUserParticipants(userId) {
                             club: { idBookClub: c.id },
                         };
 
-                        const res = await fetch('http://localhost:8080/api/participantuser', {
+                        const res = await fetch('https://projeto-web-backend.onrender.com/api/participantuser', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -173,7 +173,7 @@ async function fetchUserParticipants(userId) {
                     try {
                         const participantId = leaveBtn.dataset.participantId;
                         if (!participantId) {
-                            const resp = await fetch(`http://localhost:8080/api/participantuser/byuser/${userId}`, {
+                            const resp = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/byuser/${userId}`, {
                                 headers: { Authorization: 'Bearer ' + token },
                             });
                             if (!resp.ok) throw new Error();
@@ -200,7 +200,7 @@ async function fetchUserParticipants(userId) {
                 });
 
                 async function deleteParticipant(pid) {
-                    const res = await fetch(`http://localhost:8080/api/participantuser/${pid}`, {
+                    const res = await fetch(`https://projeto-web-backend.onrender.com/api/participantuser/${pid}`, {
                         method: 'DELETE',
                         headers: {
                             Authorization: 'Bearer ' + token,

@@ -4,7 +4,7 @@ let userId = null;
 let userType = null;
 
 async function fetchUser() {
-    const res = await fetch('http://localhost:8080/api/users/me', {
+    const res = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         headers: { Authorization: 'Bearer ' + token },
     });
     const data = await res.json();
@@ -20,7 +20,7 @@ async function fetchUser() {
 const user = await fetchUser();
 
 async function fetchBook() {
-    const res = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+    const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const book = await res.json();
@@ -46,7 +46,7 @@ async function fetchBook() {
         const method = favoriteText.textContent === 'Favoritar' ? 'POST' : 'DELETE';
 
         try {
-            const response = await fetch(`http://localhost:8080/api/users/${userId}/favorites/${book.id}`, {
+            const response = await fetch(`https://projeto-web-backend.onrender.com/api/users/${userId}/favorites/${book.id}`, {
                 method,
                 headers: {
                     Authorization: 'Bearer ' + token,
@@ -66,7 +66,7 @@ async function fetchBook() {
         }
     });
 
-    const statusRes = await fetch(`http://localhost:8080/api/readingstatus/byBookAndUser?bookId=${book.id}&userId=${userId}`, {
+    const statusRes = await fetch(`https://projeto-web-backend.onrender.com/api/readingstatus/byBookAndUser?bookId=${book.id}&userId=${userId}`, {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,
@@ -87,7 +87,7 @@ async function fetchBook() {
 
             if (readingStatus && readingStatus.id) {
                 if (status === '') {
-                    const res = await fetch(`http://localhost:8080/api/readingstatus/${readingStatus.id}`, {
+                    const res = await fetch(`https://projeto-web-backend.onrender.com/api/readingstatus/${readingStatus.id}`, {
                         method: 'DELETE',
                         headers: { Authorization: 'Bearer ' + token },
                     });
@@ -98,7 +98,7 @@ async function fetchBook() {
                     readingStatus = null;
                     document.getElementById('readingStatusSelect').value = '';
                 } else {
-                    const res = await fetch(`http://localhost:8080/api/readingstatus/${readingStatus.id}`, {
+                    const res = await fetch(`https://projeto-web-backend.onrender.com/api/readingstatus/${readingStatus.id}`, {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ async function fetchBook() {
                             book: { idBook: book.id },
                             status,
                         }),)
-                    const res = await fetch(`http://localhost:8080/api/readingstatus`, {
+                    const res = await fetch(`https://projeto-web-backend.onrender.com/api/readingstatus`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -155,7 +155,7 @@ async function fetchBook() {
         }
     });
 
-    const collectionsRes = await fetch(`http://localhost:8080/api/colection/user/${userId}`, {
+    const collectionsRes = await fetch(`https://projeto-web-backend.onrender.com/api/colection/user/${userId}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
 
@@ -168,7 +168,7 @@ async function fetchBook() {
     });
 
     async function loadCollections() {
-        const res = await fetch(`http://localhost:8080/api/colection/user/${userId}`, {
+        const res = await fetch(`https://projeto-web-backend.onrender.com/api/colection/user/${userId}`, {
             headers: { Authorization: 'Bearer ' + token },
         });
         const data = await res.json();
@@ -201,7 +201,7 @@ async function fetchBook() {
 
         for (const cb of allCheckboxes) {
             const colId = cb.value;
-            const colRes = await fetch(`http://localhost:8080/api/colection/${colId}`, {
+            const colRes = await fetch(`https://projeto-web-backend.onrender.com/api/colection/${colId}`, {
                 headers: { Authorization: 'Bearer ' + token },
             });
             const collection = await colRes.json();
@@ -214,7 +214,7 @@ async function fetchBook() {
                 books = books.filter((b) => b.idBook !== bookId);
             }
 
-            await fetch(`http://localhost:8080/api/colection/${colId}`, {
+            await fetch(`https://projeto-web-backend.onrender.com/api/colection/${colId}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: 'Bearer ' + token,
@@ -236,7 +236,7 @@ async function fetchBook() {
 
     loadCollections();
 
-    const ratingsRes = await fetch(`http://localhost:8080/api/ratings/all/${book.id}`, {
+    const ratingsRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/all/${book.id}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const ratingsData = await ratingsRes.json();
@@ -249,7 +249,7 @@ async function fetchBook() {
         emptyRatings.style.display = 'none';
         const ratingItems = await Promise.all(
             ratingsData.content.map(async (r) => {
-                const userRes = await fetch(`http://localhost:8080/api/users/${r.user}`, {
+                const userRes = await fetch(`https://projeto-web-backend.onrender.com/api/users/${r.user}`, {
                     headers: { Authorization: 'Bearer ' + token },
                 });
 
@@ -275,7 +275,7 @@ async function fetchBook() {
 
     document.getElementById('ratingQuantity').textContent = `${ratingsData.content.length} Avaliações`;
 
-    const ratingsAvgRes = await fetch(`http://localhost:8080/api/ratings/average/${book.id}`, {
+    const ratingsAvgRes = await fetch(`https://projeto-web-backend.onrender.com/api/ratings/average/${book.id}`, {
         headers: { Authorization: 'Bearer ' + token },
     });
     const ratingsAvg = await ratingsAvgRes.json();
@@ -345,7 +345,7 @@ async function fetchBook() {
 
 document.getElementById('deleteBookBtn').addEventListener('click', async () => {
     try {
-        const res = await fetch(`http://localhost:8080/api/books/${bookId}`, {
+        const res = await fetch(`https://projeto-web-backend.onrender.com/api/books/${bookId}`, {
             method: 'DELETE',
             headers: { Authorization: 'Bearer ' + token },
         });

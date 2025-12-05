@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 
 async function getUser() {
-    const response = await fetch('http://localhost:8080/api/users/me', {
+    const response = await fetch('https://projeto-web-backend.onrender.com/api/users/me', {
         method: 'GET',
         headers: { Authorization: 'Bearer ' + token },
     });
@@ -16,7 +16,7 @@ if (!user || !user.id) {
     window.location.href = './home.html';
 }
 
-const API_URL = 'http://localhost:8080/api/colection';
+const API_URL = 'https://projeto-web-backend.onrender.com/api/colection';
 
 const collectionForm = document.getElementById('collectionForm');
 const nameInput = document.getElementById('name');
