@@ -120,6 +120,12 @@ async function fetchBook() {
                 }
             } else {
                 if (status !== '') {
+                    console.log(JSON.stringify({
+                            id: '',
+                            users: { id: userId },
+                            book: { idBook: book.id },
+                            status,
+                        }),)
                     const res = await fetch(`http://localhost:8080/api/readingstatus`, {
                         method: 'POST',
                         headers: {

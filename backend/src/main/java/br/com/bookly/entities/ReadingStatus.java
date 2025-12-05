@@ -14,7 +14,12 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Status_Leitura")
+@Table(
+        name = "Status_Leitura",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"id_usuario", "id_livro"})
+        }
+)
 public class ReadingStatus {
 
     @Id
