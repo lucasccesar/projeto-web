@@ -23,3 +23,22 @@ jobs:
       - name: Instalar dependências e rodar build
         working-directory: ./backend
         run: mvn clean install -DskipTests=false
+
+      - name: Testes do backend
+        working-directory: ./backend
+        run: mvn test
+
+      - name: Deploy Backend para Render
+        run: |
+          curl -X POST https://api.render.com/deploy/success -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}"
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Deploy Frontend para Vercel
+        run: |
+          curl -X POST https://api.vercel.com/v12/now/deployments -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" -d '{"name":"projeto-web-bice"}'
