@@ -1,4 +1,4 @@
-name: CI - Projeto Web
+name: CI Backend - Projeto Web
 
 on:
   push:
@@ -7,19 +7,39 @@ on:
     branches: [ "main", "develop" ]
 
 jobs:
-  build-backend:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Configurar Java
-        uses: actions/setup-java@v3
+      - name: Cache Maven packages
+        uses: actions/cache@v3
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
 
-      - name: Instalar dependências e rodar build
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Validate Maven project
         working-directory: ./backend
-        run: mvn clean install -DskipTests=false
+        run: mvn -B validate
+
+      - name: Run Checkstyle
+        working-directory: ./backend
+        run: mvn -B checkstyle:check || true
+
+      - name: Run Unit Tests
+        working-directory: ./backend
+        run: mvn clean test
+
+      - name: Build project
+        working-directory: ./backend
+        run: mvn -B package -DskipTests
